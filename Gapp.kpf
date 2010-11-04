@@ -3,5 +3,33 @@
 <project id="dc9c5aab-1c3d-4712-9e5c-fd98a5aba9cf" kpf_version="4" name="Gapp.kpf">
 <preference-set idref="dc9c5aab-1c3d-4712-9e5c-fd98a5aba9cf">
   <boolean id="import_live">1</boolean>
+  <string relative="path" id="perlExtraPaths">lib</string>
+  <string id="phpExtraPaths"></string>
+</preference-set>
+<preference-set idref="dc9c5aab-1c3d-4712-9e5c-fd98a5aba9cf/t/001_gapp/004_attribute_trait_gtk_widget_lazy.t">
+<preference-set id="Invocations">
+<preference-set id="default">
+  <string id="cookieparams"></string>
+  <string relative="path" id="cwd"></string>
+  <long id="debugger.io-port">9011</long>
+  <string id="documentRoot"></string>
+  <string id="executable-params">-Ilib</string>
+  <string relative="path" id="filename">t/001_gapp/004_attribute_trait_gtk_widget_lazy.t</string>
+  <string id="getparams"></string>
+  <string id="language">Perl</string>
+  <string id="mpostparams"></string>
+  <string id="params"></string>
+  <string id="postparams"></string>
+  <string id="posttype">application/x-www-form-urlencoded</string>
+  <string id="request-method">GET</string>
+  <boolean id="show-dialog">1</boolean>
+  <boolean id="sim-cgi">0</boolean>
+  <boolean id="use-console">0</boolean>
+  <string id="userCGIEnvironment"></string>
+  <string id="userEnvironment"></string>
+  <string id="warnings">enabled</string>
+</preference-set>
+</preference-set>
+  <string id="lastInvocation">default</string>
 </preference-set>
 </project>
