@@ -1,4 +1,4 @@
-use Test::More 'no_plan';
+use Test::More tests => 3;
 use warnings;
 use strict;
 
@@ -29,7 +29,5 @@ ok $o, 'created object';
 
 ok $o->action_group, 'created action group widget';
 isa_ok $o->action_group, 'Gtk2::ActionGroup';
-
-print $o->action_group->list_actions;
 
 1;

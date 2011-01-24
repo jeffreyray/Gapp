@@ -8,7 +8,6 @@ has 'icon' => (
     isa => Str,
 );
 
-
 before '_process_options' => sub {
     my $class   = shift;
     my $name    = shift;
@@ -19,6 +18,7 @@ before '_process_options' => sub {
     unshift @{ $options->{build} }, sub {
         my ( $self, $w ) = @_;
         $w->set_icon( $w->render_icon( $options->{icon}, 'dnd' ) ) if exists $options->{icon};
+        #$w->set_default_size( @{ $options->{default_size} } ) if exists $options->{default_size};
     };
 };
 

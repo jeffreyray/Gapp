@@ -41,5 +41,4 @@ ok $o->label, 'created label widget';
 isa_ok $o->label, 'Gtk2::Label';
 is $o->label->get_text, 'Hello World!', 'text set';
 
-Gtk2->main;
 1;

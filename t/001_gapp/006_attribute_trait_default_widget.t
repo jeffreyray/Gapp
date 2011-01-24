@@ -12,7 +12,7 @@ use MooseX::Method::Signatures;
 widget 'window' => (
     is => 'rw',
     class => 'Gtk2::Window',
-    traits => ( qw/DefaultWidget/ ),
+    traits => [qw/DefaultWidget/],
     properties =>  {
         title => 'Gapp Window',
     },
@@ -52,6 +52,5 @@ is $o->label->get_text, 'Hello World!', 'text set';
 
 $o->label->show;
 $o->window->show_all;
-Gtk2->main;
 
 1;

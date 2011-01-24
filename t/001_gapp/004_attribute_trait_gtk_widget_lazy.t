@@ -48,6 +48,4 @@ is $o->label->get_text, 'Changed', 'lazy widget build called';
 
 $o->window->show_all;
 
-Gtk2->main;
-
 1;

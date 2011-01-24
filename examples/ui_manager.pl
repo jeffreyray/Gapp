@@ -41,9 +41,10 @@ widget 'toolbar' => (
     lazy => 1,
 );
 
-widget '_action_group' => (
-    is => 'ro',
-    traits => [ 'GtkActionGroup' ],
+widget 'ui_manager' => (
+    is => 'rw',
+    files => [ 't/001_gapp/basic.ui' ],
+    traits => [ qw/GtkUIManager/ ],
     actions => [
         [new      => 'New'    , 'New'    , 'gtk-new'     ],
         [edit     => 'Edit'   , 'Edit'   , 'gtk-edit'    ],
@@ -52,15 +53,17 @@ widget '_action_group' => (
     lazy => 1,
 );
 
-widget 'ui_manager' => (
+
+widget 'status_icon' => (
     is => 'rw',
-    files => [ 't/001_gapp/basic.ui' ],
-    traits => [ qw/GtkUIManager/ ],
+    traits => [qw( GtkStatusIcon )],
+    icon => 'gtk-info',
+    tooltip => 'Gapp Application',
     build => sub {
-        $_[1]->insert_action_group( $_[0]->_action_group, 0 );
-    },
-    lazy => 1,
+        $_[1]->set_visible( 1 );
+    }
 );
+
 
 
 package main;
