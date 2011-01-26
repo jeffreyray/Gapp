@@ -3,7 +3,7 @@ use warnings;
 use strict;
 
 package Foo::Actions::Basic;
-use Gapp::Actions;
+use Gapp::Actions; # -declare => [qw( New Edit Delete )];
 
 
 action 'New' => (
@@ -11,7 +11,7 @@ action 'New' => (
     tooltip => 'New',
     icon => 'gtk-new',
     code => sub {
-        print "New\n",
+        ${$_[1]}++;
     },
 );
 
@@ -20,8 +20,8 @@ action 'Edit' => (
     tooltip => 'New',
     icon => 'gtk-new',
     code => sub {
-        print "New\n",
-    }
+        ${$_[1]}++;
+    },
 );
 
 action 'Delete' => (
@@ -29,11 +29,26 @@ action 'Delete' => (
     tooltip => 'New',
     icon => 'gtk-new',
     code => sub {
-        print "New\n",
-    }
+        ${$_[1]}++;
+    },
 );
 
+package main;
+Foo::Actions::Basics->import( qw( New Edit Delete ) );
 
+ok (Foo::Actions::Basic->retrieve( 'New' ), qq[set/get action 'new']) ;
+ok (Foo::Actions::Basic->retrieve( 'Edit' ), qq[set/get action 'edit']);
+ok (Foo::Actions::Basic->retrieve( 'Delete' ), qq[set/get action 'delete']);
+
+my $x = 0;
+Foo::Actions::Basic->perform( 'New', \$x );
+is $x, 1, qq[performed action 'new'];
+Foo::Actions::Basic->perform( 'Edit', \$x );
+is $x, 2, qq[performed action 'edit'];
+Foo::Actions::Basic->perform( 'Delete', \$x );
+is $x, 3, qq[performed action 'delete'];
+
+New;
 
 #package My::App::Object;
 #use Test::More;
@@ -52,7 +67,7 @@ action 'Delete' => (
 #    ]
 #);
 
-#package main;
+package main;
 #use Foo::Actions::Basic qw( New Edit Delete );
 #
 #my $o = My::App::Object->new;
@@ -69,10 +84,10 @@ action 'Delete' => (
 #ok Foo::Action::Basic->get_action( 'Edit' );
 #ok Foo::Action::Basic->get_action( 'Delete' );
 
-Foo::Actions::Basic->perform( 'New' );
-Foo::Actions::Basic->perform( 'New' );
-Foo::Actions::Basic->perform( 'New' );
-#
+#Foo::Actions::Basic->perform( 'New' );
+#Foo::Actions::Basic->perform( 'New' );
+#Foo::Actions::Basic->perform( 'New' );
+##
 #
 #my $o = My::App::Object->new;
 #ok $o, 'created object';

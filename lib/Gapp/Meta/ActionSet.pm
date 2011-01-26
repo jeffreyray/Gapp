@@ -16,8 +16,9 @@ has 'actions' => (
     traits => [ qw( Hash )],
     handles => {
         _set_action => 'set',
-        actions => 'elements',
+        actions => 'values',
         action => 'get',
+        action_list => 'keys',
         has_action => 'exists',
     }
 );
