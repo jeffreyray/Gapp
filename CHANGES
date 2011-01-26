@@ -1,4 +1,7 @@
 
+0.02.1
+- added Gapp::Actions
+
 0.02
 - added GtkStatusIcon
 - added "actions" property to GtkUIManager trait
