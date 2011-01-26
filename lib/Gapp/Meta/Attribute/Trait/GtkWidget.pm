@@ -29,6 +29,12 @@ has 'build' => (
     default => sub { [ ] },
 );
 
+has 'default_size' => (
+    is => 'rw',
+    isa => ArrayRef,
+    default => sub { [ ] },
+);
+
 before '_process_options' => sub {
     my $class   = shift;
     my $name    = shift;
@@ -83,41 +89,11 @@ before '_process_options' => sub {
             $set->( $w );
         }
     }
+    unshift @{ $options->{build} }, sub {
+        my ( $self, $w ) = @_;
+        $w->set_default_size( @{ $options->{default_size} } ) if exists $options->{default_size};
+    };
 };
-#
-#after '_set_initial_slot_value' => sub {
-#    # print SETTING INITIAL VALUE
-#    print "SETTING INITIAL VALUE\n";
-#    
-#    my ( $att, $meta, $instance, $value ) = @_;
-#    my $properties = $att->properties;
-#    
-#    # apply properties to the widget
-#    for my $p ( keys %{ $properties } ) {
-#        $value->set( $p, $properties->{$p} );
-#    }
-#    
-#    # connect to signals
-#    my $sigmap = $att->signal_connect;
-#    if ($sigmap) {
-#        for my $signal ( keys %{ $att->signal_connect } ) {
-#            
-#            my $function = $sigmap->{ $signal };
-#            
-#            $value->signal_connect( $signal => sub {
-#                my $w = shift;
-#                $instance->$function( $w, [ @_ ] )
-#            } );
-#            
-#        }
-#    }
-#    
-#    # call build functions
-#    for my $function ( @{ $att->build } ) {
-#        $instance->$function( $value );
-#    }
-#};
-
 
 package Moose::Meta::Attribute::Custom::Trait::GtkWidget;
 sub register_implementation { 'Gapp::Meta::Attribute::Trait::GtkWidget' };

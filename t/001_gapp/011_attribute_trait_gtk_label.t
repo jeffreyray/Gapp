@@ -49,6 +49,4 @@ is $o->label->get_text, 'Hello World!', 'text set';
 
 $o->window->show_all;
 
-Gtk2->main;
-
 1;

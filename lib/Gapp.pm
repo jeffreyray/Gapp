@@ -17,6 +17,7 @@ use Gapp::Meta::Attribute::Trait::GtkActionGroup;
 use Gapp::Meta::Attribute::Trait::GtkButton;
 use Gapp::Meta::Attribute::Trait::GtkImage;
 use Gapp::Meta::Attribute::Trait::GtkLabel;
+use Gapp::Meta::Attribute::Trait::GtkStatusIcon;
 use Gapp::Meta::Attribute::Trait::GtkTextView;
 use Gapp::Meta::Attribute::Trait::GtkToolbar;
 use Gapp::Meta::Attribute::Trait::GtkUIManager;

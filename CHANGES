@@ -1,5 +1,12 @@
 Changes for Gapp
 
+0.02.1
+- added Gapp::Actions
+
+0.02
+- added GtkStatusIcon
+- added "actions" property to GtkUIManager trait
+- added "default_size" proprty to GtkWidget trait
 
 0.02    2010-12-09
 - Added Gtk-Image attribute trait
