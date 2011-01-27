@@ -3,7 +3,7 @@ use warnings;
 use strict;
 
 package Foo::Actions::Basic;
-use Gapp::Actions; # -declare => [qw( New Edit Delete )];
+use Gapp::Actions -declare => [qw( New Edit Delete )];
 
 
 action 'New' => (
@@ -34,7 +34,7 @@ action 'Delete' => (
 );
 
 package main;
-Foo::Actions::Basics->import( qw( New Edit Delete ) );
+Foo::Actions::Basic->import( qw( New Edit Delete ) );
 
 ok (Foo::Actions::Basic->retrieve( 'New' ), qq[set/get action 'new']) ;
 ok (Foo::Actions::Basic->retrieve( 'Edit' ), qq[set/get action 'edit']);
@@ -48,7 +48,7 @@ is $x, 2, qq[performed action 'edit'];
 Foo::Actions::Basic->perform( 'Delete', \$x );
 is $x, 3, qq[performed action 'delete'];
 
-New;
+Delete;
 
 #package My::App::Object;
 #use Test::More;

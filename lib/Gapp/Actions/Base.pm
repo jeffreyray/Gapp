@@ -11,7 +11,7 @@ sub import {
     my $callee = caller;
     
     my  @actions = $class->Action->action_list;
-    print $callee, '-', @actions, "\n";
+    print $class, '-', $callee, '-', @actions, "\n";
     
     my @exports;
     for my $name ( @actions ) {
@@ -24,7 +24,9 @@ sub import {
     }
     
     my $exporter = build_exporter { exports => \@exports };
-    return $class->$exporter( @exports );
+    #$callee->import( @args );
+    #$class->$exporter( @args );
+    return 1;
 }
 
 {
@@ -34,6 +36,10 @@ sub import {
         my $caller = shift;
         return $Actions{$caller} ||= Gapp::Meta::ActionSet->new;
     }
+}
+
+sub Delete {
+    
 }
 
 sub perform {
