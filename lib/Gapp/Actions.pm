@@ -7,6 +7,8 @@ use Gapp::Actions::Base;
 use base qw( Exporter );
 our @EXPORT_OK = qw( action );
 
+#do_New( $storm, $widget, @args );
+
 sub import {
     my ($class, %args) = @_;
 
