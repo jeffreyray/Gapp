@@ -67,7 +67,7 @@ widget 'ui_manager' => (
     is => 'rw',
     files => [ 'examples/basic.ui' ],
     traits => [ qw/GtkUIManager/ ],
-    actions => [ New, Edit, Delete ],
+    actions => [ __PACKAGE__ ],
     lazy => 1,
 );
 

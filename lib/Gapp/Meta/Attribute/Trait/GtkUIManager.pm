@@ -1,7 +1,10 @@
 package Gapp::Meta::Attribute::Trait::GtkUIManager;
 use Moose::Role;
 
-use MooseX::Types::Moose qw( ArrayRef CodeRef HashRef Object Str );
+use Gapp::Actions::Util;
+use MooseX::Types::Moose qw( ArrayRef ClassName CodeRef HashRef Object Str );
+
+
 
 has 'files' => (
     is => 'rw',
@@ -42,15 +45,40 @@ before '_process_options' => sub {
             
             for my $action ( @{ $options->{actions} } ) {
                 
-                my ( $gtk_action, $method );
                 if ( is_Object( $action ) ) {
-                    $gtk_action = Gtk2::Action->new( 
+                    my $gtk_action = Gtk2::Action->new( 
                         name => $action->name,
                         label => $action->label,
                         tooltip => $action->tooltip,
                         'stock-id' => $action->icon,
                     );
+                    $group->add_action( $gtk_action );
+                    $gtk_action->signal_connect( activate => sub {
+                        my ( $w, @args ) = @_;
+                        $action->perform( $self, $w, @args );
+                    });
                 }
+                elsif ( is_ClassName( $action ) ) {
+                    for my $action ( ACTION_REGISTRY( $action )->actions ) {
+                        my $gtk_action = Gtk2::Action->new( 
+                            name => $action->name,
+                            label => $action->label,
+                            tooltip => $action->tooltip,
+                            'stock-id' => $action->icon,
+                        );
+                        $group->add_action( $gtk_action );
+                        $gtk_action->signal_connect( activate => sub {
+                            my ( $w, @args ) = @_;
+                            $action->perform( $self, $w, @args );
+                        });
+                    }
+                }
+    
+                #$gtk_action->signal_connect( activate => sub {
+                #    my ( $w, @args ) = @_;
+                #    $action->perform( $self, $w, @args );
+                #});
+                
                 #elsif ( is_ArrayRef( $action ) ) {
                 #    my ( $action_name, $label, $tooltip, $stockid, $delegate ) = ( @$action );
                 #    $gtk_action = Gtk2::Action->new( 
@@ -61,11 +89,8 @@ before '_process_options' => sub {
                 #    );
                 #}
                 #
-                $gtk_action->signal_connect( activate => sub {
-                    my ( $w, @args ) = @_;
-                    $action->perform( $self, $w, \@args );
-                });
-                $group->add_action( $gtk_action );
+
+                
             }
             
             $ui->insert_action_group( $group, 0 );
