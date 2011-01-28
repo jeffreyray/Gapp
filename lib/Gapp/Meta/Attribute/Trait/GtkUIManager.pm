@@ -50,7 +50,7 @@ before '_process_options' => sub {
                         name => $action->name,
                         label => $action->label,
                         tooltip => $action->tooltip,
-                        'stock-id' => $action->icon,
+                        $action->icon ? ( 'stock-id' => $action->icon ) : (),
                     );
                     $group->add_action( $gtk_action );
                     $gtk_action->signal_connect( activate => sub {

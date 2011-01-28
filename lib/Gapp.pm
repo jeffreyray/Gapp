@@ -2,7 +2,7 @@ package Gapp;
 
 use Gtk2 '-init';
 
-our $VERSION = 0.02;
+our $VERSION = 0.03.1;
 our $AUTHORITY = 'cpan:JHALLOCK';
 
 use Moose ();
