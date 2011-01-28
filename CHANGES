@@ -1,7 +1,10 @@
 Changes for Gapp
 
+0.02.2
+- mergered GappX::Actions with with Gapp
+
 0.02.1
-- added Gapp::Actions
+- prototyped Gapp::Actions
 
 0.02
 - added GtkStatusIcon

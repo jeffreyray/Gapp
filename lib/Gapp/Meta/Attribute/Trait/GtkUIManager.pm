@@ -1,7 +1,7 @@
 package Gapp::Meta::Attribute::Trait::GtkUIManager;
 use Moose::Role;
 
-use MooseX::Types::Moose qw( ArrayRef CodeRef HashRef Str );
+use MooseX::Types::Moose qw( ArrayRef CodeRef HashRef Object Str );
 
 has 'files' => (
     is => 'rw',
@@ -14,13 +14,6 @@ has 'actions' => (
     isa => ArrayRef,
     default => sub { [ ] },
 );
-
-has 'method_prefix' => (
-    is => 'rw',
-    isa => Str,
-    default => '_do_action_',
-);
-
 
 before '_process_options' => sub {
     my $class   = shift;
@@ -47,25 +40,32 @@ before '_process_options' => sub {
             
             my $group = Gtk2::ActionGroup->new( $name );
             
-            for ( @{ $options->{actions} } ) {
-                my ( $action_name, $label, $tooltip, $stockid, $delegate ) = ( @$_ );
+            for my $action ( @{ $options->{actions} } ) {
                 
-                my $action = Gtk2::Action->new( 
-                    name => $action_name,
-                    label => $label,
-                    tooltip => $tooltip,
-                    'stock-id' => $stockid,
-                );
-                
-                my $att = $self->meta->get_attribute( $name );
-                my $method = $att->method_prefix . $action_name;
-                
-                defined $delegate ?
-                $action->signal_connect( activate => sub { $self->$delegate->$method } ):
-                $action->signal_connect( activate => sub { $self->$method } );
-                
-                
-                $group->add_action( $action );
+                my ( $gtk_action, $method );
+                if ( is_Object( $action ) ) {
+                    $gtk_action = Gtk2::Action->new( 
+                        name => $action->name,
+                        label => $action->label,
+                        tooltip => $action->tooltip,
+                        'stock-id' => $action->icon,
+                    );
+                }
+                #elsif ( is_ArrayRef( $action ) ) {
+                #    my ( $action_name, $label, $tooltip, $stockid, $delegate ) = ( @$action );
+                #    $gtk_action = Gtk2::Action->new( 
+                #        name => $action_name,
+                #        label => $label,
+                #        tooltip => $tooltip,
+                #        'stock-id' => $stockid,
+                #    );
+                #}
+                #
+                $gtk_action->signal_connect( activate => sub {
+                    my ( $w, @args ) = @_;
+                    $action->perform( $self, $w, \@args );
+                });
+                $group->add_action( $gtk_action );
             }
             
             $ui->insert_action_group( $group, 0 );

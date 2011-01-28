@@ -3,12 +3,34 @@ use strict;
 use warnings;
 
 use Gtk2 '-init';
-
+use lib qw( lib examples/lib );
 
 package MyApplicationObject;
 
 use Gapp;
+use Gapp::Actions -declare => [qw( New Edit Delete )];
 use MooseX::Method::Signatures;
+
+action New => (
+    label => 'New',
+    tooltip => 'New',
+    icon => 'gtk-new',
+    code => sub { print 'action: ' . $_[0]->name, "\n" },
+);
+
+action Edit => (
+    label => 'Edit',
+    tooltip => 'Edit',
+    icon => 'gtk-edit',
+    code => sub { print 'action: ' . $_[0]->name, "\n"  },
+);
+
+action Delete => (
+    label => 'Delete',
+    tooltip => 'Delete',
+    icon => 'gtk-delete',
+    code => sub { print 'action: ' . $_[0]->name, "\n"  },
+);
 
 widget 'window' => (
     is => 'ro',
@@ -43,13 +65,9 @@ widget 'toolbar' => (
 
 widget 'ui_manager' => (
     is => 'rw',
-    files => [ 't/001_gapp/basic.ui' ],
+    files => [ 'examples/basic.ui' ],
     traits => [ qw/GtkUIManager/ ],
-    actions => [
-        [new      => 'New'    , 'New'    , 'gtk-new'     ],
-        [edit     => 'Edit'   , 'Edit'   , 'gtk-edit'    ],
-        [delete   => 'Delete' , 'Delete' , 'gtk-delete'  ],
-    ],
+    actions => [ New, Edit, Delete ],
     lazy => 1,
 );
 
@@ -63,6 +81,10 @@ widget 'status_icon' => (
         $_[1]->set_visible( 1 );
     }
 );
+
+
+
+
 
 
 

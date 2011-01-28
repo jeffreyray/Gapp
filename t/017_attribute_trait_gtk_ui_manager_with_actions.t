@@ -12,15 +12,14 @@ use MooseX::Method::Signatures;
 
 widget 'ui_manager' => (
     is => 'rw',
-    files => [ 't/001_gapp/basic.ui' ],
+    files => [ 't/basic.ui' ],
     traits => [ qw/GtkUIManager/ ],
-    build => '_build_ui_manager',
+    actions => [
+        [new      => 'New'    , 'New'    , 'gtk-new'     ],
+        [edit     => 'Edit'   , 'Edit'   , 'gtk-edit'    ],
+        [delete   => 'Delete' , 'Delete' , 'gtk-delete'  ],
+    ]
 );
-
-
-method _build_ui_manager ( $w ) {
-    ok $w, 'calling build method';
-}
 
 package main;
 
@@ -29,5 +28,7 @@ ok $o, 'created object';
 
 ok $o->ui_manager, 'created action group widget';
 isa_ok $o->ui_manager, 'Gtk2::UIManager';
+
+
 
 1;

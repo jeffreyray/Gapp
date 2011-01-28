@@ -8,17 +8,15 @@ use Test::More;
 use Gapp;
 use MooseX::Method::Signatures;
 
+use lib 'lib', 't/lib';
+use Gapp::Actions::Test qw( New Edit Delete );
 
 
 widget 'ui_manager' => (
     is => 'rw',
-    files => [ 't/001_gapp/basic.ui' ],
+    files => [ 't/basic.ui' ],
     traits => [ qw/GtkUIManager/ ],
-    actions => [
-        [new      => 'New'    , 'New'    , 'gtk-new'     ],
-        [edit     => 'Edit'   , 'Edit'   , 'gtk-edit'    ],
-        [delete   => 'Delete' , 'Delete' , 'gtk-delete'  ],
-    ]
+    actions => [New, Edit, Delete],
 );
 
 package main;

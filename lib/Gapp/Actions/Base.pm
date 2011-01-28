@@ -1,56 +1,95 @@
 package Gapp::Actions::Base;
-
 use Moose;
-use Sub::Exporter qw( build_exporter );
+
+use Carp::Clan                      qw( ^Gapp::Actions );
+use Gapp::Actions::Util;
+use Gapp::Meta::Action::Undefined;
+use Gapp::Meta::Action::Registry;
+use Sub::Exporter                   qw( build_exporter );
+use Moose::Util::TypeConstraints;
+
 use namespace::clean -except => [qw( meta )];
 
-use Gapp::Meta::ActionSet;
+my $UndefMsg = q{Unable to find action '%s' in library '%s'};
 
 sub import {
     my ($class, @args) = @_;
-    my $callee = caller;
+
+    # filter or create options hash for S:E
+    my $options = (@args and (ref($args[0]) eq 'HASH')) ? $args[0] : undef;
+    unless ($options) {
+        $options = {foo => 23};
+        unshift @args, $options;
+    }
+
+    # all actions known to us
+    my @actions = $class->action_names;
+
+    # determine the wrapper, -into is supported for compatibility reasons
+    my $wrapper = $options->{ -wrapper } || 'Gapp::Actions';
+    $args[0]->{into} = $options->{ -into } 
+        if exists $options->{ -into };
+
+    my (%ex_spec, %ex_util);
     
-    my  @actions = $class->Action->action_list;
-    print $class, '-', $callee, '-', @actions, "\n";
-    
-    my @exports;
-    for my $name ( @actions ) {
-        push @exports, 
-            $name,
+    # create the functions for export
+    for my $action_short (@actions) {
+        # the action itself
+        push @{ $ex_spec{exports} }, 
+            $action_short,
             sub { 
-                print "Return $name", "\n";
-                return $name;
+                bless $wrapper->action_export_generator($class, $action_short),
+                    'Gapp::Actions::EXPORTED_ACTION';
+            };
+            
+        push @{ $ex_spec{exports} }, 
+            'do_' . $action_short,
+            sub { 
+                $wrapper->perform_export_generator($class, $action_short)
             };
     }
+
+    # create S:E exporter and increase export level unless specified explicitly
+    my $exporter = build_exporter \%ex_spec;
+    $options->{into_level}++ 
+        unless $options->{into};
+        
+
+    # and on to the real exporter
+    my @new_args = (@args, map { 'do_' . $_ } @actions); #, keys %add);
+    return $class->$exporter(@new_args);
+}
+
+sub action_names {
+    my ( $class ) = @_;
+    return ACTION_REGISTRY( $class )->action_list
+}
+
+sub get_action {
+    my ($class, $name) = @_;
     
-    my $exporter = build_exporter { exports => \@exports };
-    #$callee->import( @args );
-    #$class->$exporter( @args );
-    return 1;
+    croak "Unknown action '$name' in library '$class'"   unless
+        $class->has_action( $name );
+
+    # return real name of the action
+    return ACTION_REGISTRY( $class )->action( $name );
 }
 
-{
-    my %Actions;
+sub declare_action {
+    my ( $class, $name ) = @_;
+    return if ACTION_REGISTRY( $class )->has_action( $name );
 
-    sub Action {
-        my $caller = shift;
-        return $Actions{$caller} ||= Gapp::Meta::ActionSet->new;
-    }
+    my $action = Gapp::Meta::Action::Undefined->new( name => $name );
+    ACTION_REGISTRY( $class )->add_action( $action );
 }
 
-sub Delete {
-    
+sub has_action {
+    my ( $class, $name ) = @_;
+    return ACTION_REGISTRY( $class )->has_action( $name );
 }
 
-sub perform {
-    my $class = shift;
-    $class->Action->perform( @_ );
-}
 
-sub retrieve {
-    my $class = shift;
-    $class->Action->action( @_ );
-}
+
 
 
 1;

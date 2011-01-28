@@ -7,7 +7,7 @@ use MooseX::Method::Signatures;
 
 use MooseX::Types::Moose qw( CodeRef HashRef Object Str  );
 
-has 'label' => (
+has [qw( label name)] => (
     is => 'rw',
     isa => Str,
     default => '',
@@ -34,12 +34,6 @@ has 'code' => (
     predicate => 'has_code',
 );
 
-
-
-method add_action ( Str $name, Object|HashRef $action ) {
-    $action = Storm::Meta::Action->new( $action ) if ! is_Object($action);
-    $action->_set_action( $name, $action );
-}
 
 method perform ( @args ) {
     &{$self->code}( $self, @args ) if $self->has_code;
