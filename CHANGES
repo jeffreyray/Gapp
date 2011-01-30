@@ -1,5 +1,8 @@
 Changes for Gapp
 
+0.03.2
+- added handle "hide" to GtkDefaultWidget trait
+
 0.03.1
 - dummy tooltip, icon, code, label attributes added to ::Meta::Action::Undef
 - GtkUIManager only uses stock-icon option if it is set
