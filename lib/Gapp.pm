@@ -2,7 +2,7 @@ package Gapp;
 
 use Gtk2 '-init';
 
-our $VERSION = 0.03.1;
+our $VERSION = 0.04;
 our $AUTHORITY = 'cpan:JHALLOCK';
 
 use Moose ();
@@ -17,8 +17,10 @@ use Gapp::Meta::Attribute::Trait::GtkActionGroup;
 use Gapp::Meta::Attribute::Trait::GtkButton;
 use Gapp::Meta::Attribute::Trait::GtkImage;
 use Gapp::Meta::Attribute::Trait::GtkLabel;
+use Gapp::Meta::Attribute::Trait::GtkListStore;
 use Gapp::Meta::Attribute::Trait::GtkStatusIcon;
 use Gapp::Meta::Attribute::Trait::GtkTextView;
+use Gapp::Meta::Attribute::Trait::GtkTreeView;
 use Gapp::Meta::Attribute::Trait::GtkToolbar;
 use Gapp::Meta::Attribute::Trait::GtkUIManager;
 use Gapp::Meta::Attribute::Trait::GtkWidget;

@@ -1,5 +1,11 @@
 Changes for Gapp
 
+0.04
+- added GtkListStore trait
+- added GtkTreeView trait
+- added GtkViewColumn meta object
+- added ::Model::SimpleList custom model
+
 0.03.2
 - added handle "hide" to GtkDefaultWidget trait
 
