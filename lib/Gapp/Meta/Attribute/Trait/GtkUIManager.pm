@@ -73,23 +73,6 @@ before '_process_options' => sub {
                         });
                     }
                 }
-    
-                #$gtk_action->signal_connect( activate => sub {
-                #    my ( $w, @args ) = @_;
-                #    $action->perform( $self, $w, @args );
-                #});
-                
-                #elsif ( is_ArrayRef( $action ) ) {
-                #    my ( $action_name, $label, $tooltip, $stockid, $delegate ) = ( @$action );
-                #    $gtk_action = Gtk2::Action->new( 
-                #        name => $action_name,
-                #        label => $label,
-                #        tooltip => $tooltip,
-                #        'stock-id' => $stockid,
-                #    );
-                #}
-                #
-
                 
             }
             
