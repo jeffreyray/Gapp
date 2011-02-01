@@ -1,5 +1,8 @@
 Changes for Gapp
 
+0.04.2
+- added support for binding to cell renderers in GtkTreeView build functions
+
 0.04.1
 - added support for different cell renderers in GtkTreeView
 

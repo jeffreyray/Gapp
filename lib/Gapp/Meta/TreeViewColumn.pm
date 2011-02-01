@@ -62,6 +62,8 @@ sub gtk_widget  {
     
     my $w = $self->class->new_with_attributes( $self->label, $r );
     
+    $w->{renderer} = $r;
+    
     if ( defined $self->data_column && ! $self->display ) {
         
         $w->add_attribute( $r, $self->property => $self->data_column );

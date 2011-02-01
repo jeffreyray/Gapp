@@ -26,7 +26,7 @@ widget 'tree_view' => (
     is => 'ro',
     traits => [ 'GtkTreeView' ],
     columns => [
-        [ 'fixed'      , 'Fixed?'     , 'toggle', 0, undef, { build_renderer => \&_build_toggle } ],
+        [ 'fixed'      , 'Fixed?'     , 'toggle', 0, undef, ],
         [ 'bug_number' , 'Bug Number' , 'text', 1, undef],
         [ 'severity'   , 'Severity'   , 'text', 2, undef],
         [ 'description', 'Description', 'text', 3, undef],
@@ -35,37 +35,28 @@ widget 'tree_view' => (
         my ( $self, $w ) = @_;
         $w->set_model( $self->list_store );
         
-        $w->{renderer}[0]->signal_connect(
-            
+        # this is kind of hackish, need a better way to implement
+        
+        $w->{columns}{fixed}{renderer}->signal_connect(
+            toggled =>  \&_do_toggled,  [$self->list_store, 0]
         );
         
         
-        
-        $w->{column}{fixed}->signal_connect
     },
     lazy => 1,
 );
 
-sub _build_toggle {
-    my $self = ( @_ );
+sub _do_toggled {   
+    my ( $cell, $path_str, $args ) = @_;
+    my ( $model, $col ) = $args ? @$args : ();
+    my $path = Gtk2::TreePath->new( $path_str );
+    my $iter = $model->get_iter( $path );
     
-    my $cell = Gtk2::CellRendererToggle->new;
-    $cell->signal_connect( toggled =>  sub {
-        
-        my ( $cell, $path, $model ) = @_;
-        $path = Gtk2::TreePath->new( $path );
-        
-        my $iter = $model->get_iter( $path );
-        
-        my ( $fixed ) = $model->get( $iter, 0 );
-        
-        $fixed ^= 1;
-        
-        $model->set( $iter, 0, $fixed );
-        
-    }, $self->tree_view->get_model);
+    my ( $value ) = $model->get( $iter, $col );
+    $value ^= 1;
     
-    return $cell;
+    $model->set( $iter, $col, $value );
+    
 }
 
 
