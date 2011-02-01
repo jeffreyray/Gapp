@@ -15,6 +15,12 @@ has 'class' => (
     default => 'Gtk2::TreeViewColumn',
 );
 
+has 'name' => (
+    is => 'rw',
+    isa => Str,
+    default => '',
+);
+
 has 'label' => (
     is => 'rw',
     isa => Str,
@@ -37,6 +43,12 @@ has 'display' => (
     isa => Str|CodeRef|Undef,
 );
 
+has 'property' => (
+    is => 'rw',
+    isa => Str,
+    default => 'markup',
+);
+
 has 'data_column' => (
     is => 'rw',
     isa => Int|Undef,
@@ -52,7 +64,7 @@ sub gtk_widget  {
     
     if ( defined $self->data_column && ! $self->display ) {
         
-        $w->add_attribute( $r, markup => $self->data_column );
+        $w->add_attribute( $r, $self->property => $self->data_column );
         
     }
     elsif ( $self->display ) {
@@ -72,7 +84,7 @@ sub gtk_widget  {
                 $value = $_->$method;
             }
             
-            $renderer->set_property( markup => $value );
+            $renderer->set_property( $self->property => $value );
             
         });
         

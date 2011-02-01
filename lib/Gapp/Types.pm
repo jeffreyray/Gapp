@@ -12,29 +12,34 @@ class_type MetaTreeViewColumn,
 coerce MetaTreeViewColumn,
     from HashRef,
     via { 'Gapp::Meta::TreeViewColumn'->new( %$_ ) };
-
-coerce MetaTreeViewColumn,
-    from ArrayRef,
-    via {
-        my $input = $_;
-        my %args;
-        $args{label} = $input->[0] if defined $input->[0];
+{
+    my %RENDERER = (
+        'text'   => [ 'Gtk2::CellRendererText', 'text' ],
+        'markup' => [ 'Gtk2::CellRendererText', 'markup' ],
+        'toggle' => [ 'Gtk2::CellRendererToggle', 'active' ],
+    );
         
-        # determine how to display the content
-        if ( defined $input->[1] ) {
+    coerce MetaTreeViewColumn,
+        from ArrayRef,
+        via {
+            my $input = $_;
+            my %args;
+            $args{label} = $input->[1] if defined $input->[1];
             
-            if ( is_Int( $input->[1] ) ) {
-                $args{data_column} = $input->[1];
-            }
-            elsif ( is_Str( $input->[1] ) || is_CodeRef( $input->[1] ) ) {
-                $args{data_column} = 0;
-                $args{display} = $input->[1];
+            my $renderer = $input->[2];
+            $args{renderer_class} = $RENDERER{ $renderer }[0];
+            $args{property} = $RENDERER{ $renderer }[1];
+            
+            $args{data_column} = $input->[3];
+            
+            # determine how to display the content
+            if ( defined $input->[4] ) {
+                $args{display} = $input->[4];
             }
             
-        }
-        
-        %args = (%args, %{ $input->[2] }) if defined $input->[2];
-        return 'Gapp::Meta::TreeViewColumn'->new( %args );
-    };
+            %args = (%args, %{ $input->[5] }) if defined $input->[5];
+            return 'Gapp::Meta::TreeViewColumn'->new( %args );
+        };
+}
 
 1;

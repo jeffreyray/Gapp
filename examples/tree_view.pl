@@ -14,7 +14,7 @@ use MooseX::Method::Signatures;
 widget 'list_store' => (
     is => 'rw',
     traits => [qw( GtkListStore )],
-    columns => [qw( Glib::String Glib::String Glib::String Glib::String )],
+    columns => [qw( Glib::Boolean Glib::String Glib::String Glib::String )],
     build => sub {
         my ( $self, $w ) = @_;
         my $iter = $w->append;
@@ -26,17 +26,48 @@ widget 'tree_view' => (
     is => 'ro',
     traits => [ 'GtkTreeView' ],
     columns => [
-        [ 'Fixed?'     , 0 ],
-        [ 'Bug Number' , 1 ],
-        [ 'Severity'   , 2 ],
-        [ 'Description', 3 ],
+        [ 'fixed'      , 'Fixed?'     , 'toggle', 0, undef, { build_renderer => \&_build_toggle } ],
+        [ 'bug_number' , 'Bug Number' , 'text', 1, undef],
+        [ 'severity'   , 'Severity'   , 'text', 2, undef],
+        [ 'description', 'Description', 'text', 3, undef],
     ],
     build => sub {
         my ( $self, $w ) = @_;
         $w->set_model( $self->list_store );
+        
+        $w->{renderer}[0]->signal_connect(
+            
+        );
+        
+        
+        
+        $w->{column}{fixed}->signal_connect
     },
     lazy => 1,
 );
+
+sub _build_toggle {
+    my $self = ( @_ );
+    
+    my $cell = Gtk2::CellRendererToggle->new;
+    $cell->signal_connect( toggled =>  sub {
+        
+        my ( $cell, $path, $model ) = @_;
+        $path = Gtk2::TreePath->new( $path );
+        
+        my $iter = $model->get_iter( $path );
+        
+        my ( $fixed ) = $model->get( $iter, 0 );
+        
+        $fixed ^= 1;
+        
+        $model->set( $iter, 0, $fixed );
+        
+    }, $self->tree_view->get_model);
+    
+    return $cell;
+}
+
 
 widget 'window' => (
     is => 'ro',

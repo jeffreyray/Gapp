@@ -1,5 +1,8 @@
 Changes for Gapp
 
+0.04.1
+- added support for different cell renderers in GtkTreeView
+
 0.04
 - added GtkListStore trait
 - added GtkTreeView trait

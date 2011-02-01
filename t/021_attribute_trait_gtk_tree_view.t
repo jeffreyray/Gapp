@@ -12,9 +12,12 @@ widget 'tree_view' => (
     is => 'rw',
     traits => [qw( GtkTreeView )],
     columns => [
-        { label => 'name', display => 'name' }
+        { label => 'name', display => 'name' },
+        [ 'column_label', 'text', 1, undef ],
     ],
 );
+
+
 
 package main;
 
