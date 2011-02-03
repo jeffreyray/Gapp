@@ -43,7 +43,7 @@ widget 'tree_view' => (
         
         
     },
-    lazy => 1,
+    #lazy => 1,
 );
 
 sub _do_toggled {   

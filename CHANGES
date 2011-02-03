@@ -1,5 +1,8 @@
 Changes for Gapp
 
+0.05
+- added GtkMenu trait
+
 0.04.2
 - added support for binding to cell renderers in GtkTreeView build functions
 

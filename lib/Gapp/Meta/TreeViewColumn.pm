@@ -75,7 +75,7 @@ sub gtk_widget  {
             
             my ( $col, $renderer, $model, $iter, @args ) = @_;
             
-            local $_ = $model->get( $iter, $self->data_column ) if $self->data_column;
+            local $_ = $model->get( $iter, $self->data_column ) if defined $self->data_column;
             
             my $value;
             if ( is_CodeRef( $self->display ) ) {

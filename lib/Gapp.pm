@@ -18,6 +18,7 @@ use Gapp::Meta::Attribute::Trait::GtkButton;
 use Gapp::Meta::Attribute::Trait::GtkImage;
 use Gapp::Meta::Attribute::Trait::GtkLabel;
 use Gapp::Meta::Attribute::Trait::GtkListStore;
+use Gapp::Meta::Attribute::Trait::GtkMenu;
 use Gapp::Meta::Attribute::Trait::GtkStatusIcon;
 use Gapp::Meta::Attribute::Trait::GtkTextView;
 use Gapp::Meta::Attribute::Trait::GtkTreeView;
@@ -25,6 +26,8 @@ use Gapp::Meta::Attribute::Trait::GtkToolbar;
 use Gapp::Meta::Attribute::Trait::GtkUIManager;
 use Gapp::Meta::Attribute::Trait::GtkWidget;
 use Gapp::Meta::Attribute::Trait::GtkWindow;
+
+use Gapp::Model::SimpleList;
 
 Moose::Exporter->setup_import_methods(
     #as_is => ['method'],

@@ -13,7 +13,7 @@ widget 'tree_view' => (
     traits => [qw( GtkTreeView )],
     columns => [
         { label => 'name', display => 'name' },
-        [  'column_label', 'text', 1, undef ],
+        [  'name', 'column_label', 'text', 1, undef ],
     ],
 );
 
