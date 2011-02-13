@@ -2,7 +2,7 @@ package Gapp;
 
 use Gtk2 '-init';
 
-our $VERSION = 0.05;
+our $VERSION = 0.07;
 our $AUTHORITY = 'cpan:JHALLOCK';
 
 use Moose ();
@@ -12,8 +12,11 @@ use Moose::Exporter;
 use MooseX::Method::Signatures;
 use MooseX::Types::Moose qw( ArrayRef );
 
+use Gapp::Gtk2;
+use Gapp::Meta::GtkAssistantPage;
 use Gapp::Meta::Attribute::Trait::DefaultWidget;
 use Gapp::Meta::Attribute::Trait::GtkActionGroup;
+use Gapp::Meta::Attribute::Trait::GtkAssistant;
 use Gapp::Meta::Attribute::Trait::GtkButton;
 use Gapp::Meta::Attribute::Trait::GtkImage;
 use Gapp::Meta::Attribute::Trait::GtkLabel;

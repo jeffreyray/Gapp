@@ -1,5 +1,20 @@
 Changes for Gapp
 
+0.07
+- added ::Gtk2
+- added ::Gtk2::OComboBox
+- added ::Gtk2::FormFactory
+- added ::Gtk2::FormFactory::ComboBox
+- added ::Gtk2::List::Simple
+
+0.06.1
+- GtkAssistant can construct pages using a custom class in an array coercion
+
+0.06
+- added GtkAssistant trait
+- added GtkAssistantPage meta-object
+- added handle "destroy" to GtkDefaultWidget trait
+
 0.05
 - added GtkMenu trait
 

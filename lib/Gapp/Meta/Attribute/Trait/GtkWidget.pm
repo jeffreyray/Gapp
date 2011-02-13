@@ -20,7 +20,7 @@ has 'properties' => (
 
 has 'signal_connect' => (
     is => 'rw',
-    isa => HashRef,
+    isa => ArrayRef,
 );
 
 has 'build' => (
@@ -69,14 +69,13 @@ before '_process_options' => sub {
             # connect to signals
             my $sigmap = $att->signal_connect;
             if ($sigmap) {
-                for my $signal ( keys %{ $att->signal_connect } ) {
+                for my $signal (@{ $att->signal_connect } ) {
+                    my ( $name, $function, @args ) = @$signal;
                     
-                    my $function = $sigmap->{ $signal };
-                    
-                    $w->signal_connect( $signal => sub {
+                    $w->signal_connect( $name => sub {
                         my $w = shift;
                         $self->$function( $w, [ @_ ] )
-                    } );
+                    }, @args );
                     
                 }
             }

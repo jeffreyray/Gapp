@@ -6,7 +6,14 @@ before '_process_options' => sub {
     my $name    = shift;
     my $options = shift;
 
-    $options->{handles} = [qw/hide show show_all/],
+    $options->{handles} = [qw(
+        destroy
+        hide
+        show
+        show_all
+        signal_connect
+        signal_emit
+    )],
 };
 
 

@@ -19,7 +19,8 @@ widget 'list_store' => (
         my ( $self, $w ) = @_;
         my $iter = $w->append;
         $w->set( $iter, 0 => 0, 1 => 60489, 2 => 'Critical', 3 => 'Bug description' );
-    }
+    },
+    lazy => 1,
 );
 
 widget 'tree_view' => (
@@ -43,7 +44,7 @@ widget 'tree_view' => (
         
         
     },
-    #lazy => 1,
+    lazy => 1,
 );
 
 sub _do_toggled {   
@@ -75,6 +76,7 @@ widget 'window' => (
         $vbox->pack_start( $self->tree_view, 1, 1, 0 );
         $w->add( $vbox );
     },
+    lazy => 1,
 );
 
 
