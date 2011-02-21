@@ -6,7 +6,7 @@ package My::App::Object;
 
 use Test::More;
 
-use Gapp;
+use Gapp::Moose::Gtk2;
 
 widget 'window' => (
     is => 'rw',

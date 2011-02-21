@@ -6,7 +6,7 @@ package My::App::Object;
 
 use Test::More;
 
-use Gapp;
+use Gapp::Moose::Gtk2;
 use MooseX::Method::Signatures;
 
 widget 'window' => (
@@ -15,9 +15,9 @@ widget 'window' => (
     properties =>  {
         title => 'Gapp Window',
     },
-    signal_connect => {
-        'delete-event' => sub { Gtk2->main_quit },
-    },
+    signal_connect => [
+        ['delete-event' => sub { Gtk2->main_quit }],
+    ],
     build => '_build_window',
 );
 

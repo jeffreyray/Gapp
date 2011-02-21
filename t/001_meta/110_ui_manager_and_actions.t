@@ -5,7 +5,7 @@ use strict;
 package My::App::Object;
 use Test::More;
 
-use Gapp;
+use Gapp::Moose::Gtk2;
 use MooseX::Method::Signatures;
 
 use lib 'lib', 't/lib';

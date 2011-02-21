@@ -1,5 +1,5 @@
 package Gapp::WizardPage;
-use Gapp;
+use Gapp::Moose::Gtk2;
 
 
 use Gapp::Types qw( GtkWidget );

@@ -10,7 +10,7 @@ use Moose;
 has 'name' => ( is => 'rw' );
 
 package My::Application;
-use Gapp;
+use Gapp::Moose::Gtk2;
 
 widget 'window' => (
     is => 'ro',
@@ -18,9 +18,9 @@ widget 'window' => (
     properties => {
         title => 'Gapp Application',
     },
-    signal_connect => {
+    signal_connect => [
         'delete-event' => sub { Gtk2->main_quit },
-    },
+    ],
     build => sub {
         my ( $self, $w ) = @_;
         $w->add( $self->combo );

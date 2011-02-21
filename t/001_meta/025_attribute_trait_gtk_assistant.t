@@ -11,7 +11,7 @@ extends 'Gapp::Meta::GtkAssistantPage';
 package Foo;
 use Test::More;
 
-use Gapp;
+use Gapp::Moose::Gtk2;
 use MooseX::Method::Signatures;
 
 widget 'assistant' => (

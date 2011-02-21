@@ -7,7 +7,7 @@ use Gtk2 '-init';
 
 package HelloWorld;
 
-use Gapp;
+use Gapp::Moose::Gtk2;
 use MooseX::Method::Signatures;
 
 widget 'window' => (
@@ -16,9 +16,9 @@ widget 'window' => (
     properties => {
         title => 'Gapp Application',
     },
-    signal_connect => {
-        'delete-event' => sub { Gtk2->main_quit },
-    },
+    signal_connect => [
+        ['delete-event' => sub { Gtk2->main_quit }],
+    ],
     build => '_build_window',
 );
 

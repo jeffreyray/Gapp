@@ -7,7 +7,7 @@ use lib qw( lib examples/lib );
 
 package My::Assistant;
 
-use Gapp;
+use Gapp::Moose::Gtk2;
 use MooseX::Method::Signatures;
 
 widget 'simple_assistant' => (
@@ -16,12 +16,12 @@ widget 'simple_assistant' => (
     properties => {
         title => 'Assistant',
     },
-    signal_connect => {
-        'delete-event' => sub { $_[0]->destroy },
-        'close' =>  sub { $_[0]->destroy },
-        'cancel' =>  sub { $_[0]->destroy },
-        'destroy' => sub { Gtk2->main_quit },
-    },
+    signal_connect => [
+        ['delete-event' => sub { $_[0]->destroy }],
+        ['close' =>  sub { $_[0]->destroy }],
+        ['cancel' =>  sub { $_[0]->destroy }],
+        ['destroy' => sub { Gtk2->main_quit }],
+    ],
     pages => [
         [ 'intro', 'Intro', 'intro', 'gtk-help', \&_build_intro_page ],
         [ 'content', 'Content', 'content', 'gtk-help', \&_build_content_page ],

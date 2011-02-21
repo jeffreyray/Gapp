@@ -7,7 +7,7 @@ use lib qw( lib examples/lib );
 
 package MyApplicationObject;
 
-use Gapp;
+use Gapp::Moose::Gtk2;
 use Gapp::Actions -declare => [qw( New Edit Delete )];
 use MooseX::Method::Signatures;
 
@@ -38,9 +38,9 @@ widget 'window' => (
     properties => {
         title => 'Gapp Application',
     },
-    signal_connect => {
-        'delete-event' => sub { Gtk2->main_quit },
-    },
+    signal_connect => [
+        ['delete-event' => sub { Gtk2->main_quit }],
+    ],
     build => sub {
         my ( $self, $w ) = @_;
         my $vbox = Gtk2::VBox->new;

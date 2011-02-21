@@ -1,12 +1,25 @@
 package Gapp::Types;
 
 use MooseX::Types -declare => [qw(
+GappAction
+GappUIManager
 GtkWidget
 MetaGtkAssistantPage
 MetaTreeViewColumn
 )];
 
 use MooseX::Types::Moose qw( ArrayRef ClassName CodeRef HashRef Int );
+
+class_type GappAction,
+    { class => 'Gapp::Action' };
+    
+class_type GappUIManager,
+    { class => 'Gapp::UIManager' };
+
+coerce GappUIManager,
+    from HashRef,
+    via { 'Gapp::UIManager'->new( %$_ ) };
+    
 
 class_type GtkWidget,
     { class => 'Gtk2::Widget' };
