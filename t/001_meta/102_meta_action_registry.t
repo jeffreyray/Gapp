@@ -4,10 +4,10 @@ use warnings;
 
 use Test::More qw( no_plan );
 
-use Gapp::Meta::Action;
-use_ok 'Gapp::Meta::Action::Registry';
+use Gapp::Action;
+use_ok 'Gapp::Action::Registry';
 
-my $action = Gapp::Meta::Action->new(
+my $action = Gapp::Action->new(
     name => 'New',
     label => 'New',
     icon => 'gtk-new',
@@ -17,7 +17,7 @@ my $action = Gapp::Meta::Action->new(
     }
 );
 
-my $registry = Gapp::Meta::Action::Registry->new;
+my $registry = Gapp::Action::Registry->new;
 $registry->add_action( $action );
 ok $registry->has_action( 'New' ), 'action added to registry';
 ok $registry->action( 'New' )->name, 'retrieved action';

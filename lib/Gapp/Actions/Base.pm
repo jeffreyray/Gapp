@@ -3,8 +3,8 @@ use Moose;
 
 use Carp::Clan                      qw( ^Gapp::Actions );
 use Gapp::Actions::Util;
-use Gapp::Meta::Action::Undefined;
-use Gapp::Meta::Action::Registry;
+use Gapp::Action::Undefined;
+use Gapp::Action::Registry;
 use Sub::Exporter                   qw( build_exporter );
 use Moose::Util::TypeConstraints;
 
@@ -79,7 +79,7 @@ sub declare_action {
     my ( $class, $name ) = @_;
     return if ACTION_REGISTRY( $class )->has_action( $name );
 
-    my $action = Gapp::Meta::Action::Undefined->new( name => $name );
+    my $action = Gapp::Action::Undefined->new( name => $name );
     ACTION_REGISTRY( $class )->add_action( $action );
 }
 

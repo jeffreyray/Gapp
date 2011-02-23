@@ -5,9 +5,9 @@ use warnings;
 
 use Test::More qw( no_plan );
 
-use_ok 'Gapp::Meta::Action';
+use_ok 'Gapp::Action';
 
-my $action = Gapp::Meta::Action->new(
+my $action = Gapp::Action->new(
     name => 'New',
     label => 'New',
     icon => 'gtk-new',

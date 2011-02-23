@@ -4,6 +4,8 @@ use warnings;
 
 package MyApplicationObject;
 
+use Gtk2 '-init';
+
 use Gapp;
 use Gapp::Moose;
 use Gapp::Actions -declare => [qw( New Edit Delete )];
@@ -33,6 +35,8 @@ action Delete => (
 my $w = Gapp::Window->new(
     content => [
         Gapp::Toolbar->new(
+            style => 'icons',
+            icon_size => 'dnd',
             content => [
                 Gapp::ToolButton->new( action => New ),
                 Gapp::ToolButton->new( action => Edit ),

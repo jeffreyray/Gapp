@@ -77,7 +77,7 @@ sub _apply_signals {
     for my $s ( @{ $self->signal_connect } ) {
         my ( $name, $action, @args ) = @$s;
         use Scalar::Util qw( blessed );
-        $action = $action->code if blessed $action && $action->isa( 'Gapp::Meta::Action' );
+        $action = $action->code if blessed $action && $action->isa( 'Gapp::Action' );
         
         if ( is_GappAction( $action ) ) {
             $self->gtk_widget->signal_connect( $name => sub {

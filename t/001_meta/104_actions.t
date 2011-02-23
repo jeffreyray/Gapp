@@ -8,7 +8,7 @@ use Test::More qw( no_plan );
 
 use Gapp::Actions::Test qw( New Edit Delete );
 
-isa_ok (New, 'Gapp::Meta::Action');
+isa_ok (New, 'Gapp::Action');
 
 my $x = 0;
 do_New( \$x );

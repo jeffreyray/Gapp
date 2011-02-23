@@ -1,4 +1,4 @@
-package Gapp::Meta::Action::Registry;
+package Gapp::ActionSet;
 
 use Moose;
 use MooseX::SemiAffordanceAccessor;
@@ -6,6 +6,8 @@ use MooseX::StrictConstructor;
 use MooseX::Method::Signatures;
 
 use MooseX::Types::Moose qw( Object HashRef );
+
+use Gapp::Action;
 
 has 'actions' => (
     is => 'bare',
@@ -21,9 +23,9 @@ has 'actions' => (
     }
 );
 
-method add_action ( $action ) {
-    $action = Gapp::Meta::Action->new( $action ) if ! is_Object($action);
-    $self->_set_action( $action->name, $action );
+method add_action ( Str $name, Object|HashRef $action ) {
+    $action = Gapp::Action->new( $action ) if ! is_Object($action);
+    $self->_set_action( $name, $action );
 }
 
 method perform ( Str $action, @args ) {

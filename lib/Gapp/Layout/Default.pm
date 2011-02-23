@@ -46,6 +46,47 @@ build 'Gapp::Image', sub {
     }
 };
 
+# ImageMenuItem
+
+build 'Gapp::ImageMenuItem', sub {
+    my ( $l, $w ) = @_;
+    my $gtkw = $w->gtk_widget;
+    $gtkw->get_child->set_text( $w->label ) if $w->label;
+    $gtkw->set_image( Gtk2::Image->new_from_stock( $w->icon, 'menu' ) ) if $w->icon;
+};
+
+add 'Gapp::MenuItem', to 'Gapp::Menu', sub {
+    my ( $l, $w, $c ) = @_;
+    $c->gtk_widget->append( $w->gtk_widget );
+};
+
+
+# MenuItem
+
+build 'Gapp::MenuItem', sub {
+    my ( $l, $w ) = @_;
+    $w->gtk_widget->get_child->set_text( $w->label ) if $w->label;
+};
+
+add 'Gapp::MenuItem', to 'Gapp::MenuShell', sub {
+    my ( $l, $w, $c ) = @_;
+    $c->gtk_widget->append( $w->gtk_widget );
+};
+
+# Toolbar
+build 'Gapp::Toolbar', sub {
+    my ( $l, $w ) = @_;
+    $w->gtk_widget->set_icon_size( $w->icon_size ) if $w->icon_size;
+};
+
+# ToolItem
+
+add 'Gapp::ToolItem', to 'Gapp::Toolbar', sub {
+    my ($l,  $w, $c) = @_;
+    $c->gtk_widget->insert( $w->gtk_widget, -1 );
+};
+
+
 # ToolButton
 
 build 'Gapp::ToolButton', sub {
@@ -77,6 +118,11 @@ add 'Gapp::Widget', to 'Gapp::Dialog', sub {
     my ($l,  $w, $c ) = @_;
     $c->gtk_widget->vbox->pack_start( $w->gtk_widget, $w->expand, $w->fill, $w->padding );
     $w->gtk_widget->show;
+};
+
+add 'Gapp::Widget', to 'Gapp::Window', sub {
+    my ($l,  $w, $c ) = @_;
+    $c->gtk_widget->add( $w->gtk_widget );
 };
 
 # Window

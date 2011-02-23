@@ -1,4 +1,4 @@
-package Gapp::Meta::Action::Undefined;
+package Gapp::Action::Undefined;
 
 use Moose;
 use MooseX::SemiAffordanceAccessor;

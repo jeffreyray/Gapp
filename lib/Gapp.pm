@@ -1,5 +1,7 @@
 package Gapp;
 
+our $VERSION = 0.08;
+
 use Gapp::Action;
 use Gapp::ActionGroup;
 use Gapp::Dialog;
@@ -7,6 +9,10 @@ use Gapp::HBox;
 use Gapp::VBox;
 use Gapp::Image;
 use Gapp::Label;
+use Gapp::Menu;
+use Gapp::MenuItem;
+use Gapp::ImageMenuItem;
+use Gapp::MenuToolButton;
 use Gapp::UIManager;
 use Gapp::Toolbar;
 use Gapp::ToolButton;

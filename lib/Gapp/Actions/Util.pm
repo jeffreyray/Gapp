@@ -6,8 +6,8 @@ use Scalar::Util qw( blessed reftype );
 use Moose::Exporter;
 use Scalar::Util 'blessed';
 
-use Gapp::Meta::Action;
-use Gapp::Meta::Action::Registry;
+use Gapp::Action;
+use Gapp::Action::Registry;
 
 Moose::Exporter->setup_import_methods(
     with_caller => [
@@ -23,7 +23,7 @@ Moose::Exporter->setup_import_methods(
 
     sub ACTION_REGISTRY {
         my $class = shift;
-        return $REGISTRY{$class} ||= Gapp::Meta::Action::Registry->new;
+        return $REGISTRY{$class} ||= Gapp::Action::Registry->new;
     }
 }
 
@@ -34,7 +34,7 @@ sub action {
     
     my %p = ref $_[0] eq 'HASH' ? %{$_[0]} : @_;
     
-    my $action = Gapp::Meta::Action->new( name => $name, %p );   
+    my $action = Gapp::Action->new( name => $name, %p );   
     ACTION_REGISTRY( $caller )->add_action( $action );
 
     return 1;

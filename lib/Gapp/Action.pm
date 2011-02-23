@@ -37,7 +37,7 @@ has 'code' => (
 
 sub perform {
     my ( $self, @args ) = @_;
-    $self->code->( @args ) if $self->has_code;
+    $self->code->( $self, @args ) if $self->has_code;
 }
 
 sub create_gtk_action {
