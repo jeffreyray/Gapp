@@ -1,5 +1,8 @@
 Changes for Gapp
 
+0.08
+- massive refactor
+
 0.07
 - added ::Gtk2
 - added ::Gtk2::OComboBox

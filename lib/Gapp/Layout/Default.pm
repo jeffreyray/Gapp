@@ -1,5 +1,7 @@
 package Gapp::Layout::Default;
 use Gapp::Layout;
+use strict;
+use warnings;
 
 # Assistant
 
@@ -7,11 +9,28 @@ build 'Gapp::Assistant', sub {
     my ( $l, $w ) = @_;
 };
 
-# AssistantPage
+
+# Assistnat Page
+
+build 'Gapp::AssistantPage', sub {
+    my ( $l, $w ) = @_;
+};
 
 add 'Gapp::AssistantPage', to 'Gapp::Assistant', sub {
-   my ( $l, $widget, $container ) = @_;
+   my ( $l, $w, $c) = @_;
+   
+    my $gtk_w = $w->gtk_widget;
+    my $assistant = $c->gtk_widget;
+   
+    my $page_num = $assistant->append_page( $gtk_w );
+    $gtk_w->{pagenum} = $page_num;
+    $assistant->set_page_title     ($gtk_w, $w->title );
+    $assistant->set_page_side_image($gtk_w, $assistant->render_icon( $w->icon , 'dnd' ) ) if $w->icon;
+    $assistant->set_page_type      ($gtk_w, $w->type );
+    $assistant->set_page_complete  ($gtk_w, 1);
+    $assistant->{pages}{$w->name} = $gtk_w;  
 };
+
 
 # Dialog
 
@@ -98,6 +117,11 @@ build 'Gapp::ToolButton', sub {
 };
 
 # Widget
+
+add 'Gapp::Widget', to 'Gapp::AssistantPage', sub {
+    my ($l,  $w, $c ) = @_;
+    $c->gtk_widget->pack_start( $w->gtk_widget, $w->expand, $w->fill, $w->padding );
+};
 
 add 'Gapp::Widget', to 'Gapp::Container', sub {
     my ($l,  $w, $c) = @_;

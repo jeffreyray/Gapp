@@ -1,9 +1,11 @@
 package Gapp;
 
-our $VERSION = 0.08;
+our $VERSION = 0.09;
 
 use Gapp::Action;
 use Gapp::ActionGroup;
+use Gapp::Assistant;
+use Gapp::AssistantPage;
 use Gapp::Dialog;
 use Gapp::HBox;
 use Gapp::VBox;

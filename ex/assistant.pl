@@ -4,53 +4,45 @@ use strict;
 use warnings;
 
 
-package My::Assistant;
+use Gapp;
 
-use Gapp::Moose;
-use MooseX::SemiAffordanceAccessor;
-
-widget 'assistant' => (
-    is => 'rw',
-    traits => [qw( GappAssistant )],
-    design => {
-        title => 'Assistant',
-        content => [
-            [ 'intro', 'Intro', 'intro', 'gtk-help', '_build_intro_page' ],
-            [ 'content', 'Content', 'content', 'gtk-help', '_build_content_page' ],
-            [ 'summary', 'Summary', 'summary', 'gtk-help', '_build_summary_page' ],
-        ],
-        signal_connect => [
-            ['delete-event' => sub { $_[0]->destroy }],
-            ['close' =>  sub { $_[0]->destroy }],
-            ['cancel' =>  sub { $_[0]->destroy }],
-            ['destroy' => sub { Gtk2->main_quit }],
-        ],
-    },
-    lazy => 1,
-);
-
-sub _build_intro_page {
-    my ( $self, $assistant, $page ) = @_;
-    my $label = Gtk2::Label->new( 'Intro.' );
-    $page->add( $label );
-}
-
-sub _build_content_page {
-    my ( $self, $assistant, $page ) = @_;
-    my $label = Gtk2::Label->new( 'Content.' );
-    $page->add( $label );
-}
-
-sub _build_summary_page {
-    my ( $self, $assistant, $page ) = @_;
-    my $label = Gtk2::Label->new( 'Summary.' );
-    $page->add( $label );
-}
-
-
-package main;
-
-my $gapp_object = My::Assistant->new;
-$gapp_object->show_all;
+Gapp::Assistant->new(
+    title => 'Assistant',
+    content => [
+        Gapp::AssistantPage->new(
+            name => 'intro',
+            title => 'Intro',
+            type => 'intro',
+            icon => 'gtk-help',
+            content => [
+                Gapp::Label->new( text => 'Intro' ),
+            ]
+        ),
+        Gapp::AssistantPage->new(
+            name => 'content',
+            title => 'Content',
+            type => 'content',
+            icon => 'gtk-help',
+            content => [
+                Gapp::Label->new( text => 'Content' ),
+            ]
+        ),
+        Gapp::AssistantPage->new(
+            name => 'summary',
+            title => 'Summary',
+            type => 'summary',
+            icon => 'gtk-help',
+            content => [
+                Gapp::Label->new( text => 'Summary' ),
+            ]
+        ),
+    ],
+    signal_connect => [
+        ['delete-event' => sub { $_[0]->gtk_widget->destroy }],
+        ['close' =>  sub { $_[0]->gtk_widget->destroy }],
+        ['cancel' =>  sub { $_[0]->gtk_widget->destroy }],
+        ['destroy' => sub { Gtk2->main_quit }],
+    ],
+)->show_all;
 
 Gtk2->main;
