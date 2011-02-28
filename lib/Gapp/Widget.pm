@@ -16,11 +16,19 @@ has 'args' => (
     isa => 'Maybe[ArrayRef]',
 );
 
+# the method/function used to construct the widget
 has 'constructor' => (
     is => 'rw',
     isa => 'Str',
     default => 'new',
 );
+
+# allow user to customize widget, called after widget is built
+has 'customize' => (
+    is => 'rw',
+    isa => 'CodeRef|Undef',
+);
+
 
 # gtk-widget class
 has 'class' => (
@@ -51,7 +59,11 @@ has 'gtk_widget' => (
     handles => [qw( show show_all hide )],
 );
 
-
+# call customize code-ref if set
+sub _apply_customize {
+    my ( $self ) = @_;
+    $self->customize->( $self, $self->gtk_widget ) if $self->customize;
+}
 
 # call builder method from layout
 sub _apply_layout {
@@ -74,7 +86,7 @@ sub _apply_signals {
     my ( $self ) = @_;
 
     # apply signals to the widget
-    for my $s ( @{ $self->signal_connect } ) {
+    for my $s ( @{ $self->connected_signals } ) {
         my ( $name, $action, @args ) = @$s;
         use Scalar::Util qw( blessed );
         $action = $action->code if blessed $action && $action->isa( 'Gapp::Action' );
@@ -82,13 +94,13 @@ sub _apply_signals {
         if ( is_GappAction( $action ) ) {
             $self->gtk_widget->signal_connect( $name => sub {
                 my $w = shift;
-                $action->perform( $self, $w, [ @_ ] )
+                $action->perform( $self, $w,  @_  )
             }, @args );
         }
         else {
             $self->gtk_widget->signal_connect( $name => sub {
                 my $w = shift;
-                $self->$action( $w, [ @_ ] )
+                $self->$action( $w,  @_  )
             }, @args );
         }
     }
@@ -116,10 +128,10 @@ sub _build_gtk_widget {
     $self->_apply_properties;
     $self->_apply_signals;
     $self->_apply_layout;
+    $self->_apply_customize;
     
     return $w;
 }
-
 
 
 has 'layout' => (
@@ -161,11 +173,17 @@ has 'properties' => (
 );
 
 # signals to connect to
-has 'signal_connect' => (
+has 'connected_signals' => (
     is => 'ro',
     isa => 'ArrayRef',
     default => sub { [ ] },
+    init_arg => 'signal_connect',
 );
+
+sub signal_connect {
+    my ( $self, $name, $code, @args ) = @_;
+    push @{ $self->connected_signals }, [ $name, $code, @args ];
+}
 
 
 has 'traits' => (

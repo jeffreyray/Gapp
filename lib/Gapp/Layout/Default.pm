@@ -116,6 +116,57 @@ build 'Gapp::ToolButton', sub {
     $gtkw->set_icon_widget( Gtk2::Image->new_from_stock( $w->icon, 'dnd' ) ) if $w->icon;
 };
 
+# TreeView
+
+build 'Gapp::TreeView', sub {
+    my ( $l, $w ) = @_;
+    my $gtkw = $w->gtk_widget;
+    $gtkw->set_model( $w->model->gtk_widget ) if $w->model;
+};
+
+# TreeViewColumn
+
+build 'Gapp::TreeViewColumn', sub {
+    my ( $l, $w ) = @_;
+    
+    
+    my $gtkw = $w->gtk_widget;
+    
+    my $gtkr = $w->renderer->gtk_widget;
+    $gtkw->{renderer} = $gtkr;
+    
+    # add the renderer to the column
+    $gtkw->pack_start( $gtkr, $w->renderer->expand ? 1 : 0 );
+    
+    
+    # define how to display the renderer
+    if ( defined $w->data_column && ! $w->data_func ) {
+        $gtkw->add_attribute( $gtkr, $w->renderer->property => $w->data_column );
+    }
+    elsif ( $w->display ) {
+        
+        $gtkw->set_cell_data_func($gtkr, sub {
+            
+            my ( $col, $gtkrenderer, $model, $iter, @args ) = @_;
+            
+            local $_ = $model->get( $iter, $w->data_column ) if defined $w->data_column;
+            
+            my $value;
+            if ( is_CodeRef( $w->data_func ) ) {
+                $value = &{ $w->data_func }( @_ );
+            }
+            elsif ( is_Str( $w->data_func ) ) {
+                my $method = $w->data_func;
+                $value = $_->$method;
+            }
+            
+            $gtkrenderer->set_property( $w->property => $value );
+            
+        });
+    }
+
+};
+
 # Widget
 
 add 'Gapp::Widget', to 'Gapp::AssistantPage', sub {

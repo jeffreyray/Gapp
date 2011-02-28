@@ -8,6 +8,21 @@ use Moose::Meta::Method;
 use Moose::Exporter;
 
 use Gapp;
+use Gapp::Moose::Meta::Attribute::Trait::GappActionGroup;
+use Gapp::Moose::Meta::Attribute::Trait::GappAssistant;
+use Gapp::Moose::Meta::Attribute::Trait::GappButton;
+use Gapp::Moose::Meta::Attribute::Trait::GappImage;
+use Gapp::Moose::Meta::Attribute::Trait::GappLabel;
+use Gapp::Moose::Meta::Attribute::Trait::GappListStore;
+use Gapp::Moose::Meta::Attribute::Trait::GappDefault;
+use Gapp::Moose::Meta::Attribute::Trait::GappMenu;
+use Gapp::Moose::Meta::Attribute::Trait::GappScrolledWindow;
+use Gapp::Moose::Meta::Attribute::Trait::GappStatusIcon;
+use Gapp::Moose::Meta::Attribute::Trait::GappTextView;
+use Gapp::Moose::Meta::Attribute::Trait::GappToolbar;
+use Gapp::Moose::Meta::Attribute::Trait::GappTreeView;
+use Gapp::Moose::Meta::Attribute::Trait::GappUIManager;
+use Gapp::Moose::Meta::Attribute::Trait::GappWindow;
 use Gapp::Moose::Meta::Attribute::Trait::GappWidget;
 
 Moose::Exporter->setup_import_methods(

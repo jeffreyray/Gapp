@@ -1,6 +1,8 @@
 package Gapp::Moose::Meta::Attribute::Trait::GappWidget;
 use Moose::Role;
 
+use MooseX::Types::Moose qw( ArrayRef CodeRef HashRef Int Str Undef );
+
 has 'class' => (
     is => 'rw',
     isa => 'Str',
@@ -48,6 +50,6 @@ before '_process_options' => sub {
 };
 
 package Moose::Meta::Attribute::Custom::Trait::GappWidget;
-sub register_implementation { 'Gapp::Meta::Attribute::Trait::GappWidget' };
+sub register_implementation { 'Gapp::Moose::Meta::Attribute::Trait::GappWidget' };
 
 1;

@@ -37,6 +37,21 @@ method perform ( @args ) {
     carp 'you are calling "perform" on an undefind action (' . $_[0]->name . ')';
 }
 
+sub create_gtk_action {
+    my ( $self, @args ) = @_;
+    my %opts = (
+        name => $self->name,
+    );
+    
+    
+    my $gtk_action = Gtk2::Action->new( %opts );
+    $gtk_action->signal_connect( activate => sub {
+        my ( $w, @args ) = @_;
+        $self->perform( $self, $w, @args );
+    });
+    return $gtk_action;
+}
+
 no Moose;
 __PACKAGE__->meta->make_immutable;
 

@@ -18,6 +18,11 @@ sub BUILDARGS {
         $args{properties}{title} = $args{title};
         delete $args{title};
     }
+    if ( exists $args{default_size} ) {
+        $args{properties}{'default-width'} = $args{default_size}[0];
+        $args{properties}{'default-height'} = $args{default_size}[1];
+        delete $args{default_size};
+    }
     
     __PACKAGE__->SUPER::BUILDARGS( %args );
 }

@@ -21,7 +21,6 @@ has 'ui_widget' => (
 around '_construct_gtk_widget' => sub {
     my ( $orig, $self ) = @_;
     my $w = $self->ui->gtk_widget->get_widget( $self->ui_widget );
-    print $w, "\n";
     
     if ( ! $w ) {
         $self->meta->throw_error(

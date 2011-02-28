@@ -69,7 +69,7 @@ before '_process_options' => sub {
             # connect to signals
             my $sigmap = $att->signal_connect;
             if ($sigmap) {
-                for my $signal (@{ $att->signal_connect } ) {
+                for my $signal (@{ $att->connected_signals } ) {
                     my ( $name, $function, @args ) = @$signal;
                     
                     $w->signal_connect( $name => sub {
