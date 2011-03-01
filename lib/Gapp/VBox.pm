@@ -1,7 +1,7 @@
 package Gapp::VBox;
 
 use Moose;
-extends 'Gapp::Container';
+extends 'Gapp::Box';
 
 use Gapp::Util;
 use Moose::Util;

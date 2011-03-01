@@ -21,7 +21,6 @@ has '+gtk_widget' => (
 );
 
 after '_build_gtk_widget' => sub {
-    print "--->\n";
     shift->gtk_widget->vbox->show_all;
 };
 

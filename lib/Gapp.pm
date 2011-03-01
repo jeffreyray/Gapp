@@ -29,6 +29,8 @@ use Gapp::Layout::Default;
 our $Layout = Gapp::Layout::Default->Layout;
 
 use Gapp::Meta::Widget::Native::Trait::ErrorDialog;
+use Gapp::Meta::Widget::Native::Trait::Form;
+use Gapp::Meta::Widget::Native::Trait::FormField;
 use Gapp::Meta::Widget::Native::Trait::FromUIManager;
 
 
