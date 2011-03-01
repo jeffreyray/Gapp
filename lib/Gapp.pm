@@ -8,6 +8,7 @@ use Gapp::Assistant;
 use Gapp::AssistantPage;
 use Gapp::CellRenderer;
 use Gapp::Dialog;
+use Gapp::Entry;
 use Gapp::HBox;
 use Gapp::Image;
 use Gapp::Label;

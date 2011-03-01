@@ -13,6 +13,12 @@ has 'content' => (
     default => sub { [ ] },
 );
 
+after '_build_gtk_widget' => sub {
+    my $self = shift;
+    $self->add( $_ ) for @{$self->content};
+};
+
+# pack widgets into container
 sub add {
     my ( $self, $child ) = @_;
     
@@ -21,14 +27,17 @@ sub add {
     $self->layout->pack_widget( $child, $self);
 }
 
-#sub INITIALIZE_GTK_WIDGET {
-#    $self->add( $_ ) for @{$self->content};
-#}
-
-after '_build_gtk_widget' => sub {
-    my $self = shift;
-    $self->add( $_ ) for @{$self->content};
-};
-
-
+# return a list of all descendants
+sub find_descendants {
+    my ( $self, $child ) = @_;
+    
+    my @descendants;
+    
+    for my $w ( @{ $self->content } ) {
+        push @descendants, $w;
+        push @descendants, $w->find_descendants if $w->can( 'find_descendants' );
+    }
+    
+    return @descendants;
+}
 1;

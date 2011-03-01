@@ -1,13 +1,40 @@
 package Gapp::Types;
 
 use MooseX::Types -declare => [qw(
+Form
+FormContext
+FormField
 GappAction
 GappCellRenderer
+GappContainer
 GappTreeViewColumn
 GappUIManager
+GappWidget
 )];
 
 use MooseX::Types::Moose qw( ArrayRef ClassName CodeRef HashRef Int Str );
+
+# GappContainer
+class_type GappContainer,
+    { class => 'Gapp::Container' };
+
+# GappWidget
+class_type GappWidget,
+    { class => 'Gapp::Widget' };
+
+# FormField
+type Form,
+    as GappContainer,
+    where { $_->does('Gapp::Meta::Widget::Native::Trait::Form') };
+
+# FormField
+subtype FormField,
+    as GappWidget,
+    where { $_->does('Gapp::Meta::Widget::Native::Trait::FormField') };
+
+# FormContext
+class_type FormContext,
+    { class => 'Gapp::Form::Context' };
 
 # GappAction
 class_type GappAction,
@@ -40,6 +67,7 @@ class_type GappCellRenderer,
     coerce GappCellRenderer,
         from ArrayRef,
         via { 'Gapp::CellRenderer'->new( class => $_->[0], property => $_->[1] ) };
+
 
 
 # GappTreeViewColumn
@@ -76,7 +104,11 @@ class_type GappUIManager,
 coerce GappUIManager,
     from HashRef,
     via { 'Gapp::UIManager'->new( %$_ ) };
-    
+
+# GappWidget
+class_type GappWidget,
+    { class => 'Gapp::Widget' };
+
 #
 #class_type GtkWidget,
 #    { class => 'Gtk2::Widget' };

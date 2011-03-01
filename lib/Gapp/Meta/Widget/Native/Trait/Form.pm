@@ -1,7 +1,7 @@
 package Gapp::Meta::Widget::Native::Trait::Form;
 
 use Moose::Role;
-
+use Gapp::Types qw( FormField );
 
 has 'context' => (
     is => 'rw',
@@ -10,7 +10,7 @@ has 'context' => (
 
 # update the user variables
 sub apply {
-    my $self = ( @_ );
+    my ( $self ) = ( @_ );
     
     my $cx = $self->context;
     
@@ -18,14 +18,25 @@ sub apply {
 
 # update the values in the form
 sub update {
-    my $self = ( @_ );
+     my ( $self ) = ( @_ );
     
     my $cx = $self->context;
     
-    for my $c ( $self->find_descendants ) {
-        next if ! $c->does( 'FormField' );
+    for my $w ( $self->find_fields ) {
+        $cx->update_widget( $w );
     }
     
+}
+
+sub find_fields {
+     my ( $self ) = ( @ _ );
+    
+    my @fields;
+    for my $w ( $self->find_descendants ) {
+        push @fields, $w if is_FormField( $w );
+    }
+    
+    return @fields;
 }
 
 

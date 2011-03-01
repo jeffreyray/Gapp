@@ -1,12 +1,12 @@
-package Gapp::Form;
+package Gapp::Box;
 
 use Moose;
 use MooseX::SemiAffordanceAccessor;
 
-extends 'Gapp::VBox';
+extends 'Gapp::Container';
 
 has '+class' => (
-    default => 'Gtk2::VBox',
+    default => 'Gtk2::Box',
 );
 
 sub BUILDARGS {
