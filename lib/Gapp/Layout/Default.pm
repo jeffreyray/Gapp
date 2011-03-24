@@ -92,6 +92,7 @@ add 'Gapp::MenuItem', to 'Gapp::MenuShell', sub {
     $c->gtk_widget->append( $w->gtk_widget );
 };
 
+
 # Toolbar
 build 'Gapp::Toolbar', sub {
     my ( $l, $w ) = @_;
@@ -194,6 +195,66 @@ add 'Gapp::Widget', to 'Gapp::Dialog', sub {
     $c->gtk_widget->vbox->pack_start( $w->gtk_widget, $w->expand, $w->fill, $w->padding );
     $w->gtk_widget->show;
 };
+
+add 'Gapp::Widget', to 'Gapp::Table', sub {
+    my ( $l, $w, $c ) = @_;
+    
+    my $cell = $c->next_cell;
+    
+    my $gtk_widget;
+    if ( defined $cell->xalign || defined $cell->yalign ) {
+        my ( $xa, $ya ) = ( $cell->xalign, $cell->yalign );
+        my $xs = $xa == -1 ? 1 : 0; # x-scale
+	my $ys = $ya == -1 ? 1 : 0; # y-scale
+        $xa = 0 if $xa == -1; # x-align
+        $ya = 0 if $ya == -1; # y-align
+        
+        my $gtk_align = Gtk2::Alignment->new( $xa, $ya, $xs, $ys );
+        $gtk_align->add( $w->gtk_widget );
+        $gtk_widget = $gtk_align;
+    }
+    else {
+        $gtk_widget = $w->gtk_widget;
+    }
+    
+    
+    $c->gtk_widget->attach(
+        $gtk_widget, $cell->table_attach, 
+        0, 0
+    );
+    
+    
+    1;
+};
+
+sub add_widget_to_table {
+	my $self = shift;
+	my ($widget, $table) = @_;
+	
+	my $child_idx = $table->get_layout_data->{child_idx} || 0;
+
+	my $table_attach = $table->get_widget_table_attach->[$child_idx];
+	my $table_align  = $table->get_widget_table_align->[$child_idx];
+
+	my $gtk_widget = $table->get_content->[$child_idx]->get_gtk_parent_widget;
+
+	if ( defined $table_align->{xalign} or defined $table_align->{yalign} ) {
+		my $xalign = $table_align->{xalign};
+		my $yalign = $table_align->{yalign};
+
+		my $xscale = $xalign == -1 ? 1 : 0;
+		my $yscale = $yalign == -1 ? 1 : 0;
+		
+		$xalign = 0 if $xalign == -1;
+		$yalign = 0 if $yalign == -1;
+		
+		my $gtk_align = Gtk2::Alignment->new($xalign, $yalign, $xscale, $yscale);
+		$gtk_align->add($gtk_widget);
+		$gtk_widget = $gtk_align;
+	}
+
+
+}
 
 add 'Gapp::Widget', to 'Gapp::Window', sub {
     my ($l,  $w, $c ) = @_;

@@ -9,4 +9,10 @@ has '+class' => (
     default => 'Gtk2::RadioButton',
 );
 
+has 'value' => (
+    is => 'rw',
+    isa => 'Str',
+    default => '',
+);
+
 1;

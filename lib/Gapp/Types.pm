@@ -7,6 +7,7 @@ FormField
 GappAction
 GappCellRenderer
 GappContainer
+GappTableMap
 GappTreeViewColumn
 GappUIManager
 GappWidget
@@ -68,7 +69,13 @@ class_type GappCellRenderer,
         from ArrayRef,
         via { 'Gapp::CellRenderer'->new( class => $_->[0], property => $_->[1] ) };
 
-
+# GappTableMap
+class_type GappTableMap,
+    { class => 'Gapp::TableMap' };
+    
+coerce GappTableMap,
+    from Str,
+    via { 'Gapp::TableMap'->new( string => $_ ) };
 
 # GappTreeViewColumn
 class_type GappTreeViewColumn,

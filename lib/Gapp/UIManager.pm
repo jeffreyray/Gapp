@@ -22,6 +22,12 @@ has 'actions' => (
     default => sub { [ ] },
 );
 
+has 'action_args' => (
+    is => 'rw',
+    isa => 'ArrayRef',
+    default => sub { [ ] },
+);
+
 after _construct_gtk_widget => sub {
     my $self = shift;
    $self->gtk_widget->add_ui_from_file( $_ ) for @{ $self->files };
@@ -31,7 +37,7 @@ after _construct_gtk_widget => sub {
 sub _apply_actions_to_gtk_widget {
     my ( $self ) = @_;
     
-    my $group = Gapp::ActionGroup->new( actions => $self->actions );
+    my $group = Gapp::ActionGroup->new( actions => [@{$self->actions}], action_args => [@{$self->action_args}] );
     $self->gtk_widget->insert_action_group( $group->gtk_widget, 0 );
 }
 

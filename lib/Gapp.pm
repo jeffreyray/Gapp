@@ -1,12 +1,14 @@
 package Gapp;
 
-our $VERSION = 0.09;
+our $VERSION = 0.10;
 
 use Gapp::Action;
 use Gapp::ActionGroup;
 use Gapp::Assistant;
 use Gapp::AssistantPage;
+use Gapp::Button;
 use Gapp::CellRenderer;
+use Gapp::CheckButton;
 use Gapp::Dialog;
 use Gapp::Entry;
 use Gapp::HBox;
@@ -17,14 +19,18 @@ use Gapp::Menu;
 use Gapp::MenuItem;
 use Gapp::ImageMenuItem;
 use Gapp::MenuToolButton;
-use Gapp::UIManager;
+use Gapp::RadioButton;
+use Gapp::Table;
+use Gapp::ToggleButton;
 use Gapp::Toolbar;
 use Gapp::ToolButton;
 use Gapp::TreeView;
 use Gapp::TreeViewColumn;
+use Gapp::UIManager;
+use Gapp::VBox;
 use Gapp::Widget;
 use Gapp::Window;
-use Gapp::VBox;
+
 
 use Gapp::Layout::Default;
 our $Layout = Gapp::Layout::Default->Layout;

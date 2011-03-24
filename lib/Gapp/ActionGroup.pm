@@ -24,6 +24,12 @@ has 'actions' => (
     default => sub { [ ] },
 );
 
+has 'action_args' => (
+    is => 'rw',
+    isa => 'ArrayRef',
+    default => sub { [ ] },
+);
+
 {
     my $anon = 1;
 
@@ -60,7 +66,7 @@ after _construct_gtk_widget => sub {
     
     # create the gtk action widgets and add them
     # the the action group gtk widget
-    map { $gtk_widget->add_action( $_->create_gtk_action ) } @actions;
+    map { $gtk_widget->add_action( $_->create_gtk_action( args => $self->action_args ) ) } @actions;
 };
 
 1;

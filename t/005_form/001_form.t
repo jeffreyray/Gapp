@@ -25,6 +25,14 @@ $cx->add_node( 'employee', $e, );
 my $form = Gapp::VBox->new (
     traits => [qw( Form )],
     context => $cx,
+    #context => {
+    #    nodes => {
+    #        employee => [ $e,
+    #            get_prefix =>
+    #        ],
+    #        facility => { content => $f },
+    #    }
+    #},
     content => [
         Gapp::VBox->new(
             content => [

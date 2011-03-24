@@ -1,5 +1,15 @@
 Changes for Gapp
 
+0.10 - add Table support
+- added Button
+- added RadioButton
+- added CheckButton
+- added ToggleButton
+- fixed bug with actions
+- added action_args property to ActionGroup
+
+
+
 0.08
 - massive refactor
 

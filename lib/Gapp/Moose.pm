@@ -8,6 +8,7 @@ use Moose::Meta::Method;
 use Moose::Exporter;
 
 use Gapp;
+use Gapp::Gtk2;
 use Gapp::Moose::Meta::Attribute::Trait::GappActionGroup;
 use Gapp::Moose::Meta::Attribute::Trait::GappAssistant;
 use Gapp::Moose::Meta::Attribute::Trait::GappButton;
@@ -18,6 +19,7 @@ use Gapp::Moose::Meta::Attribute::Trait::GappDefault;
 use Gapp::Moose::Meta::Attribute::Trait::GappMenu;
 use Gapp::Moose::Meta::Attribute::Trait::GappScrolledWindow;
 use Gapp::Moose::Meta::Attribute::Trait::GappStatusIcon;
+use Gapp::Moose::Meta::Attribute::Trait::GappTable;
 use Gapp::Moose::Meta::Attribute::Trait::GappTextView;
 use Gapp::Moose::Meta::Attribute::Trait::GappToolbar;
 use Gapp::Moose::Meta::Attribute::Trait::GappTreeView;

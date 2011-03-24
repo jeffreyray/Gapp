@@ -47,6 +47,7 @@ sub create_gtk_action {
         label => $self->label,
         tooltip => $self->tooltip,
         icon => $self->icon,
+        args => [],
         @args
     );
     
@@ -55,11 +56,12 @@ sub create_gtk_action {
     }
     
     delete $opts{icon};
+    my $args = delete $opts{args};
     
     my $gtk_action = Gtk2::Action->new( %opts );
     $gtk_action->signal_connect( activate => sub {
-        my ( $w, @args ) = @_;
-        $self->perform( $self, $w, @args );
+        my ( $w, @gtkargs ) = @_;
+        $self->perform( $args, [ $w, @gtkargs ] );
     });
     return $gtk_action;
 }
