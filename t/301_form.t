@@ -48,9 +48,9 @@ ok $form, 'created form object';
 ok $form->find_fields, 'found form fields';
 $form->update;
 
-Gapp::Window->new(
-    content => [ $form ]
-)->show_all;
-
-Gtk2->main;
+#Gapp::Window->new(
+#    content => [ $form ]
+#)->show_all;
+#
+#Gtk2->main;
 

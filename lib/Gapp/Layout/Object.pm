@@ -86,12 +86,21 @@ sub find_packer {
     }
     
     # widget superclasses ( minus Moose stuff )
-    my @isa = $widget->meta->linearized_isa;
-    splice @isa,-2,2;
+    my @wisa = $widget->meta->linearized_isa;
+    splice @wisa,-2,2;
     
-    for ( @isa ) {
-        my $packer = $self->lookup_packer( $_, $container );
-        return $packer if $packer;
+    # container superclasses ( minus Moose stuff, minus non-container classes )
+    my @cisa = $container->meta->linearized_isa;
+    splice @cisa,-2,2;
+    @cisa = grep { $_->isa('Gapp::Container') } @cisa; 
+    
+    for my $cclass ( @cisa ) {
+        
+        for my $wclass ( @wisa ) {
+            my $packer = $self->lookup_packer( $wclass, $cclass );
+            return $packer if $packer;
+        }
+        
     }
 }
 

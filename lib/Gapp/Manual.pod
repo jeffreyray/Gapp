@@ -1,0 +1,174 @@
+=pod
+
+=head1 NAME
+
+Gapp::Manual::Introduction - An introduction Gapp programming
+
+=head1 POST-MODERN GUI APPLICATIONS
+
+Gapp is a framework for creating GUI applications in Perl 5. Gapp is based on
+Moose and Gtk2-Perl. Moose calls itself a I<post-modern> object system, and
+relative to Perl 5, it is. Gapp aims to bring that same I<post-modern> feel to
+developing Gtk+ applications in perl.
+
+Applications maintain a consistent look and feel without hand-configuring every
+widget. Gapp effectively separates GUI design from application logic and data
+structures, while keeping your widgets and data up-to-date.
+
+Gapp makes programming complex GUI applications fun and easy.
+
+=head2 PREREQUISITES
+
+Gapp uses both L<Moose> and L<Gtk2> extensively and assumes that the user
+understands these modules as well. Any of the Gapp documentation that you find
+lacking is probably covered by these modules.
+
+=over 4
+
+=item L<Moose>
+
+The documentation for Moose can be found on the CPAN at
+L<http://search.cpan.org/search?query=Moose>.
+
+=item L<Gtk2>
+
+The documentation for Gtk+ can be found at
+L<http://library.gnome.org/devel/gtk/stable/>.
+
+=back
+
+=head1 A BASIC APPLICATION
+
+  use Gapp;
+
+  $w = Gapp::Window->new(
+    properties => {
+      title => 'Gapp application',
+    },
+    signal_connect => [
+      [ 'delete-event' => sub { Gapp->quit } ],
+    ],
+    content => [
+      Gapp::Label->new( text => 'Hello World!' ),
+    ]
+  );
+
+  $w->show_all;
+
+  Gapp->main;
+  
+=head1 WIDGET PARAMETERS
+
+=over 4
+
+=item properties
+
+Any properties you set here will be applied to the Gtk+ widget upon
+construction. You may find valid parameters by referencing that Gtk+
+documentation at L<http://library.gnome.org/devel/gtk/stable/>.
+
+In this example we could have said:
+
+  Gapp::Window->new (
+    title => 'Gapp applicaiton'
+  ...
+  
+This is because the C<title> parameter delegates to the C<title> property of
+the Gtk widget. The documentation for the Gapp widget will provide more
+information on properties that have been setup for delegation.
+
+=item signal_connect
+
+You may connect to signals using the C<signal_connect> parameter using the
+format in the example.
+
+=item content
+
+You can add widgets to containers using the C<content> parameter. No formatting
+options are specified here, just the heirarchy of the widgets. Spacing and
+other rendering details are resolved by the layout. That will be discussed more
+later.
+
+=back
+
+=head1 WIDGET CONSTRUCTION
+
+As previously mentioned, Gapp is a layer over Gtk2. A L<Gapp::Widget> is used to
+manage the construction of a L<Gtk2::Widget>.
+
+The L<Gtk2::Widget> is created on the first call to C<Gapp::gtk_widget>. Make
+all configurations to your widget before this happens; any change you make to
+the L<Gapp::Widget> will not be reflected in the Gtk widget once it has been
+constructed.
+
+In our example program, the call to C<gtk_widget> was made implicitly by calling
+C<show_all> all on the window. This is because C<show_all> is set up to delegate
+to the Gtk widget's C<show_all> method. The documentation for the Gapp widget
+will provide more information on methods that have been setup for delegation.
+
+=head1 WIDGET LAYOUT
+
+The layout determines how widgets are displayed on the screen. It has control
+over things like spacing, alignment, borders, etc. By centralizing the code
+the determines the appearance of widgets, it is is possible to achieve a
+consistent look GUI. By making changes to the layout, you can affect the
+appearnce of your whole application. You can subclass layouts too!
+
+You should see L<Gapp::Layout> for information on creatng and using layouts.
+
+=head1 ACTIONS
+
+Actions can be performed and know how to display themselves in menu's and on
+on buttons. You can call them directly or connect them to signals.
+
+  use Gapp::Actions::Basic qw( Quit );
+
+  # call directly
+  do_Quit; 
+
+  # connect to signal
+  $w = Gapp::Window->new;
+  $w->signal_connect( 'delete-event' => Quit );
+
+  # display in menu
+  Gapp::MenuItem->new( action => Quit );
+
+You should see L<Gapp::Actions> for information on creatng and using actions.
+
+=head1 TRAITS
+
+Apply traits and roles to your widgets to change their behavior!
+ 
+  Gapp::Entry->new( traits => [qw( MyCustomTrait )] );
+  
+=head1 FORMS
+
+Advanced form handling allows you to easily get form data from widgets and
+vice versa. You don't manually need to update each field in the form.
+
+  $form = Gapp::VBox->new(
+    traits => [qw( Form )],
+    content => [ Gapp::Entry->new( field => 'user_name' ) ],
+  );
+
+=head1 EXTENDING
+
+Gapp extensions provide added functionality. The GappX:: namespace is the
+official place to find Gapp extensions. These extensi.ons can be found on the
+CPAN.
+
+
+=head1 AUTHORS
+
+Jeffrey Ray Hallock E<lt>jeffrey.hallock at gmail dot comE<gt>
+
+=head1 COPYRIGHT
+
+    Copyright (c) 2011 Jeffrey Ray Hallock. All rights reserved.
+    This program is free software; you can redistribute it and/or
+    modify it under the same terms as Perl itself.
+
+=cut
+
+
+

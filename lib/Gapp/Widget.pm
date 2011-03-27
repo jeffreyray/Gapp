@@ -8,7 +8,7 @@ use MooseX::Types::Moose qw( ArrayRef HashRef Str Undef );
 
 use Gtk2;
 use Gapp::Layout::Default;
-use Gapp::Types qw( GappAction );
+use Gapp::Types qw( GappAction GappLayout );
 
 # passed to gtk-widget constructor
 has 'args' => (
@@ -136,9 +136,10 @@ sub _build_gtk_widget {
 
 has 'layout' => (
     is => 'rw',
-    isa => 'Gapp::Layout::Object',
+    isa => GappLayout,
     lazy_build => 1,
     trigger => \&_on_set_layout,
+    coerce => 1,
 );
 
 sub _build_layout {
@@ -146,6 +147,7 @@ sub _build_layout {
     $Gapp::Layout || Gapp::Layout::Default->Layout;
 }
 
+# for subclassing
 sub _on_set_layout {
     
 }

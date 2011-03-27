@@ -15,11 +15,12 @@ has 'label' => (
 );
 
 
+
 sub BUILDARGS {
     my $class = shift;
     my %args = @_ == 1 && is_HashRef( $_[0] ) ? %{$_[0]} : @_;
     
-    if ( exists $args{label} ) {
+    if ( exists $args{label} && ! $args{args} ) {
         $args{args} = [ $args{label} ];
         $args{constructor} = 'new_with_label';
     }

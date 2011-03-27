@@ -1,6 +1,18 @@
 Changes for Gapp
 
-0.10 - add Table support
+0.11
+- documentation
+- added &Gapp::main and &Gapp::main_quit
+- added the form stash
+- can now populate a Gapp::ListStore using "content" parameter
+- restuructured tests
+Big Fixes:
+- radio button labels were not displaying
+- layouts find packers for subclassed containers
+- table requires map
+
+0.10
+- added Table support
 - added Button
 - added RadioButton
 - added CheckButton

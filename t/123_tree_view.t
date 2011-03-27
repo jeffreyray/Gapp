@@ -15,7 +15,7 @@ my $w = Gapp::TreeView->new(
     columns => [
         Gapp::TreeViewColumn->new(
             name => 'id',
-            label => 'ID',
+            title => 'ID',
             renderer => 'text',
         ),
     ]

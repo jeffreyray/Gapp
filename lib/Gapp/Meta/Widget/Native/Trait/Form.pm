@@ -1,11 +1,19 @@
 package Gapp::Meta::Widget::Native::Trait::Form;
 
 use Moose::Role;
-use Gapp::Types qw( FormField );
+use Gapp::Form::Stash;
+use Gapp::Types qw( FormContext FormField FormStash );
+
 
 has 'context' => (
     is => 'rw',
-    isa => 'Gapp::Form::Context',
+    isa => FormContext,
+);
+
+has 'stash' => (
+    is => 'rw',
+    isa => FormStash,
+    default => sub { Gapp::Form::Stash->new },
 );
 
 # update the user variables
@@ -18,14 +26,8 @@ sub apply {
 
 # update the values in the form
 sub update {
-     my ( $self ) = ( @_ );
-    
-    my $cx = $self->context;
-    
-    for my $w ( $self->find_fields ) {
-        $cx->update_widget( $w );
-    }
-    
+    my ( $self ) = ( @_ );
+    $self->_update_fields;
 }
 
 sub find_fields {
@@ -37,6 +39,24 @@ sub find_fields {
     }
     
     return @fields;
+}
+
+sub _update_stash {
+    my ( $self ) = @_;
+    
+    my $stash = $self->stash;
+    
+    for my $w ( $self->find_fields ) {
+        $w->widget_to_stash( $stash );
+    }
+}
+
+sub _update_fields {
+    my ( $self ) = @_;
+    
+    for my $w ( $self->find_fields ) {
+        $w->stash_to_widget( $self->stash );
+    }
 }
 
 

@@ -4,9 +4,11 @@ use MooseX::Types -declare => [qw(
 Form
 FormContext
 FormField
+FormStash
 GappAction
 GappCellRenderer
 GappContainer
+GappLayout
 GappTableMap
 GappTreeViewColumn
 GappUIManager
@@ -36,6 +38,11 @@ subtype FormField,
 # FormContext
 class_type FormContext,
     { class => 'Gapp::Form::Context' };
+    
+# FormContext
+class_type FormStash,
+    { class => 'Gapp::Form::Stash' };
+
 
 # GappAction
 class_type GappAction,
@@ -68,6 +75,15 @@ class_type GappCellRenderer,
     coerce GappCellRenderer,
         from ArrayRef,
         via { 'Gapp::CellRenderer'->new( class => $_->[0], property => $_->[1] ) };
+
+
+# GappTableMap
+class_type GappLayout,
+    { class => 'Gapp::Layout::Object' };
+    
+coerce GappLayout,
+    from Str,
+    via { $_->Layout };
 
 # GappTableMap
 class_type GappTableMap,

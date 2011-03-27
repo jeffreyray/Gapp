@@ -17,6 +17,12 @@ has 'columns' => (
     default => sub { [ ] },
 );
 
+has 'content' => (
+    is => 'rw',
+    isa => 'ArrayRef',
+    default => sub { [ ] },
+);
+
 sub BUILDARGS {
     my $class = shift;
     my %args = @_ == 1 && is_HashRef( $_[0] ) ? %{$_[0]} : @_;

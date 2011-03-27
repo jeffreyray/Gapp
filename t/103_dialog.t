@@ -35,5 +35,5 @@ my $w = Gapp::Dialog->new(
 #ok $w, 'created gapp window';
 #ok $w->gtk_widget, 'created gtk widget';
 #
-$w->gtk_widget->show_all;
-$w->gtk_widget->run;
+#$w->gtk_widget->show_all;
+#$w->gtk_widget->run;

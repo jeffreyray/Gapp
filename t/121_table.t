@@ -43,8 +43,8 @@ my $t = Gapp::Table->new(
 
 ok $t, 'created table';
 
-Gapp::Window->new( content => [ $t ] )->show_all;
-Gtk2->main;
-
-
+#Gapp::Window->new( content => [ $t ] )->show_all;
+#Gtk2->main;
+#
+#
 

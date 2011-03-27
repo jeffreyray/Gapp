@@ -30,6 +30,61 @@ add 'Gapp::AssistantPage', to 'Gapp::Assistant', sub {
     $assistant->set_page_complete  ($gtk_w, 1);
     $assistant->{pages}{$w->name} = $gtk_w;  
 };
+# ComboBox
+
+build 'Gapp::ComboBox', sub {
+    my ( $l, $w ) = @_;
+    my $gtkw = $w->gtk_widget;
+    
+    
+    # populate the module with values
+    if ( $w->values ) {
+        my $model = Gapp::ListStore->new( columns => [qw( Glib::String )] )->gtk_widget;
+        
+        for ( @{ $w->values } ) {
+            my $iter = $model->append;
+            $model->set( $iter, 0 => $_ );
+        }
+        
+        #$model->set( $model->append, 0 => $_ ) for @{ $w->values };
+        $gtkw->set_model( $model );
+    }
+    
+    # create the renderer to display the values
+    my $gtkr = $w->renderer->gtk_widget;
+    $gtkw->{renderer} = $gtkr;
+    
+    # add the renderer to the column
+    $gtkw->pack_start( $gtkr, $w->renderer->expand ? 1 : 0 );
+    
+    
+    # define how to display the renderer
+    if ( defined $w->data_column && ! $w->data_func ) {
+        $gtkw->add_attribute( $gtkr, $w->renderer->property => $w->data_column );
+    }
+    elsif ( $w->data_func ) {
+        
+        $gtkw->set_cell_data_func($gtkr, sub {
+            
+            my ( $col, $gtkrenderer, $model, $iter, @args ) = @_;
+            
+            local $_ = $model->get( $iter, $w->data_column ) if defined $w->data_column;
+            
+            my $value;
+            if ( is_CodeRef( $w->data_func ) ) {
+                $value = &{ $w->data_func }( @_ );
+            }
+            elsif ( is_Str( $w->data_func ) ) {
+                my $method = $w->data_func;
+                $value = $_->$method;
+            }
+            
+            $gtkrenderer->set_property( $w->property => $value );
+            
+        });
+    }
+
+};
 
 
 # Dialog
@@ -144,7 +199,7 @@ build 'Gapp::TreeViewColumn', sub {
     if ( defined $w->data_column && ! $w->data_func ) {
         $gtkw->add_attribute( $gtkr, $w->renderer->property => $w->data_column );
     }
-    elsif ( $w->display ) {
+    elsif ( $w->data_func ) {
         
         $gtkw->set_cell_data_func($gtkr, sub {
             
@@ -226,35 +281,6 @@ add 'Gapp::Widget', to 'Gapp::Table', sub {
     
     1;
 };
-
-sub add_widget_to_table {
-	my $self = shift;
-	my ($widget, $table) = @_;
-	
-	my $child_idx = $table->get_layout_data->{child_idx} || 0;
-
-	my $table_attach = $table->get_widget_table_attach->[$child_idx];
-	my $table_align  = $table->get_widget_table_align->[$child_idx];
-
-	my $gtk_widget = $table->get_content->[$child_idx]->get_gtk_parent_widget;
-
-	if ( defined $table_align->{xalign} or defined $table_align->{yalign} ) {
-		my $xalign = $table_align->{xalign};
-		my $yalign = $table_align->{yalign};
-
-		my $xscale = $xalign == -1 ? 1 : 0;
-		my $yscale = $yalign == -1 ? 1 : 0;
-		
-		$xalign = 0 if $xalign == -1;
-		$yalign = 0 if $yalign == -1;
-		
-		my $gtk_align = Gtk2::Alignment->new($xalign, $yalign, $xscale, $yscale);
-		$gtk_align->add($gtk_widget);
-		$gtk_widget = $gtk_align;
-	}
-
-
-}
 
 add 'Gapp::Widget', to 'Gapp::Window', sub {
     my ($l,  $w, $c ) = @_;

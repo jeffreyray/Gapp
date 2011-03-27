@@ -2,6 +2,9 @@ package Gapp::Table;
 
 
 use Moose;
+use MooseX::LazyRequire;
+use MooseX::SemiAffordanceAccessor;
+use MooseX::StrictConstructor;
 extends 'Gapp::Container';
 
 use Gapp::TableMap;
@@ -14,8 +17,8 @@ has '+class' => (
 has 'map' => (
     is => 'rw',
     isa => GappTableMap,
-    default => '',
 	coerce => 1,
+	lazy_required => 1,
 );
 
 has '_active_cell' => (
