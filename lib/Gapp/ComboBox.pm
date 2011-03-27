@@ -14,23 +14,6 @@ has '+class' => (
     default => 'Gtk2::ComboBox',
 );
 
-has 'model' => (
-    is => 'rw',
-    isa => 'Maybe[Object]',
-);
-
-has 'values' => (
-    is => 'rw',
-    isa => 'Maybe[ArrayRef]',
-);
-
-has 'renderer' => (
-    is => 'rw',
-    isa => GappCellRenderer,
-    default => sub { Gapp::CellRenderer->new( class => 'Gtk2::CellRendererText', property => 'markup' ) },
-    coerce => 1,
-);
-
 has 'data_func' => (
     is => 'rw',
     isa => 'Str|CodeRef|Undef',
@@ -41,6 +24,26 @@ has 'data_column' => (
     isa => 'Int|Undef',
     default => 0,
 );
+
+has 'model' => (
+    is => 'rw',
+    isa => 'Maybe[Object]',
+);
+
+has 'renderer' => (
+    is => 'rw',
+    isa => GappCellRenderer,
+    default => sub { Gapp::CellRenderer->new( class => 'Gtk2::CellRendererText', property => 'markup' ) },
+    coerce => 1,
+);
+
+has 'values' => (
+    is => 'rw',
+    isa => 'Maybe[ArrayRef]',
+);
+
+
+
 
 
 # returns the value of the widget
@@ -88,3 +91,87 @@ sub stash_to_widget {
 }
 
 1;
+
+
+
+__END__
+
+=pod
+
+=head1 NAME
+
+Gapp::ComboBox - ComboBox Widget
+
+=head1 OBJECT HIERARCHY
+
+=over 4
+
+=item L<Gapp::Widget>
+
+=item +-- L<Gapp::ComboBox>
+
+=back
+
+=head1 PROVIDED ATTRIBUTES
+
+=over 4
+
+=item B<data_column>
+
+=over 4
+
+=item isa Int
+
+=item default 0
+
+=back
+
+=item B<data_func>
+
+=over 4
+
+=item isa Str|CodeRef|Undef
+
+=back
+
+=item B<model>
+
+=over 4
+
+=item isa L<Gapp::ListStore>|Undef
+
+=back
+
+=item B<renderer>
+
+=over 4
+
+=item isa L<Gapp::CellRenderer>
+
+=item default Gapp::CellRenderer->new( class => 'Gtk2::CellRendererText', property => 'markup' );
+
+=back
+
+=item B<values>
+
+=over 4
+
+=item isa ArrayRef
+
+=back
+
+=back 
+
+=head1 AUTHORS
+
+Jeffrey Ray Hallock E<lt>jeffrey.hallock at gmail dot comE<gt>
+
+=head1 COPYRIGHT & LICENSE
+
+    Copyright (c) 2011 Jeffrey Ray Hallock.
+
+    This program is free software; you can redistribute it and/or
+    modify it under the same terms as Perl itself.
+
+=cut
+

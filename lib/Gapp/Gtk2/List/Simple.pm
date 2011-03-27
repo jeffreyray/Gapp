@@ -22,10 +22,9 @@ sub INIT_INSTANCE {
 
 sub FINALIZE_INSTANCE {
 	my $self = shift;
-
-	# free all records and free all memory used by the list
-	# warning IMPLEMENT
-	
+	$self->{rows} = undef;
+	$self->{stamp} = undef;
+	$self->{column_types} = undef;
 }
 
 sub GET_FLAGS { [qw/list-only/] }
@@ -171,8 +170,78 @@ sub set {
 	$self->row_changed ($self->get_path ($treeiter), $treeiter);
 }
 
-
-
-
-
 1;
+
+
+
+__END__
+
+=pod
+
+=head1 NAME
+
+Gapp::Gtk2::List::Simple - A simple list that can hold arbitrary values
+
+=head1 SYNOPSIS
+
+  use Gtk2 '-init';
+
+  use Gapp::Gtk2;
+
+  $list = Gapp::Gtk2::List::Simple->new;
+
+  $iter = $list->append( $value );
+
+  $list->set( $iter, $new_value );
+  
+   
+=head1 DESCRIPTION
+
+<Gapp::Gtk2::List::Simple> is a very simpleL<Gtk2::TreeModel|http://library.gnome.org/devel/gtk/stable/GtkTreeModel.html>
+that is implmented in perl. It has only column with no restrictions on the data
+type it can hold. Nodes can not have children.
+
+=head1 OBJECT HEIRARCHY
+
+=over4
+
+=item  L<Glib::Object|http://gtk2-perl.sourceforge.net/doc/pod/Glib/Object.html>
+
+=item  +--L<Gapp::Gtk2::List::Simple>
+
+=back 
+  
+=head2 Implemented Interfaces
+
+=over 4
+
+=item L<Gtk2::TreeModel|http://gtk2-perl.sourceforge.net/doc/pod/Gtk2/TreeModel.html>
+
+=back
+
+=head1 PROVIDED METHODS
+
+=over 4
+
+=item B<append ( $value )>
+
+Adds the value to the list, returns an C<$iter> to reference the position.
+
+=item B<set( $iter, $value )>
+
+Sets the value at the position referenced by the C<$iter>.
+
+=back
+
+=head1 AUTHOR
+
+Jeffrey Ray Hallock E<lt>jeffrey.hallock at gmail dot comE<gt>
+
+=head1 COPYRIGHT
+
+    Copyright (c) 2011 Jeffrey Ray Hallock.
+    This program is free software; you can redistribute it and/or
+    modify it under the same terms as Perl itself.
+
+=cut
+

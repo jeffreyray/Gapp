@@ -281,3 +281,184 @@ sub _find_yalign {
 
 
 1;
+
+
+
+__END__
+
+=pod
+
+=head1 NAME
+
+Gapp::TableMap - Create ASCII Table Layouts
+
+=head1 SYNOPSIS
+
+    Gapp::TableMap->new( string => "
+        +-------%------+>>>>>>>>>>>>>>>+
+        |     Name     |               |
+        +--------------~ Image         |
+        | Keywords     |               |
+        +-------+------+[--------------+
+        ^       ' More | Something     |
+        ^       |      +-----+--------]+
+        _ Notes |      |     |     Foo |
+        +-------+------+-----+---------+
+        ^ Bar          | Baz           |
+        +--------------+---------------+
+    ");
+
+=head1 OBJECT HIERARCHY
+
+=over 4
+
+=item L<Gapp::TableMap>
+
+=back
+
+=head1 DESCRIPTION
+
+A L<Gapp::TableMap> is used to layout widgets in a table. Generally you will only
+need to know how to create a Table map and won't need to worry about the
+details (unless your want to change how widgets are added to table - see
+L<Gapp::Layout>).
+
+=head2 Creating a TableMap
+
+You may also call the L<Gapp::TableMap> constructor with a single argument,
+which will be used as the C<string> attribute.
+
+    Gapp::TableMap->new( ... );
+
+The C<map> attribute of L<Gapp::Table> will coerce a string into a
+L<Gapp::TableMap> for you.
+
+    Gapp::Table->new (
+        map => '
+            ...
+        ',
+    )
+
+=head2 Special Characters
+
+This is the complete list of recognized characters and their meaning:
+
+=over 10
+
+=item - | + =
+
+The widget fills the cell, but the cell doesn't resize with the
+table. That's the default, because these characters belong to the set
+of ASCII graphic characters used to draw the layout.
+
+=item >
+
+The cell expands horizontal. Recognized only in the top border of a cell.
+
+=item ^
+
+The cell expands vertical. Recognized only in the left border of a cell.
+
+=item [
+
+Widget is attached on the left and doesn't expand anymore with the cell.
+Recognized only in the top border of a cell.
+
+=item ]
+
+Widget is attached on the right and doesn't expand anymore with the cell.
+Recognized only in the top border of a cell.
+
+=item %
+
+Widget is attached in the middle (horizontal) and doesn't expand anymore with
+the cell. Recognized only in the top border of a cell.
+
+=item '
+
+Widget is attached on the top and doesn't expand anymore with the cell.
+Recognized only in the left border of a cell.
+
+=item _
+
+Widget is attached on the bottom and doesn't expand anymore with the cell.
+Recognized only in the left border of a cell.
+
+=item ~
+
+Widget is attached in the middle (vertical) and doesn't expand anymore with the
+cell. Recognized only in the left border
+of a cell.
+
+=back
+
+=head2 Whitespace
+
+You may have arbitrary whitespace around your table, inlcuding TAB
+characters. Don't use TAB characters but true SPACE characters inside the table.
+
+=head1 PROVIDED ATTRIBUTES
+
+=over 4
+
+=item B<string>
+
+=over 4
+
+=item isa: Str
+
+=back
+
+=back
+
+=head1 PROVIDED METHODS
+
+=over 4
+
+=item B<cells>
+
+Returns an ArrayRef containing L<Gapp::TableCell> objects.
+
+=item B<row_count>
+
+The number of table rows in the map.
+
+=item B<col_count>
+
+The number of tbale columns in the map.
+
+=back
+
+=head1 ACKNOWLEDGMENTS
+
+Thanks to Jörn Reder and his L<Gtk2::Ex::FormFactory::Table> package, this one
+is able to exist.
+
+=head1 AUTHORS
+
+Jörn Reder <joern at zyn dot de>
+
+Jeffrey Ray Hallock E<lt>jeffrey.hallock at gmail dot comE<gt>
+
+=head1 COPYRIGHT & LICENSE
+
+    Copyright 2004-2006 by Jörn Reder.
+
+    Copyright (c) 2011 Jeffrey Ray Hallock.
+
+    This library is free software; you can redistribute it and/or modify
+    it under the terms of the GNU Library General Public License as
+    published by the Free Software Foundation; either version 2.1 of the
+    License, or (at your option) any later version.
+    
+    This library is distributed in the hope that it will be useful, but
+    WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Library General Public License for more details.
+    
+    You should have received a copy of the GNU Library General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307
+    USA.
+
+=cut

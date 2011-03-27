@@ -8,7 +8,7 @@ Sub::Exporter::setup_exporter({
     groups  => { all => [qw( resolve_widget_trait_alias )] }
 });
 
-
+# resolve custom widget trait names
 sub resolve_widget_trait_alias {
     return resolve_widget_class_alias( @_, trait => 1 );
 }

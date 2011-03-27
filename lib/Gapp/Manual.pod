@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Gapp::Manual::Introduction - An introduction Gapp programming
+Gapp::Manual - An introduction to Gapp programming
 
 =head1 POST-MODERN GUI APPLICATIONS
 
@@ -23,19 +23,19 @@ Gapp uses both L<Moose> and L<Gtk2> extensively and assumes that the user
 understands these modules as well. Any of the Gapp documentation that you find
 lacking is probably covered by these modules.
 
-=over 4
-
-=item L<Moose>
+=head2 Moose
 
 The documentation for Moose can be found on the CPAN at
 L<http://search.cpan.org/search?query=Moose>.
 
-=item L<Gtk2>
+=head2 Gtk2
+
+The documentation for Gtk2-Perl can be ound at
+<http://gtk2-perl.sourceforge.net/doc/pod/index.html>.
 
 The documentation for Gtk+ can be found at
 L<http://library.gnome.org/devel/gtk/stable/>.
 
-=back
 
 =head1 A BASIC APPLICATION
 
@@ -114,7 +114,16 @@ the determines the appearance of widgets, it is is possible to achieve a
 consistent look GUI. By making changes to the layout, you can affect the
 appearnce of your whole application. You can subclass layouts too!
 
-You should see L<Gapp::Layout> for information on creatng and using layouts.
+=head2 Using a Layout
+
+Layouts are referenced using their class names. You can specify which layout to
+use when constructing your widget. All widgets accept the C<layout> parameter.
+
+  Gapp::Window->new( layout => 'My::Custom::Layout', content => ... );
+
+=head2 Creating a Layout
+
+You should see L<Gapp::Layout> for information on creating layouts.
 
 =head1 ACTIONS
 
@@ -164,7 +173,7 @@ Jeffrey Ray Hallock E<lt>jeffrey.hallock at gmail dot comE<gt>
 
 =head1 COPYRIGHT
 
-    Copyright (c) 2011 Jeffrey Ray Hallock. All rights reserved.
+    Copyright (c) 2011 Jeffrey Ray Hallock.
     This program is free software; you can redistribute it and/or
     modify it under the same terms as Perl itself.
 

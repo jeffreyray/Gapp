@@ -8,12 +8,10 @@ use Sub::Name;
 
 use namespace::clean -except => [qw( meta )];
 
-
 sub import {
     my ($class, %args) = @_;
     my  $callee = caller;
 
-    # everyone should want this
     strict->import;
     warnings->import;
 
@@ -28,7 +26,7 @@ sub import {
         
         for my $action (@orig_declare) {
             
-            croak "Cannot create an action containing '::' ($action) at the moment"
+            croak q[could not create action ($action): actions may not contain containing '::']
                 if $action =~ /::/;
             
             # add action to library and remember to export
@@ -61,4 +59,90 @@ sub perform_export_generator {
         return $action->code->( $action, @_ );
     };
 }
+
 1;
+
+
+__END__
+
+=pod
+
+=head1 NAME
+
+Gapp::Actions - Create Actions for Gapp Applications
+
+=head1 SYNOPSIS
+
+    package My::Actions;
+    use Gapp::Actions -declare =>[qw( PrintStuff )];
+
+    action PrintStuff => (
+        name => 'PrintStuff',
+        label => 'Print',
+        tooltip => 'Print',
+        icon => 'gtk-print',
+        code => sub {
+            my ( $action, $args ) = @_;
+            print $args[0], "\n";
+        }
+    );
+
+    ... later ...
+
+    package main;
+
+    use My::Actions qw( PrintStuff );
+
+    # call directly
+    do_PrintStuff( 'Stuff!' );
+
+    # assign to button
+    Gapp::Button->new( action => [PrintStuff, 'stuff'] );
+
+    # use as callback
+    Gapp::Button->new->signal_connect( clicked => PrintStuff, 'stuff' );
+  
+=head1 DESCRIPTION
+
+Actions are chunks of code that know how to display themselves on buttons,
+menus and other objects. They can be called directly, or used as callbacks.
+
+=head1 SEE ALSO
+
+L<MooseX::Types>
+
+=head1 ACKNOWLEDGEMENTS
+
+Many thanks to the C<#moose> cabal on C<irc.perl.org>, and all those who
+contributed to the L<MooseX::Types> module, making L<Gapp::Actions> possible.
+
+=head1 AUTHORS
+
+Robert "phaylon" Sedlacek <rs@474.at>
+
+Jeffrey Ray Hallock E<lt>jeffrey.hallock at gmail dot comE<gt>
+
+=head1 CONTRIBUTORS
+
+jnapiorkowski: John Napiorkowski <jjnapiork@cpan.org>
+
+caelum: Rafael Kitover <rkitover@cpan.org>
+
+rafl: Florian Ragwitz <rafl@debian.org>
+
+hdp: Hans Dieter Pearcey <hdp@cpan.org>
+
+autarch: Dave Rolsky <autarch@urth.org>
+
+=head1 COPYRIGHT & LICENSE
+
+    Copyright (c) 2007-2009 Robert Sedlacek <rs@474.at>
+
+    Copyright (c) 2011 Jeffrey Ray Hallock.
+
+    This program is free software; you can redistribute it and/or
+    modify it under the same terms as Perl itself.
+
+=cut
+
+

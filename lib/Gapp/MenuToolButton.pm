@@ -19,3 +19,55 @@ after '_construct_gtk_widget' => sub {
 };
 
 1;
+
+
+
+__END__
+
+=pod
+
+=head1 NAME
+
+Gapp::MenuToolButton - MenuToolButton Widget
+
+=head1 OBJECT HIERARCHY
+
+=over 4
+
+=item L<Gapp::Widget>
+
+=item ....+-- L<Gapp::ToolItem>
+
+=item ........+-- L<Gapp::ToolButton>
+
+=item ............+-- L<Gapp::MenuToolButton>
+
+=back
+
+=head1 PROVIDED ATTRIBUTES
+
+=over 4
+
+=item B<menu>
+
+=over 4
+
+=item isa GappMenu
+
+=back
+
+=back
+
+=head1 AUTHORS
+
+Jeffrey Ray Hallock E<lt>jeffrey.hallock at gmail dot comE<gt>
+
+=head1 COPYRIGHT & LICENSE
+
+    Copyright (c) 2011 Jeffrey Ray Hallock.
+
+    This program is free software; you can redistribute it and/or
+    modify it under the same terms as Perl itself.
+
+=cut
+

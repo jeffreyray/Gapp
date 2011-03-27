@@ -1,5 +1,8 @@
 Changes for Gapp
 
+0.12
+- lots and lots and lots of documentation
+
 0.11
 - documentation
 - added &Gapp::main and &Gapp::main_quit
@@ -19,8 +22,6 @@ Big Fixes:
 - added ToggleButton
 - fixed bug with actions
 - added action_args property to ActionGroup
-
-
 
 0.08
 - massive refactor

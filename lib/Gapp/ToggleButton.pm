@@ -61,3 +61,72 @@ sub stash_to_widget {
 }
 
 1;
+
+
+
+__END__
+
+=pod
+
+=head1 NAME
+
+Gapp::ToggleButton - ToggleButton Widget
+
+=head1 OBJECT HIERARCHY
+
+=over 4
+
+=item L<Gapp::Widget>
+
+=item +-- L<Gapp::Button>
+
+=item ....+-- L<Gapp::ToggleButton>
+
+=back
+
+=head2 Roles
+
+=over 4
+
+=item L<Gapp::Meta::Widget::Native::Trait::FormField>
+
+=back
+
+=head1 PROVIDED ATTRIBUTES
+
+=over 4
+
+=item B<value>
+
+=over 4
+
+=item isa Str
+
+=back
+
+=back
+
+=head1 DELEGATES TO GTK
+
+=head2 Attributes
+
+=over 4
+
+=item B<active>
+
+=back 
+
+=head1 AUTHORS
+
+Jeffrey Ray Hallock E<lt>jeffrey.hallock at gmail dot comE<gt>
+
+=head1 COPYRIGHT & LICENSE
+
+    Copyright (c) 2011 Jeffrey Ray Hallock.
+
+    This program is free software; you can redistribute it and/or
+    modify it under the same terms as Perl itself.
+
+=cut
+
+
