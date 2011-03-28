@@ -3,7 +3,6 @@ use strict;
 use warnings;
 
 use Test::More qw( no_plan );
-use lib qw( ..\lib lib );
 
 use Gapp;
 
@@ -30,7 +29,7 @@ my $form = Gapp::Table->new(
         Gapp::Entry->new( field => 'entry' ),
         
         Gapp::Label->new( text => 'Entry' ),
-        Gapp::ComboBox->new( field => 'combo', values => [ '', '1', '2', '3' ] ),
+        Gapp::ComboBox->new( field => 'combo', values => [  '1', '2', '3' ] ),
         
         Gapp::Label->new( text => 'Entry' ),
         Gapp::RadioButton->new( field => 'radio', value => 1, label => 'True' ),
@@ -41,10 +40,10 @@ my $form = Gapp::Table->new(
         
         Gapp::VBox->new( content => [
             my $button1 = Gapp::Button->new(
-                label => 'Save',
+                label => 'Submit',
             ),
             my $button2 = Gapp::Button->new(
-                label => 'Reset',
+                label => 'Refresh',
             ),
             my $button3 = Gapp::Button->new(
                 label => 'Clear',
@@ -55,9 +54,7 @@ my $form = Gapp::Table->new(
 );
 
 use Data::Dumper;
-$button1->signal_connect(
-    clicked => sub { $form->_update_stash }
-);
+$button1->signal_connect( clicked => sub { $form->_update_stash } );
 $button2->signal_connect( clicked => sub { $form->_update_fields } );
 $button3->signal_connect( clicked => sub { $form->stash->clear; $form->_update_fields; } );
 

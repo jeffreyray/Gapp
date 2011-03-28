@@ -1,6 +1,6 @@
 package Gapp;
 
-our $VERSION = 0.12;
+our $VERSION = 0.13;
 
 use Gtk2 '-init';
 
@@ -23,6 +23,7 @@ use Gapp::MenuItem;
 use Gapp::ImageMenuItem;
 use Gapp::MenuToolButton;
 use Gapp::RadioButton;
+use Gapp::SimpleList;
 use Gapp::Table;
 use Gapp::ToggleButton;
 use Gapp::Toolbar;
@@ -82,7 +83,8 @@ Gapp - Post-modern Gtk+ applications
 =head1 NEW VERSION WARNING
 
 *THIS IS NEW SOFTWARE. IT IS STILL IN DEVELOPMENT. THE API MAY CHANGE IN FUTURE
-VERSIONS WITH NO NOTICE.*
+VERSIONS WITH NO NOTICE. THE DOCUMENTATION MAY COVER FEATURES THAT ARE NOT
+COMPLETE IN THEIR IMPLEMENTATION. THE DOCUMENTATION MAY ALSO BE LACKING.*
     
 =head1 DESCRIPTION
 
@@ -110,15 +112,36 @@ Delegates to C<Gtk2::main_quit>.
 
 =back
 
-=head1 AUTHOR
+=head1 ACKNOWLEDGEMENTS
+
+Thanks to everyone at Gtk2-Perl and Moose and all those who came before me for
+making this module possible.
+
+Special thanks to Jörn Reder, author of L<Gtk2::Ex::FormFactory>, which inspired
+me to write Gapp. L<Gapp::TableMap> uses modified code directly from
+L<Gtk2::Ex::FormFactory::Table> (see L<Gapp::TableMap> for more details.)
+
+Special thanks to the authors and contributors of L<MooseX::Types>, which formed
+the basis for L<Gapp::Actions> (see L<Gapp::Actions> for more details.)
+
+=head1 AUTHORS
 
 Jeffrey Ray Hallock E<lt>jeffrey.hallock at gmail dot comE<gt>
 
-=head1 COPYRIGHT
+Individual packages in this module may have have multiple authors/and or
+contributors. Please refer to the documentation of indivdual packages for
+more information. (see L<Gapp::Actions>, L<Gapp::TableMap>)
+
+=head1 COPYRIGHT & LICENSE
 
     Copyright (c) 2011 Jeffrey Ray Hallock.
+    
     This program is free software; you can redistribute it and/or
     modify it under the same terms as Perl itself.
+    
+    Individual packages in this module may have have multiple copyrights and
+    licenses. Please refer to the documentation of indivdual packages for more
+    information. (see L<Gapp::Actions>, L<Gapp::TableMap>)
 
 =cut
 

@@ -4,7 +4,6 @@ use Moose;
 use MooseX::SemiAffordanceAccessor;
 
 extends 'Gapp::Button';
-with 'Gapp::Meta::Widget::Native::Trait::FormField';
 
 has '+class' => (
     default => 'Gtk2::ToggleButton',
@@ -81,14 +80,6 @@ Gapp::ToggleButton - ToggleButton Widget
 =item +-- L<Gapp::Button>
 
 =item ....+-- L<Gapp::ToggleButton>
-
-=back
-
-=head2 Roles
-
-=over 4
-
-=item L<Gapp::Meta::Widget::Native::Trait::FormField>
 
 =back
 

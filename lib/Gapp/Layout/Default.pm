@@ -3,6 +3,8 @@ use Gapp::Layout;
 use strict;
 use warnings;
 
+use MooseX::Types::Moose qw( CodeRef Str );
+
 # Assistant
 
 build 'Gapp::Assistant', sub {
@@ -39,12 +41,12 @@ build 'Gapp::ComboBox', sub {
     
     # populate the module with values
     if ( $w->values ) {
-        my $model = Gapp::ListStore->new( columns => [qw( Glib::String )] )->gtk_widget;
         
-        for ( @{ $w->values } ) {
-            my $iter = $model->append;
-            $model->set( $iter, 0 => $_ );
-        }
+        my $model = $w->model->gtk_widget;
+        print $model, "\n";
+        
+        my @values = is_CodeRef($w->values) ? &{$w->values}($w) : @{$w->values};
+        $model->append( $_ ) for ( @values );
         
         #$model->set( $model->append, 0 => $_ ) for @{ $w->values };
         $gtkw->set_model( $model );
@@ -60,26 +62,33 @@ build 'Gapp::ComboBox', sub {
     
     # define how to display the renderer
     if ( defined $w->data_column && ! $w->data_func ) {
-        $gtkw->add_attribute( $gtkr, $w->renderer->property => $w->data_column );
+        $gtkw->set_cell_data_func($gtkr, sub {
+            
+            my ( $col, $gtkrenderer, $model, $iter, @args ) = @_;
+            
+            my $value = $model->get( $iter ) if defined $w->data_column;
+            
+            $gtkrenderer->set_property( 'markup' => $value );
+        });
     }
     elsif ( $w->data_func ) {
         
         $gtkw->set_cell_data_func($gtkr, sub {
             
             my ( $col, $gtkrenderer, $model, $iter, @args ) = @_;
+
+            my $value = $model->get( $iter ) if defined $w->data_column;
+            local $_ = $value;
             
-            local $_ = $model->get( $iter, $w->data_column ) if defined $w->data_column;
-            
-            my $value;
             if ( is_CodeRef( $w->data_func ) ) {
                 $value = &{ $w->data_func }( @_ );
             }
             elsif ( is_Str( $w->data_func ) ) {
                 my $method = $w->data_func;
-                $value = $_->$method;
+                $value = defined $_ ? $_->$method : '';
             }
-            
-            $gtkrenderer->set_property( $w->property => $value );
+
+            $gtkrenderer->set_property( 'markup' => $value );
             
         });
     }

@@ -4,6 +4,7 @@ use Moose;
 use MooseX::SemiAffordanceAccessor;
 
 extends 'Gapp::Widget';
+with 'Gapp::Meta::Widget::Native::Trait::FormField';
 
 has '+class' => (
     default => 'Gtk2::Button',
@@ -28,6 +29,21 @@ sub BUILDARGS {
 
 1;
 
+# returns the value of the widget
+sub get_field_value {
+}
+
+sub set_field_value {
+}
+
+sub widget_to_stash {
+
+}
+
+sub stash_to_widget {
+
+}
+
 
 
 __END__
@@ -43,6 +59,14 @@ Gapp::Box - Box widget
     Gapp::Widget
     +--Gapp::Container
       +--Gapp::Box
+
+=head2 Roles
+
+=over 4
+
+=item L<Gapp::Meta::Widget::Native::Trait::FormField>
+
+=back
 
 =head1 PROVIDED ATTRIBUTES
 

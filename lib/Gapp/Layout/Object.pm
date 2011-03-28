@@ -28,6 +28,19 @@ has '_builders' => (
     }
 );
 
+has '_stylers' => (
+    is => 'ro',
+    isa => HashRef,
+    default => sub { { } },
+    init_arg => undef,
+    traits => [qw( Hash )],
+    handles => {
+        add_styler => 'set',
+        get_styler => 'get',
+        has_styler => 'exists',
+    }
+);
+
 has '_packers' => (
     is       => 'ro',
     isa      => 'HashRef[HashRef]',
@@ -44,6 +57,13 @@ sub build_widget {
     $builder->( $self, $widget );
 }
 
+# the "packer" is a code ref that is called to
+# add a widget to a container 
+sub add_packer {
+    my ( $self, $widget, $container, $code_ref ) = @_;
+    $self->_packers->{$widget}{$container} = $code_ref;
+}
+
 sub find_builder {
     my ( $self, $w ) = @_;
     $w = $w->meta->name if ref $w;
@@ -52,22 +72,6 @@ sub find_builder {
     return $self->parent ? $self->parent->find_builder( $w ) : undef;
 }
 
-# the "packer" is a code ref that is called to
-# add a widget to a container 
-sub add_packer {
-    my ( $self, $widget, $container, $code_ref ) = @_;
-    $self->_packers->{$widget}{$container} = $code_ref;
-}
-
-sub has_packer {
-    my ( $self, $widget, $container ) = @_;
-    exists $self->_packers->{$widget}{$container};
-}
-
-sub get_packer {
-    my ( $self, $widget, $container ) = @_;
-    $self->_packers->{$widget}{$container};
-}
 
 # search this layout and parent layouts for a packer that will DWIM
 sub find_packer {
@@ -104,6 +108,24 @@ sub find_packer {
     }
 }
 
+sub find_styler {
+    my ( $self, $w ) = @_;
+    $w = $w->meta->name if ref $w;
+    $w = ($w->meta->superclasses)[0]->meta->name if $w->meta->name =~ /__ANON__/;
+    return $self->get_styler( $w->meta->name ) if $self->get_styler( $w->meta->name );
+    return $self->parent ? $self->parent->find_styler( $w ) : undef;
+}
+
+sub get_packer {
+    my ( $self, $widget, $container ) = @_;
+    $self->_packers->{$widget}{$container};
+}
+
+sub has_packer {
+    my ( $self, $widget, $container ) = @_;
+    exists $self->_packers->{$widget}{$container};
+}
+
 # search this layout and parent layouts for specific packer
 sub lookup_packer {
     my ( $self, $widget, $container ) = @_;
@@ -135,6 +157,14 @@ sub pack_widget {
     
     # pack the widget
     $packer->( $self, $widget, $container );   
+}
+
+sub style_widget {
+    my ( $self, $widget ) = @_;
+    my $builder = $self->find_styler( $widget );
+    return if ! defined $builder;
+    
+    $builder->( $self, $widget );
 }
 
 

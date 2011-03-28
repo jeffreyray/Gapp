@@ -9,23 +9,63 @@ use_ok 'Gapp::ComboBox';
 
 use Gapp;
 
-my $w = Gapp::ComboBox->new(
-    values => [
-        'foo',
-        'bar',
-        'baz',
-    ]
-);
-ok $w, 'created gapp widget';
-ok $w->gtk_widget, 'created gtk widget';
+{   # Basic combox box with stings
+    my $w = Gapp::ComboBox->new(
+        values => [ 'foo', 'bar', 'baz', ]
+    );
+    ok $w, 'created gapp widget';
+    ok $w->gtk_widget, 'created gtk widget';
+    
+    my $model = $w->gtk_widget->get_model;
+    my $iter = $model->get_iter_first;
+    ok $model->get( $iter ), 'got foo';
+    
+    $iter = $model->iter_next( $iter );
+    ok $model->get( $iter ), 'got bar';
+    
+    $iter = $model->iter_next( $iter );
+    ok $model->get( $iter ), 'got baz';
+}
 
-my $model = $w->gtk_widget->get_model;
-my $iter = $model->get_iter_first;
-ok $model->get( $iter, 0 ), 'got foo';
 
-$iter = $model->iter_next( $iter );
-ok $model->get( $iter, 0 ), 'got bar';
+{   # Basic combox box with sub as values
+    my $w = Gapp::ComboBox->new(
+        values => sub { 'foo', 'bar', 'baz' }
+    );
+    ok $w, 'created gapp widget';
+    ok $w->gtk_widget, 'created gtk widget';
+    
+    my $model = $w->gtk_widget->get_model;
+    my $iter = $model->get_iter_first;
+    ok $model->get( $iter ), 'got foo';
+    
+    $iter = $model->iter_next( $iter );
+    ok $model->get( $iter ), 'got bar';
+    
+    $iter = $model->iter_next( $iter );
+    ok $model->get( $iter ), 'got baz';
+    
+    Gapp::Window->new( content => [ $w ] )->show_all;
+Gapp->main;
+}
 
-$iter = $model->iter_next( $iter );
-ok $model->get( $iter, 0 ), 'got baz';
-
+{   # Basic combox box with sub as values
+    my $w = Gapp::ComboBox->new(
+        values => sub { 'foo', 'bar', 'baz' }
+    );
+    ok $w, 'created gapp widget';
+    ok $w->gtk_widget, 'created gtk widget';
+    
+    my $model = $w->gtk_widget->get_model;
+    my $iter = $model->get_iter_first;
+    ok $model->get( $iter ), 'got foo';
+    
+    $iter = $model->iter_next( $iter );
+    ok $model->get( $iter ), 'got bar';
+    
+    $iter = $model->iter_next( $iter );
+    ok $model->get( $iter ), 'got baz';
+    
+    Gapp::Window->new( content => [ $w ] )->show_all;
+    Gapp->main;
+}

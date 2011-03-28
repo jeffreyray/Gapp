@@ -79,10 +79,17 @@ sub _apply_customize {
 }
 
 # call builder method from layout
-sub _apply_layout {
+sub _apply_builders {
     my ( $self ) = @_;
     no warnings;
     $self->layout->build_widget( $self );
+}
+
+# call builder method from layout
+sub _apply_stylers {
+    my ( $self ) = @_;
+    no warnings;
+    $self->layout->style_widget( $self );
 }
 
 # apply any properties to the gtk_widget
@@ -137,10 +144,11 @@ sub _construct_gtk_widget {
 sub _build_gtk_widget {
     my ( $self ) = @_;
 
+    $self->_apply_stylers;
     my $w = $self->_construct_gtk_widget( @_ );
     $self->_apply_properties;
     $self->_apply_signals;
-    $self->_apply_layout;
+    $self->_apply_builders;
     $self->_apply_customize;
     
     return $w;
@@ -265,7 +273,16 @@ sub interpolate_class {
 
 1;
 
+sub get_property {
+    my ( $self, $name ) = @_;
+    $self->properties->{$name};
+}
 
+sub find_ancestors {
+    my ( $self ) = @_;
+    my $parent = $self->parent;
+    return $parent ? ( $parent, $parent->find_ancestors ) : ();
+}
 
 
 __END__

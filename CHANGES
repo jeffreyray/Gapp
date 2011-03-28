@@ -1,5 +1,10 @@
 Changes for Gapp
 
+0.13
+- comobox defaults to using simple list
+- added stylers to layout
+- added form attribute to form fields
+
 0.12
 - lots and lots and lots of documentation
 

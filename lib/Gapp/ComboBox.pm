@@ -9,6 +9,7 @@ use Gapp::Types qw( GappCellRenderer );
 extends 'Gapp::Widget';
 with 'Gapp::Meta::Widget::Native::Trait::FormField';
 
+use Gapp::SimpleList;
 
 has '+class' => (
     default => 'Gtk2::ComboBox',
@@ -28,6 +29,7 @@ has 'data_column' => (
 has 'model' => (
     is => 'rw',
     isa => 'Maybe[Object]',
+    default => sub { Gapp::SimpleList->new },
 );
 
 has 'renderer' => (
@@ -39,7 +41,7 @@ has 'renderer' => (
 
 has 'values' => (
     is => 'rw',
-    isa => 'Maybe[ArrayRef]',
+    isa => 'ArrayRef|CodeRef|Undef',
 );
 
 
@@ -112,6 +114,36 @@ Gapp::ComboBox - ComboBox Widget
 
 =back
 
+=head1 SYNOPSIS
+
+  # basic combo-box
+  Gapp::ComboBox->new(
+    values => [ '', 'Option1', 'Option 2', 'Option 3' ],
+  );
+
+  # in this example the combo is populated with array-refs
+  # the text is displayed to the user, and and the integer
+  # can be referenced for programmer user
+  Gapp::ComboBox->new(
+    values => [
+        [ 0, ' ' ],
+        [ 1, 'Option 1' ],
+        [ 2, 'Option 2' ],
+        [ 3, 'Option 3' ],
+    ],
+    data_func => sub { $_->[1] },
+  );
+
+  # objects too
+  Gapp::ComboBox->new(
+    values => [
+        $object1,
+        $object2,
+        $object3
+    ],
+    data_func => 'label',
+  );
+
 =head1 PROVIDED ATTRIBUTES
 
 =over 4
@@ -126,6 +158,10 @@ Gapp::ComboBox - ComboBox Widget
 
 =back
 
+This is the column in the model to the ComboBox will reference by default. The
+values in the column will appear as options to the user. You can manipulate this
+value using the C<data_func> attribute.
+
 =item B<data_func>
 
 =over 4
@@ -134,13 +170,18 @@ Gapp::ComboBox - ComboBox Widget
 
 =back
 
+Use the C<data_func> to manipulate how an entry in the combo is rendered. The
+value returned by this function will be displayed to the user. C<$_> is set to
+the value held in the model at C<data_column> for your convienence.
+
 =item B<model>
 
 =over 4
 
-=item isa L<Gapp::ListStore>|Undef
+=item isa Object|Undef
 
 =back
+
 
 =item B<renderer>
 

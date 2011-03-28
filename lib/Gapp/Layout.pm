@@ -5,8 +5,8 @@ use warnings;
 use Gapp::Layout::Object;
 
 use Sub::Exporter -setup => {
-    exports => [qw/Layout build add to extends/],
-    groups  => { default => [qw/Layout build add to extends/] },
+    exports => [qw/Layout build add to extends style/],
+    groups  => { default => [qw/Layout build add to extends style/] },
 };
 
 {
@@ -18,25 +18,35 @@ use Sub::Exporter -setup => {
     }
 }
 
-sub extends {
-    my ( $base ) = @_;
-    caller()->Layout->set_parent( $base->Layout );
-}
 
-sub build {
-    my ( $type, $definition ) = @_;
-    caller()->Layout->add_builder( $type => $definition );
-}
 
 sub add {
     my ( $widget, @args ) = @_;
     caller()->Layout->add_packer( $widget, @args );
 }
 
+
+sub build {
+    my ( $type, $definition ) = @_;
+    caller()->Layout->add_builder( $type => $definition );
+}
+
+sub extends {
+    my ( $base ) = @_;
+    caller()->Layout->set_parent( $base->Layout );
+}
+
+
+sub style {
+    my ( $type, $definition ) = @_;
+    caller()->Layout->add_styler( $type => $definition );
+}
+
 sub to {
     my ( $container, @args ) = @_;
     return ( $container, @args );
 }
+
 
 
 1;
@@ -59,17 +69,17 @@ Gapp::Layout - Define how widgets are displayed
     extends 'Gapp::Layout::Default';
     
     # center all entry texts
-    build 'Gapp::Entry', sub {
+    style 'Gapp::Entry', sub {
         ( $layout, $widget ) = @_;
-        $widget->gtk_widget->set( 'xalign', .5 );
-        $layout->parent->build_widget( $widget );
+        $widget->properties->{xalign} ||= .5 ;
+        $layout->parent->style_widget( $widget );
     };
     
-    # set spacing/borders for all vboxes
+    # add a widget to bottom of all vboxes
     build 'Gapp::VBox', sub {
         ( $layout, $widget ) = @_;
-        $widget->gtk_widget->set( spacing => 12 );
-        $widget->gtk_widget->set( 'border-width' => 6 );
+        $footer  = Gtk2::Label->new( 'footer!, 0, 0, 0 );        
+        $widget->gtk_widget->pack_end( $footer,  );
         $layout->parent->build_widget( $widget );
     };
     
@@ -102,16 +112,41 @@ L<Gapp::Layout::Default>.
  package My::Custom::Layout;
  use Gapp::Layout;
  extends 'Gapp::Layout::Default';
+ 
+=head2 Stylers
+
+Stylers are used to alter any of the L<Gapp::Widget> attributes before the Gtk+
+widget is constructed. The example below centers the the text in an entry field
+if no xalign has been set. If you want to alter the Gtk+ widget once it has been
+constructed, you want to use a builder.
+
+  # center all entry texts
+  style 'Gapp::Entry', sub {
+
+    ( $layout, $widget ) = @_;
+
+    $widget->{properties}{xalign} if ! defined $widget->{properties}{xalign};
+
+    $layout->parent->style_widget( $widget );
+
+  };
 
 =head2 Builders
 
-Builders are used to customize the Gtk+ widget when it is constructed.
+Builders are used to customize the Gtk+ widget once it is has been. Use the
+builder to maniplulate things at the Gtk2 level.
 
-    # center all entry texts
-    build 'Gapp::Entry', sub {
+    # add a widget to bottom of all vboxes
+    build 'Gapp::VBox', sub {
+
         ( $layout, $widget ) = @_;
-        $widget->gtk_widget->set( 'xalign', .5 );
+
+        $footer  = Gtk2::Label->new( 'footer!, 0, 0, 0 );
+
+        $widget->gtk_widget->pack_end( $footer,  );
+
         $layout->parent->build_widget( $widget );
+
     };
 
 =head2 Packers
