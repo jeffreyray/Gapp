@@ -1,5 +1,11 @@
 Changes for Gapp
 
+0.14
+- added form trait
+- added form stash
+- added DateEntry
+- added SSNEntry
+
 0.13
 - comobox defaults to using simple list
 - added stylers to layout

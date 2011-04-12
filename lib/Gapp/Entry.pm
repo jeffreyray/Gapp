@@ -18,7 +18,10 @@ sub BUILDARGS {
         $args{properties}{text} = [ $args{text} ];
         delete $args{text};
     }
-    
+    if ( exists $args{xalign} ) {
+        $args{properties}{xalign} = $args{xalign};
+        delete $args{xalign};
+    }
     __PACKAGE__->SUPER::BUILDARGS( %args );
 }
 
@@ -92,6 +95,8 @@ Gapp::Entry - Entry Widget
 =over 4
 
 =item B<text>
+
+=item B<xalign>
 
 =back 
 

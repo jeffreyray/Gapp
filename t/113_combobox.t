@@ -46,7 +46,6 @@ use Gapp;
     ok $model->get( $iter ), 'got baz';
     
     Gapp::Window->new( content => [ $w ] )->show_all;
-Gapp->main;
 }
 
 {   # Basic combox box with sub as values
@@ -67,5 +66,4 @@ Gapp->main;
     ok $model->get( $iter ), 'got baz';
     
     Gapp::Window->new( content => [ $w ] )->show_all;
-    Gapp->main;
 }

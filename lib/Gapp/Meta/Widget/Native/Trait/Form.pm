@@ -3,6 +3,7 @@ package Gapp::Meta::Widget::Native::Trait::Form;
 use Moose::Role;
 use Gapp::Form::Stash;
 use Gapp::Types qw( FormContext FormField FormStash );
+with 'Gapp::Meta::Widget::Native::Trait::FormElement';
 
 
 has 'context' => (
@@ -41,7 +42,7 @@ sub find_fields {
     return @fields;
 }
 
-sub _update_stash {
+sub update_stash {
     my ( $self ) = @_;
     
     my $stash = $self->stash;
@@ -51,7 +52,7 @@ sub _update_stash {
     }
 }
 
-sub _update_fields {
+sub update_fields {
     my ( $self ) = @_;
     
     for my $w ( $self->find_fields ) {

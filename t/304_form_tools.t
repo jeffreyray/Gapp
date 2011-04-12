@@ -54,8 +54,8 @@ my $form = Gapp::Table->new(
 );
 
 use Data::Dumper;
-$button1->signal_connect( clicked => sub { $form->_update_stash } );
-$button2->signal_connect( clicked => sub { $form->_update_fields } );
+$button1->signal_connect( clicked => sub { $form->update_stash } );
+$button2->signal_connect( clicked => sub { $form->update_fields } );
 $button3->signal_connect( clicked => sub { $form->stash->clear; $form->_update_fields; } );
 
 my $w = Gapp::Window->new( content => [ $form ] )->show_all;
