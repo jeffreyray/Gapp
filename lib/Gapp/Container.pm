@@ -13,6 +13,7 @@ has 'content' => (
     traits => [qw( Array )],
     handles => {
         'add' => 'push',
+        children => 'elements',
     }
 );
 

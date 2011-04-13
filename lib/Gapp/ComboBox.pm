@@ -92,6 +92,14 @@ sub stash_to_widget {
     $self->set_field_value( $stash->fetch( $self->field ) );
 }
 
+sub _connect_changed_handler {
+    my ( $self ) = @_;
+
+    $self->gtk_widget->signal_connect (
+      changed => sub { $self->_widget_value_changed },
+    );
+}
+
 1;
 
 

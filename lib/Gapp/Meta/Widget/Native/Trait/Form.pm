@@ -28,7 +28,7 @@ sub apply {
 # update the values in the form
 sub update {
     my ( $self ) = ( @_ );
-    $self->_update_fields;
+    $self->update_fields;
 }
 
 sub find_fields {
@@ -56,7 +56,9 @@ sub update_fields {
     my ( $self ) = @_;
     
     for my $w ( $self->find_fields ) {
+        $w->set_is_updating( 1 );
         $w->stash_to_widget( $self->stash );
+        $w->set_is_updating( 0 );
     }
 }
 

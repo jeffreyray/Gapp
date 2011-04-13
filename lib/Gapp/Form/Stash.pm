@@ -16,6 +16,7 @@ has 'storage' => (
         fetch => 'get',
         has => 'exists',
         delete => 'delete',
+        elements => 'keys',
     },
     lazy => 1,
 );

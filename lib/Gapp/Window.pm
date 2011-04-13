@@ -10,6 +10,11 @@ has '+class' => (
     default => 'Gtk2::Window',
 );
 
+has 'icon' => (
+    is => 'rw',
+    isa => 'Str|Undef',
+);
+
 sub BUILDARGS {
     my $class = shift;
     my %args = @_ == 1 && is_HashRef( $_[0] ) ? %{$_[0]} : @_;

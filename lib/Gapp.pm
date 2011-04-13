@@ -1,6 +1,6 @@
 package Gapp;
 
-our $VERSION = 0.14;
+our $VERSION = 0.15;
 
 use Gtk2 '-init';
 
@@ -15,6 +15,8 @@ use Gapp::ComboBox;
 use Gapp::DateEntry;
 use Gapp::Dialog;
 use Gapp::Entry;
+use Gapp::Form::Context;
+use Gapp::Form::Stash;
 use Gapp::HBox;
 use Gapp::Image;
 use Gapp::Label;
@@ -23,6 +25,7 @@ use Gapp::Menu;
 use Gapp::MenuItem;
 use Gapp::ImageMenuItem;
 use Gapp::MenuToolButton;
+use Gapp::ProgressBar;
 use Gapp::RadioButton;
 use Gapp::SimpleList;
 use Gapp::SSNEntry;

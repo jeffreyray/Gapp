@@ -9,6 +9,7 @@ use MooseX::Types::Moose qw( CodeRef Str );
 
 build 'Gapp::Assistant', sub {
     my ( $l, $w ) = @_;
+    $w->gtk_widget->set_icon( $w->gtk_widget->render_icon( $w->icon, 'dnd' ) ) if $w->icon;
 };
 
 
@@ -25,7 +26,7 @@ add 'Gapp::AssistantPage', to 'Gapp::Assistant', sub {
     my $assistant = $c->gtk_widget;
    
     my $page_num = $assistant->append_page( $gtk_w );
-    $gtk_w->{pagenum} = $page_num;
+    $w->set_num( $page_num );
     $assistant->set_page_title     ($gtk_w, $w->title );
     $assistant->set_page_side_image($gtk_w, $assistant->render_icon( $w->icon , 'dnd' ) ) if $w->icon;
     $assistant->set_page_type      ($gtk_w, $w->type );
@@ -300,6 +301,7 @@ add 'Gapp::Widget', to 'Gapp::Window', sub {
 
 build 'Gapp::Window', sub {
     my ( $l, $w ) = @_;
+    $w->gtk_widget->set_icon( $w->gtk_widget->render_icon( $w->icon, 'dnd' ) ) if $w->icon;
 };
 
 

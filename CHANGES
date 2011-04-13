@@ -1,5 +1,19 @@
 Changes for Gapp
 
+0.15
+- added find_page to Assistant
+- added num attribute to AssistantPage
+- added _connect_changed_handler to Entry, RadioButton, ComboBox
+- added children method to Container
+- added accessor, reder_prefix, writer_prefix attributes to Form::Context
+- added lookup, modify, update_from_stash methods to Form::Context
+- added accessor, reder_prefix, writer_prefix attributes to Form::Context::Node
+- added lookup, modify methods to Form::Context::Node
+- added icon attribute to Window
+- stash now actively syncs with widget state
+- added on_change handler to FormField trait
+- added ProgressBar widget
+
 0.14
 - added form trait
 - added form stash

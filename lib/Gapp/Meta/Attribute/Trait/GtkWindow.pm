@@ -17,7 +17,7 @@ before '_process_options' => sub {
     
     unshift @{ $options->{build} }, sub {
         my ( $self, $w ) = @_;
-        $w->set_icon( $w->render_icon( $options->{icon}, 'dnd' ) ) if exists $options->{icon};
+        $w->set_icon( $w->render_icon( $options->{icon}, 'menu' ) ) if exists $options->{icon};
         #$w->set_default_size( @{ $options->{default_size} } ) if exists $options->{default_size};
     };
 };

@@ -32,6 +32,11 @@ has 'icon' => (
     default => '',
 );
 
+has 'num' => (
+    is => 'rw',
+    isa => 'Int|Undef',
+);
+
 
 
 1;
