@@ -45,8 +45,6 @@ before '_process_options' => sub {
                 my $gtk_widget = $c->gtk_widget;
                 $w->append_column( $gtk_widget );
                 
-                print $c->name, "\n";
-                
                 $w->{columns}{$c->name} = $gtk_widget;
                 
             }

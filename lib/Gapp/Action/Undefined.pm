@@ -47,7 +47,7 @@ sub create_gtk_action {
     my $gtk_action = Gtk2::Action->new( %opts );
     $gtk_action->signal_connect( activate => sub {
         my ( $w, @args ) = @_;
-        $self->perform( $self, $w, @args );
+        $self->perform( \@args, [$w,  @_]  );
     });
     return $gtk_action;
 }

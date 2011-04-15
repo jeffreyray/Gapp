@@ -12,22 +12,28 @@ has 'content' => (
     default => sub { [ ] },
     traits => [qw( Array )],
     handles => {
-        'add' => 'push',
+        _add_content => 'push',
         children => 'elements',
     }
 );
+
+sub add {
+    my ( $self, @args ) = @_;
+    $_->set_parent( $self ) for @args;
+    $self->_add_content( @args );
+}
 
 sub BUILD {
     my ( $self ) = @_;
     for my $child ( @{$self->content} ) {
         $child->set_parent( $self );
-        $child->set_layout( $self->layout ) if $self->has_layout;
+        #$child->set_layout( $self->layout ) if $self->has_layout;
     }
 }
 
 after '_build_gtk_widget' => sub {
     my $self = shift;
-    $self->layout->pack_widget( $_, $self) for @{$self->content};
+    $self->find_layout->pack_widget( $_, $self) for @{$self->content};
 };
 
 # return a list of all descendants

@@ -1,5 +1,20 @@
 Changes for Gapp
 
+0.16
+- added OkCancelDialog widget trait
+- added current_page method to Assistant
+- added validator attribute and validate method to AssistantPage
+- Assistant now automatically validates a page upon display
+- added modifed property to stash
+- fixed icon property to Window, Dialog and Assistant widgets
+- added find_layout method to Widget
+BUG FIX:
+- actions were passing in incorrect args when called in certain contexts
+- containers were not setting the parent attribute of child widgets when
+  added using the 'add' method
+- DateEntry widget connects to value-changed signal instead of changed
+- Layouts now work correctly
+
 0.15
 - added find_page to Assistant
 - added num attribute to AssistantPage

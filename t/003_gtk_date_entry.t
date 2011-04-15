@@ -8,7 +8,7 @@ use_ok( 'Gapp::Gtk2::DateEntry' );
 
 
 my $entry =  Gapp::Gtk2::DateEntry->new( value => '08-11-1986' );
-is $entry->get_value->ymd, '08-11-1986', 'set value';
+is $entry->get_value->ymd, '1986-08-11', 'set value';
 
 
 $entry = Gapp::Gtk2::DateEntry->new;

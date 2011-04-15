@@ -27,4 +27,28 @@ sub find_page {
     }
 }
 
+sub current_page {
+    my ( $self ) = @_;
+    my $num = $self->gtk_widget->get_current_page;
+    
+    for my $page ( $self->children ) {
+        return $page if $page->num == $num;
+    }
+}
+
+
+
+sub BUILD {
+    my $self = shift;
+    $self->signal_connect( 'prepare' => sub {
+        my ( $self ) = @_;
+        my $page = $self->current_page;
+        $page->validate if $page->validator;
+    }, $self);
+}
+
+
+
+
+
 1;

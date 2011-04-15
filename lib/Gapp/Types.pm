@@ -8,7 +8,11 @@ FormStash
 GappAction
 GappCellRenderer
 GappContainer
+GappDialog
+GappDialogImage
 GappLayout
+GappLayoutOrUndef
+GappImage
 GappTableMap
 GappTreeViewColumn
 GappUIManager
@@ -20,6 +24,26 @@ use MooseX::Types::Moose qw( ArrayRef ClassName CodeRef HashRef Int Str );
 # GappContainer
 class_type GappContainer,
     { class => 'Gapp::Container' };
+    
+# GappDialog
+class_type GappDialog,
+    { class => 'Gapp::Dialog' };
+    
+# GappImage
+class_type GappImage,
+    { class => 'Gapp::Image' };
+
+# GappDialogImage
+subtype GappDialogImage,
+    as GappImage;
+
+coerce GappDialogImage,
+    from Str,
+    via {
+        Gapp::Image->new(
+            stock => [ $_, 'dialog' ],
+        );
+    };
 
 # GappWidget
 class_type GappWidget,

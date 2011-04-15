@@ -48,6 +48,7 @@ use Gapp::Meta::Widget::Native::Trait::ErrorDialog;
 use Gapp::Meta::Widget::Native::Trait::Form;
 use Gapp::Meta::Widget::Native::Trait::FormField;
 use Gapp::Meta::Widget::Native::Trait::FromUIManager;
+use Gapp::Meta::Widget::Native::Trait::OkCancelDialog;
 
 sub main { Gtk2->main };
 sub quit { Gtk2->main_quit };

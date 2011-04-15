@@ -14,12 +14,20 @@ has 'storage' => (
     handles => {
         store => 'set',
         fetch => 'get',
-        has => 'exists',
+        contains => 'exists',
         delete => 'delete',
         elements => 'keys',
     },
     lazy => 1,
 );
 
+has 'modified' => (
+    is => 'rw',
+    isa => 'Bool',
+    default => 0,
+);
+
+after 'store' => sub { $_[0]->set_modified(1) };
+after 'delete' => sub { $_[0]->set_modified(1) };
 
 1;

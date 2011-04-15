@@ -35,6 +35,14 @@ sub set_field_value {
     $self->gtk_widget->set_value( $value );
 }
 
+sub _connect_changed_handler {
+    my ( $self ) = @_;
+
+    $self->gtk_widget->signal_connect (
+      'value-changed' => sub { $self->_widget_value_changed },
+    );
+}
+
 
 1;
 

@@ -82,14 +82,14 @@ sub _apply_customize {
 sub _apply_builders {
     my ( $self ) = @_;
     no warnings;
-    $self->layout->build_widget( $self );
+    $self->find_layout->build_widget( $self );
 }
 
 # call builder method from layout
 sub _apply_stylers {
     my ( $self ) = @_;
     no warnings;
-    $self->layout->style_widget( $self );
+    $self->find_layout->style_widget( $self );
 }
 
 # apply any properties to the gtk_widget
@@ -114,14 +114,14 @@ sub _apply_signals {
         if ( is_GappAction( $action ) ) {
             $self->gtk_widget->signal_connect( $name => sub {
                 my $w = shift;
-                $action->perform( $self, $w,  @_  )
-            }, @args );
+                $action->perform( \@args, [$w,  @_]  )
+            });
         }
         else {
             $self->gtk_widget->signal_connect( $name => sub {
                 my $w = shift;
-                $self->$action( $w,  @_  )
-            }, @args );
+                $self->$action( \@args, [$w,  @_]  )
+            });
         }
     }
 
@@ -157,21 +157,57 @@ sub _build_gtk_widget {
 
 has 'layout' => (
     is => 'rw',
-    isa => GappLayout,
-    lazy_build => 1,
-    trigger => \&_on_set_layout,
+    isa => GappLayout|Undef,
+    predicate => 'has_layout',
+    #lazy_build => 1,
+    #trigger => \&_on_set_layout,
     coerce => 1,
 );
 
-sub _build_layout {
-    no warnings;
-    $Gapp::Layout || Gapp::Layout::Default->Layout;
+has '_used_layout' => (
+    is => 'rw',
+    isa => GappLayout|Undef,
+    clearer => '_clear_used_layout',
+    #lazy_build => 1,
+    #trigger => \&_on_set_layout,
+    #coerce => 1,
+);
+
+
+sub find_layout {
+    my ( $self, $default ) = @_;
+    return $self->_used_layout if $self->_used_layout;
+    
+    if ( $self->layout ) {
+        $self->_set_used_layout( $self->layout );
+    }
+    else {
+        if ( $self->parent ) {
+            $self->_set_used_layout( $self->parent->find_layout );
+        }
+        else {
+            no warnings;
+            $self->_set_used_layout( $default || $Gapp::Layout || Gapp::Layout::Default->Layout );
+        }
+    }
+    return $self->_used_layout;
+}
+
+sub _forget_layout {
+    my ( $self ) = @_;
+    $self->_clear_used_layout;
+    
+    if ( $self->can('children') ) {
+        $_->_forget_layout for $self->children;
+    }
 }
 
 # for subclassing
 sub _on_set_layout {
     
 }
+
+
 
 # padding around widget in container
 has 'padding' => (

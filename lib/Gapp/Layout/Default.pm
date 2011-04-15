@@ -44,7 +44,6 @@ build 'Gapp::ComboBox', sub {
     if ( $w->values ) {
         
         my $model = $w->model->gtk_widget;
-        print $model, "\n";
         
         my @values = is_CodeRef($w->values) ? &{$w->values}($w) : @{$w->values};
         $model->append( $_ ) for ( @values );
@@ -96,13 +95,12 @@ build 'Gapp::ComboBox', sub {
 
 };
 
-
 # Dialog
 
 build 'Gapp::Dialog', sub {
     my ( $l, $w ) = @_;
     my $gtk_w = $w->gtk_widget;
-    
+    $w->gtk_widget->set_icon( $w->gtk_widget->render_icon( $w->icon, 'dnd' ) ) if $w->icon;
     my $i = 0; for my $b ( @{ $w->buttons } ) {
         $gtk_w->add_button( $b, $i );
         $i++;

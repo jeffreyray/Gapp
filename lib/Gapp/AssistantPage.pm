@@ -37,6 +37,31 @@ has 'num' => (
     isa => 'Int|Undef',
 );
 
+# the validator function is valled to determine if the page is complete
+# the code-ref should return true for complete, false for not
+has 'validator' => (
+    is => 'rw',
+    isa => 'Maybe[CodeRef]',
+);
+
+# call validate to validate the page
+sub validate {
+    my ( $self ) = shift;
+    return if ! $self->validator;
+    
+    my $valid = $self->validator->( $self );
+    
+    if ( ! $self->parent ) {
+        warn qq[could not mark page ($self) as complete: ] .
+             qq[you must add this page to an assistant first];
+        return $valid;
+    }
+    
+    $self->parent->gtk_widget->set_page_complete( $self->gtk_widget, $valid );
+    return $valid;
+}
+
+
 
 
 1;
