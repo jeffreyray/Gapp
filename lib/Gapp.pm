@@ -1,6 +1,6 @@
 package Gapp;
 
-our $VERSION = 0.15;
+our $VERSION = 0.17;
 
 use Gtk2 '-init';
 
@@ -27,6 +27,7 @@ use Gapp::ImageMenuItem;
 use Gapp::MenuToolButton;
 use Gapp::ProgressBar;
 use Gapp::RadioButton;
+use Gapp::ScrolledWindow;
 use Gapp::SimpleList;
 use Gapp::SSNEntry;
 use Gapp::Table;

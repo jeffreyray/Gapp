@@ -20,9 +20,14 @@ has 'content' => (
 );
 
 
+
+
+after '_build_gtk_widget' => sub {
+    my $self = shift;
+    print "after build\n";
+};
+
 1;
-
-
 
 __END__
 

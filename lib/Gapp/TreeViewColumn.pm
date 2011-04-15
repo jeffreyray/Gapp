@@ -27,16 +27,18 @@ has 'renderer' => (
     coerce => 1,
 );
 
-has 'data_func' => (
-    is => 'rw',
-    isa => 'Str|CodeRef|Undef',
-);
-
 has 'data_column' => (
     is => 'rw',
     isa => 'Int|Undef',
     default => undef,
 );
+
+has 'data_func' => (
+    is => 'rw',
+    isa => 'Str|CodeRef|Undef',
+);
+
+
 
 sub BUILDARGS {
     my $class = shift;

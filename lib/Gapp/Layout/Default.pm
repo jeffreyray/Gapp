@@ -155,6 +155,31 @@ add 'Gapp::MenuItem', to 'Gapp::MenuShell', sub {
     $c->gtk_widget->append( $w->gtk_widget );
 };
 
+# SimpleList
+build 'Gapp::SimpleList', sub {
+    my ( $l, $w ) = @_;
+    map { $w->gtk_widget->append( $_ ) } @{ $w->content };
+};
+
+# ScrolledWindow
+build 'Gapp::ScrolledWindow', sub {
+    my ( $l, $w ) = @_;
+    $w->gtk_widget->set_policy( @{ $w->policy }) if $w->policy;
+};
+
+add 'Gapp::Widget', to 'Gapp::ScrolledWindow', sub {
+    my ($l, $w, $c) = @_;
+    
+    if ( $c->use_viewport ) {
+	$c->gtk_widget->add_with_viewport( $w->gtk_widget );
+    }
+    else {
+	$c->gtk_widget->add( $w->gtk_widget );
+    }
+    
+};
+
+
 
 # Toolbar
 build 'Gapp::Toolbar', sub {
@@ -185,7 +210,7 @@ build 'Gapp::ToolButton', sub {
 build 'Gapp::TreeView', sub {
     my ( $l, $w ) = @_;
     my $gtkw = $w->gtk_widget;
-    $gtkw->set_model( $w->model->gtk_widget ) if $w->model;
+    $gtkw->set_model( $w->model->isa('Gapp::Widget') ? $w->model->gtk_widget : $w->model ) if $w->model;
 };
 
 # TreeViewColumn
@@ -224,7 +249,7 @@ build 'Gapp::TreeViewColumn', sub {
                 $value = $_->$method;
             }
             
-            $gtkrenderer->set_property( $w->property => $value );
+            $gtkrenderer->set_property( $w->renderer->property => $value );
             
         });
     }

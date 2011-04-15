@@ -38,9 +38,15 @@ Gapp::Box - Box widget
 
 =head1 OBJECT HIERARCHY
 
-    Gapp::Widget
-    +--Gapp::Container
-      +--Gapp::Box
+=over 4
+
+=item L<Gapp::Widget>
+
+=item +-- L<Gapp::Container>
+
+=item ....+-- L<Gapp::Box>
+
+=back
 
 =head1 DELEGATED PROPERTIES
 

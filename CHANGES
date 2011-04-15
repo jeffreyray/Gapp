@@ -1,5 +1,8 @@
 Changes for Gapp
 
+0.17
+- added ScrolledWindow
+
 0.16
 - added OkCancelDialog widget trait
 - added current_page method to Assistant

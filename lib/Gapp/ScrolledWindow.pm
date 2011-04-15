@@ -1,9 +1,25 @@
-package Gapp::Bin;
+package Gapp::ScrolledWindow;
 
 use Moose;
 use MooseX::SemiAffordanceAccessor;
 
-extends 'Gapp::Container';
+extends 'Gapp::Bin';
+
+has '+class' => (
+    default => 'Gtk2::ScrolledWindow',
+);
+
+has 'policy' => (
+    is => 'rw',
+    isa => 'Maybe[ArrayRef]',
+);
+
+has 'use_viewport' => (
+    is => 'rw',
+    isa => 'Bool',
+    default => 0,
+);
+
 
 1;
 
@@ -26,6 +42,8 @@ Gapp::Bin - Bin widget
 =item +-- L<Gapp::Container>
 
 =item ....+-- L<Gapp::Bin>
+
+=item ........+-- L<Gapp::ScrolledWindow>
 
 =back
 
