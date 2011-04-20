@@ -25,12 +25,12 @@ sub BUILDARGS {
 
 # returns the value of the widget
 sub get_field_value {
-    $_[0]->gtk_widget->get_value;
+    $_[0]->gtk_widget->get_value eq '' ? undef : $_[0]->gtk_widget->get_value;
 }
 
 sub set_field_value {
     my ( $self, $value ) = @_;
-    $self->gtk_widget->set_value( $value );
+    $self->gtk_widget->set_value( defined $value ? $value : '' );
 }
 
 

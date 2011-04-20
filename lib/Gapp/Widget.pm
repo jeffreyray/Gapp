@@ -64,6 +64,19 @@ has 'fill' => (
     default => 1 ,
 );
 
+# the container of the gtk widget
+#has 'gtk_container' => (
+#    isa => 'Maybe[Gtk2::Widget]',
+#    reader => '_gtk_container',
+#    writer => 'set_gtk_container',
+#);
+#
+#sub gtk_container {
+#    $_[0]->_gtk_container || $_[0]->_gtk_widget;
+#}
+
+
+
 # the actual gtk-widget
 has 'gtk_widget' => (
     is => 'rw',

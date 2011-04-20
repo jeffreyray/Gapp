@@ -15,6 +15,18 @@ has 'icon' => (
     isa => 'Str|Undef',
 );
 
+has 'transient_for' => (
+    is => 'rw',
+    isa => 'Maybe[Gapp::Window]',
+);
+
+has 'position' => (
+    is => 'rw',
+    isa => 'Maybe[Str]',
+);
+
+
+
 sub BUILDARGS {
     my $class = shift;
     my %args = @_ == 1 && is_HashRef( $_[0] ) ? %{$_[0]} : @_;

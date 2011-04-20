@@ -13,6 +13,7 @@ GappDialogImage
 GappLayout
 GappLayoutOrUndef
 GappImage
+GappNoticeImage
 GappTableMap
 GappTreeViewColumn
 GappUIManager
@@ -38,6 +39,18 @@ subtype GappDialogImage,
     as GappImage;
 
 coerce GappDialogImage,
+    from Str,
+    via {
+        Gapp::Image->new(
+            stock => [ $_, 'dialog' ],
+        );
+    };
+    
+# GappDialogImage
+subtype GappNoticeImage,
+    as GappImage;
+
+coerce GappNoticeImage,
     from Str,
     via {
         Gapp::Image->new(

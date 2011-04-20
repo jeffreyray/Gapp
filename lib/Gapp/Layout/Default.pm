@@ -101,6 +101,8 @@ build 'Gapp::Dialog', sub {
     my ( $l, $w ) = @_;
     my $gtk_w = $w->gtk_widget;
     $w->gtk_widget->set_icon( $w->gtk_widget->render_icon( $w->icon, 'dnd' ) ) if $w->icon;
+    $w->gtk_widget->set_position( $w->position ) if $w->position;
+    $w->gtk_widget->set_transient_for( $w->transient_for->gtk_widget ) if $w->transient_for;
     my $i = 0; for my $b ( @{ $w->buttons } ) {
         $gtk_w->add_button( $b, $i );
         $i++;
@@ -153,6 +155,34 @@ build 'Gapp::MenuItem', sub {
 add 'Gapp::MenuItem', to 'Gapp::MenuShell', sub {
     my ( $l, $w, $c ) = @_;
     $c->gtk_widget->append( $w->gtk_widget );
+};
+
+
+# Notice
+build 'Gapp::Notice', sub {
+    my ( $l, $w ) = @_;
+
+    my $gtkw = $w->gtk_widget;
+    
+};
+
+
+
+# NoticeBox
+style 'Gapp::NoticeBox', sub {
+    my ( $l, $w ) = @_;
+    
+    $w->properties->{decorated} ||= 0;
+    $w->properties->{opacity}   ||= 0;
+    $w->properties->{gravity}   ||= 'south-east';
+    $w->properties->{'skip-taskbar-hint'} = 1;
+};
+
+build 'Gapp::NoticeBox', sub {
+    my ( $l, $w ) = @_;
+
+    my $gtkw = $w->gtk_widget;
+    $gtkw->set_keep_above( 1 );
 };
 
 # SimpleList
@@ -246,7 +276,7 @@ build 'Gapp::TreeViewColumn', sub {
             }
             elsif ( is_Str( $w->data_func ) ) {
                 my $method = $w->data_func;
-                $value = $_->$method;
+                $value = $_ ? $_->$method : '';
             }
             
             $gtkrenderer->set_property( $w->renderer->property => $value );
@@ -261,6 +291,11 @@ build 'Gapp::TreeViewColumn', sub {
 add 'Gapp::Widget', to 'Gapp::AssistantPage', sub {
     my ($l,  $w, $c ) = @_;
     $c->gtk_widget->pack_start( $w->gtk_widget, $w->expand, $w->fill, $w->padding );
+};
+
+add 'Gapp::Widget', to 'Gapp::Bin', sub {
+    my ($l,  $w, $c ) = @_;
+    $c->gtk_widget->add( $w->gtk_widget );
 };
 
 add 'Gapp::Widget', to 'Gapp::Container', sub {

@@ -7,7 +7,7 @@ extends 'Gapp::Widget';
 
 # the contents of the widget
 has 'content' => (
-    is => 'ro',
+    is => 'rw',
     isa => 'ArrayRef',
     default => sub { [ ] },
     traits => [qw( Array )],

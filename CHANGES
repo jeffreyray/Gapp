@@ -1,5 +1,13 @@
 Changes for Gapp
 
+0.18
+- added EventBox widget
+- added updated attribute to Stash
+- added update_from_context attribute to Stash
+- added NoticeBox and Notice widgets
+- added transient_for and position attributes to Window widget
+
+
 0.17
 - added ScrolledWindow
 

@@ -17,6 +17,7 @@ use Gapp::Moose::Meta::Attribute::Trait::GappLabel;
 use Gapp::Moose::Meta::Attribute::Trait::GappListStore;
 use Gapp::Moose::Meta::Attribute::Trait::GappDefault;
 use Gapp::Moose::Meta::Attribute::Trait::GappMenu;
+use Gapp::Moose::Meta::Attribute::Trait::GappNoticeBox;
 use Gapp::Moose::Meta::Attribute::Trait::GappScrolledWindow;
 use Gapp::Moose::Meta::Attribute::Trait::GappStatusIcon;
 use Gapp::Moose::Meta::Attribute::Trait::GappTable;

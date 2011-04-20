@@ -29,6 +29,7 @@ before '_process_options' => sub {
         $opts->{default} = sub {
             my ( $self ) = @_;
             my $att = $self->meta->get_attribute( $name );
+            print $name, "\n";
             
             my $wclass = $att->class;
             my $wmethod = $att->constructor;

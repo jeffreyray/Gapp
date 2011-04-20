@@ -14,8 +14,22 @@ has 'context' => (
 has 'stash' => (
     is => 'rw',
     isa => FormStash,
-    default => sub { Gapp::Form::Stash->new },
+    #trigger => \&_initialize_stash,
+    #initializer => \&_initialize_stash,
+    lazy_build => 1,
 );
+
+sub _build_stash {
+    my $self = shift;
+    my $stash = Gapp::Form::Stash->new;
+    
+    for my $w ( $self->find_fields ) {
+        $stash->store( $w->field, undef ) if ! $stash->contains( $w->field );
+    }
+    
+    $stash->set_modified( 0 );
+    return $stash;
+}
 
 # update the user variables
 sub apply {
@@ -40,6 +54,18 @@ sub find_fields {
     }
     
     return @fields;
+}
+
+sub _initialize_stash {
+    my ( $self ) = @_;
+    
+    my $stash = $self->stash;
+    
+    for my $w ( $self->find_fields ) {
+        $stash->store( $w->field, undef ) if ! $stash->contains( $w->field );
+    }
+    
+    $stash->set_modified( 0 );
 }
 
 sub update_stash {
