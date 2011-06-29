@@ -66,6 +66,11 @@ sub create_gtk_action {
     return $gtk_action;
 }
 
+sub create_gtk_image {
+    my ( $self, @args ) = @_;
+    Gtk2::Image->new_from_stock( $self->icon , $args[0] );
+}
+
 
 
 no Moose;

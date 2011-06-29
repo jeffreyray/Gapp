@@ -170,6 +170,14 @@ sub set {
 	$self->row_changed ($self->get_path ($treeiter), $treeiter);
 }
 
+sub clear {
+    my ( $self ) = @_;
+    $self->{rows} = [],
+}
+
+
+
+
 1;
 
 

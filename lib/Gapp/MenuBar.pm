@@ -1,16 +1,11 @@
-package Gapp::ToolItem;
+package Gapp::MenuBar;
 
 use Moose;
 use MooseX::SemiAffordanceAccessor;
-extends 'Gapp::Widget';
+extends 'Gapp::MenuShell';
 
 has '+class' => (
-    default => 'Gtk2::ToolItem',
-);
-
-has 'action' => (
-    is => 'rw',
-    #isa => 'Maybe[Gapp::Action]',
+    default => 'Gtk2::MenuBar',
 );
 
 
@@ -24,7 +19,7 @@ __END__
 
 =head1 NAME
 
-Gapp::ToolItem - ToolItem Widget
+Gapp::MenuBar - MenuBar Widget
 
 =head1 OBJECT HIERARCHY
 
@@ -32,21 +27,11 @@ Gapp::ToolItem - ToolItem Widget
 
 =item L<Gapp::Widget>
 
-=item ....+-- L<Gapp::ToolItem>
+=item +-- L<Gapp::Container>
 
-=back
+=item ....+-- L<Gapp::MenuShell>
 
-=head1 PROVIDED ATTRIBUTES
-
-=over 4
-
-=item B<action>
-
-=over 4
-
-=item isa GappAction|Undef
-
-=back
+=item ........+-- L<Gapp::MenuBar>
 
 =back
 

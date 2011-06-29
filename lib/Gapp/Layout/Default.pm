@@ -3,7 +3,7 @@ use Gapp::Layout;
 use strict;
 use warnings;
 
-use MooseX::Types::Moose qw( CodeRef Str );
+use MooseX::Types::Moose qw( ArrayRef CodeRef Str );
 
 # Assistant
 
@@ -108,6 +108,21 @@ build 'Gapp::Dialog', sub {
         $i++;
     }
 };
+
+# FileChooserDialog
+
+build 'Gapp::FileChooserDialog', sub {
+    my ( $l, $w ) = @_;
+    my $gtk_w = $w->gtk_widget;
+    $w->gtk_widget->set_icon( $w->gtk_widget->render_icon( $w->icon, 'dnd' ) ) if $w->icon;
+    $w->gtk_widget->set_position( $w->position ) if $w->position;
+    $w->gtk_widget->set_transient_for( $w->transient_for->gtk_widget ) if $w->transient_for;
+    my $i = 0; for my $b ( @{ $w->buttons } ) {
+        $gtk_w->add_button( $b, $i );
+        $i++;
+    }
+};
+
 
 # Label
 
@@ -230,9 +245,28 @@ add 'Gapp::ToolItem', to 'Gapp::Toolbar', sub {
 build 'Gapp::ToolButton', sub {
     my ( $l, $w ) = @_;
     my $gtkw = $w->gtk_widget;
+    
     $gtkw->set_stock_id( $w->stock_id ) if $w->stock_id;
     $gtkw->set_label( $w->label ) if defined $w->label;
-    $gtkw->set_icon_widget( Gtk2::Image->new_from_stock( $w->icon, 'dnd' ) ) if $w->icon;
+    
+    my $action = is_ArrayRef( $w->action ) ? $w->action->[0] : $w->action;
+    my ( $cb, @args );
+    @args = is_ArrayRef( $w->action ) ? @{$w->action} : ();
+    shift @args;
+    
+    if ( is_CodeRef($action) ) {
+	$cb = $action;
+	$gtkw->signal_connect( 'clicked', $cb, @args );
+    }
+    else {
+	$gtkw->set_stock_id( $action->icon ) if $action->icon;
+	$gtkw->set_label( $action->label ) if $action->label;
+	
+	$gtkw->signal_connect( clicked => sub {
+	    my ( $w, @gtkargs ) = @_;
+	    $action->perform( \@args, [ $w, @gtkargs ] );
+	});
+    }
 };
 
 # TreeView
