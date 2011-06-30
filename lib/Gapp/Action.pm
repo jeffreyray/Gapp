@@ -1,6 +1,7 @@
 package Gapp::Action;
 
 use Moose;
+use MooseX::Clone;
 use MooseX::SemiAffordanceAccessor;
 use MooseX::StrictConstructor;
 use MooseX::Method::Signatures;

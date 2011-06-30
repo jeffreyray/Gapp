@@ -289,6 +289,7 @@ build 'Gapp::ToolButton', sub {
     
     $gtkw->set_stock_id( $w->stock_id ) if $w->stock_id;
     $gtkw->set_label( $w->label ) if defined $w->label;
+    $gtkw->set_tooltip_text( $w->tooltip ) if defined $w->tooltip;
     
     my $action = is_ArrayRef( $w->action ) ? $w->action->[0] : $w->action;
     my ( $cb, @args );
@@ -302,6 +303,7 @@ build 'Gapp::ToolButton', sub {
     else {
 	$gtkw->set_stock_id( $action->icon ) if $action->icon;
 	$gtkw->set_label( $action->label ) if $action->label;
+	$gtkw->set_tooltip_text( $action->tooltip ) if defined $action->tooltip;
 	
 	$gtkw->signal_connect( clicked => sub {
 	    my ( $gtkw, @gtkargs ) = @_;

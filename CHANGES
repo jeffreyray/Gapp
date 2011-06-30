@@ -1,5 +1,14 @@
 Changes for Gapp
 
+0.21
+- Gapp::Actions now implement MooseX::Clone
+- added 'buttons' attribute to Gapp::ButtonBox
+- containers now set parent attribute of child elements correctly
+- added tooltips to Gapp::ToolButtons
+- added GappHBox and GappVBox attribute traits
+- added tooltip attribute to Gapp::Widget
+
+
 0.20
 - IMPORTANT: actions performed by gtk widgets are now passed the following
 arguments( $gapp_widget, $user_args, $gtk_widget, @gtk_args )

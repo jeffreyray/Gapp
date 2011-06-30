@@ -11,6 +11,10 @@ has 'content' => (
     isa => 'ArrayRef',
     default => sub { [ ] },
     traits => [qw( Array )],
+    trigger => sub {
+        my ( $self, $content ) = @_;
+        map { $_->set_parent( $self ) } @$content;
+    },
     handles => {
         _add_content => 'push',
         children => 'elements',

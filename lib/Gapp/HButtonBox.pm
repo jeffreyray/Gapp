@@ -3,7 +3,7 @@ package Gapp::HButtonBox;
 use Moose;
 use MooseX::SemiAffordanceAccessor;
 
-extends 'Gapp::Container';
+extends 'Gapp::ButtonBox';
 
 has '+class' => (
     default => 'Gtk2::HButtonBox',

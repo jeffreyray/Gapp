@@ -85,6 +85,11 @@ has 'gtk_widget' => (
     handles => [qw( show show_all hide )],
 );
 
+has 'tooltip' => (
+    is => 'rw',
+    isa => 'Maybe[Str]',
+);
+
 # call customize code-ref if set
 sub _apply_customize {
     my ( $self ) = @_;

@@ -31,6 +31,20 @@ sub _build_stash {
     return $stash;
 }
 
+
+sub close {
+    my ( $self ) = @_;
+    $self->gtk_widget->destroy;
+}
+
+sub do_before_close {
+    
+}
+
+sub do_after_close {
+    
+}
+
 # update the user variables
 sub apply {
     my ( $self ) = @_;
@@ -44,15 +58,27 @@ sub ok {
     $self->close;
 }
 
+sub do_before_ok {
+    
+}
+
+sub do_after_ok {
+    
+}
+
 sub cancel {
     my ( $self ) = @_;
     $self->close;
 }
 
-sub close {
-    my ( $self ) = @_;
-    $self->gtk_widget->destroy;
+sub do_before_cancel {
+    
 }
+
+sub do_after_cancel {
+    
+}
+
 
 # update the values in the form
 sub update {
