@@ -1,5 +1,10 @@
 Changes for Gapp
 
+0.20
+- actions performed by gtk widgets are now passed the following arguments
+  ( $gapp_widget, $user_args, $gtk_widget, @gtk_args )
+- added ButtonBox, HButtonBox, VButtonBox
+
 0.19
 - added MenuBar widget
 - added FileChooserDialog
