@@ -3,6 +3,7 @@ use Gapp::Layout;
 use strict;
 use warnings;
 
+use Gapp::Types qw( GappAction GappActionOrArrayRef );
 use MooseX::Types::Moose qw( ArrayRef CodeRef Str );
 
 # Assistant
@@ -33,6 +34,46 @@ add 'Gapp::AssistantPage', to 'Gapp::Assistant', sub {
     $assistant->set_page_complete  ($gtk_w, 1);
     $assistant->{pages}{$w->name} = $gtk_w;  
 };
+
+build 'Gapp::Button', sub {
+    my ( $l, $w ) = @_;
+    my $gtkw = $w->gtk_widget;
+    
+    my ( $label, $image, $tooltip );
+    
+    if ( $w->icon ) {
+	$image = Gtk2::Image->new_from_stock( $w->icon, 'button' );
+    }
+    
+    if ( $w->action ) {
+	my ( $action, @args );
+	
+	if ( is_ArrayRef( $w->action ) ) {
+	    ( $action, @args ) = @{ $w->action };
+	}
+	else {
+	    $action = $w->action;
+	}
+	
+        $label = defined $w->label ? $w->label : $action->label;
+	$image ||= $action->create_gtk_image( 'button' );
+	$tooltip = defined $w->tooltip ? $w->tooltip : $action->tooltip;
+	
+	$gtkw->signal_connect( clicked => sub {
+	    my ( $gtkw, @gtkargs ) = @_;
+	    $action->perform( $w, \@args, $gtkw, \@gtkargs );
+	});
+    }
+    else {
+	$label = $w->label;
+	$tooltip = $w->tooltip;
+    }
+    
+    $gtkw->set_label( $label ) if defined $label;
+    $gtkw->set_image( $image ) if defined $image;
+    $gtkw->set_tooltip_text( $tooltip ) if defined $tooltip;
+};
+
 # ComboBox
 
 build 'Gapp::ComboBox', sub {
@@ -263,8 +304,8 @@ build 'Gapp::ToolButton', sub {
 	$gtkw->set_label( $action->label ) if $action->label;
 	
 	$gtkw->signal_connect( clicked => sub {
-	    my ( $w, @gtkargs ) = @_;
-	    $action->perform( \@args, [ $w, @gtkargs ] );
+	    my ( $gtkw, @gtkargs ) = @_;
+	    $action->perform( $w, \@args, $gtkw, \@gtkargs );
 	});
     }
 };

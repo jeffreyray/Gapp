@@ -6,6 +6,7 @@ use Test::More qw( no_plan );
 use lib qw( ..\lib lib );
 
 use Gapp;
+use Gapp::Actions::Form qw( Apply Cancel Ok );
 
 my $map = <<ENDMAP;
 +-[--------[----------+------------------------------------+
@@ -39,15 +40,15 @@ my $form = Gapp::Table->new(
         Gapp::Label->new( text => 'Entry' ),
         Gapp::CheckButton->new( field => 'check', label => 'True' ),
         
-        Gapp::VBox->new( content => [
+        Gapp::HButtonBox->new( content => [
             my $button1 = Gapp::Button->new(
-                label => 'Save',
+                action => Cancel,
             ),
             my $button2 = Gapp::Button->new(
-                label => 'Reset',
+                action => Apply,
             ),
             my $button3 = Gapp::Button->new(
-                label => 'Clear',
+                action => Ok,
             ),
         ]),
         
@@ -55,11 +56,12 @@ my $form = Gapp::Table->new(
 );
 
 use Data::Dumper;
-$button1->signal_connect(
-    clicked => sub { $form->update_stash }
-);
-$button2->signal_connect( clicked => sub { $form->_update_fields } );
-$button3->signal_connect( clicked => sub { $form->stash->clear; $form->_update_fields; } );
+#$button1->signal_connect(
+#    clicked => sub { $form->update_stash }
+#);
+#$button2->signal_connect( clicked => sub { $form->_update_fields } );
+#$button3->signal_connect( clicked => sub { $form->stash->clear; $form->_update_fields; } );
 
-my $w = Gapp::Window->new( content => [ $form ] )->show_all;
+my $w = Gapp::Window->new( content => [ $form ] );
+$w->show_all;
 Gapp->main;

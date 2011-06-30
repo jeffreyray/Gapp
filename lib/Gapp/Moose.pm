@@ -13,6 +13,7 @@ use Gapp::Moose::Meta::Attribute::Trait::GappActionGroup;
 use Gapp::Moose::Meta::Attribute::Trait::GappAssistant;
 use Gapp::Moose::Meta::Attribute::Trait::GappButton;
 use Gapp::Moose::Meta::Attribute::Trait::GappFileChooserDialog;
+use Gapp::Moose::Meta::Attribute::Trait::GappHButtonBox;
 use Gapp::Moose::Meta::Attribute::Trait::GappImage;
 use Gapp::Moose::Meta::Attribute::Trait::GappLabel;
 use Gapp::Moose::Meta::Attribute::Trait::GappListStore;
@@ -30,6 +31,7 @@ use Gapp::Moose::Meta::Attribute::Trait::GappTreeView;
 use Gapp::Moose::Meta::Attribute::Trait::GappUIManager;
 use Gapp::Moose::Meta::Attribute::Trait::GappWindow;
 use Gapp::Moose::Meta::Attribute::Trait::GappWidget;
+use Gapp::Moose::Meta::Attribute::Trait::GappVButtonBox;
 
 Moose::Exporter->setup_import_methods(
     with_meta => ['widget'],

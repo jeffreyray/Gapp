@@ -6,6 +6,8 @@ FormContext
 FormField
 FormStash
 GappAction
+GappAction
+GappActionOrArrayRef
 GappCellRenderer
 GappContainer
 GappDialog
@@ -21,6 +23,13 @@ GappWidget
 )];
 
 use MooseX::Types::Moose qw( ArrayRef ClassName CodeRef HashRef Int Str );
+
+# GappAction
+class_type GappAction,
+    { class => 'Gapp::Action' };
+    
+subtype GappActionOrArrayRef,
+    as GappAction|ArrayRef;     
 
 # GappContainer
 class_type GappContainer,

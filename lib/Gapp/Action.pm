@@ -61,9 +61,14 @@ sub create_gtk_action {
     my $gtk_action = Gtk2::Action->new( %opts );
     $gtk_action->signal_connect( activate => sub {
         my ( $w, @gtkargs ) = @_;
-        $self->perform( $args, [ $w, @gtkargs ] );
+        $self->perform( $self, $args, $w, \@gtkargs );
     });
     return $gtk_action;
+}
+
+sub create_gapp_image {
+    my ( $self, @args ) = @_;
+    Gapp::Image->new( gtk_widget => Gtk2::Image->new_from_stock( $self->icon , $args[0] ) );
 }
 
 sub create_gtk_image {

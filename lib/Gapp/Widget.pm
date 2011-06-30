@@ -122,18 +122,17 @@ sub _apply_signals {
     for my $s ( @{ $self->connected_signals } ) {
         my ( $name, $action, @args ) = @$s;
         use Scalar::Util qw( blessed );
-        $action = $action->code if blessed $action && $action->isa( 'Gapp::Action' );
         
         if ( is_GappAction( $action ) ) {
             $self->gtk_widget->signal_connect( $name => sub {
-                my $w = shift;
-                $action->perform( \@args, [$w,  @_]  )
+                my ( $gtkw, @gtkargs ) = @_;
+                $action->perform( $self, \@args, $gtkw,  \@gtkargs );
             });
         }
         else {
             $self->gtk_widget->signal_connect( $name => sub {
-                my $w = shift;
-                $self->$action( \@args, [$w,  @_]  )
+                my ( $gtkw, @gtkargs ) = @_;
+                $action->( $self, \@args, $gtkw,  \@gtkargs );
             });
         }
     }
@@ -331,6 +330,15 @@ sub find_ancestors {
     my ( $self ) = @_;
     my $parent = $self->parent;
     return $parent ? ( $parent, $parent->find_ancestors ) : ();
+}
+
+sub find_toplevel {
+    my ( $self ) = @_;
+    my @ancestors = $self->find_ancestors;
+    
+    print "---->", $self->parent, "\n";
+    
+    return @ancestors ? $ancestors[-1] : $self;
 }
 
 

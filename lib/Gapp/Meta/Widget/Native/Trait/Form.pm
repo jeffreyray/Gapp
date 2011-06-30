@@ -35,12 +35,13 @@ sub _build_stash {
 sub apply {
     my ( $self ) = @_;
     $self->update_stash;
-    $self->context->update_from_stash( $self->stash );
+    $self->context->update_from_stash( $self->stash ) if $self->context;
 }
 
 sub ok {
     my ( $self ) = @_;
     $self->apply;
+    $self->close;
 }
 
 sub cancel {
@@ -50,7 +51,7 @@ sub cancel {
 
 sub close {
     my ( $self ) = @_;
-    $self->gtk_widget->close;
+    $self->gtk_widget->destroy;
 }
 
 # update the values in the form

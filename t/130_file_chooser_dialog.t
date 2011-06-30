@@ -13,5 +13,3 @@ my $w = Gapp::FileChooserDialog->new(
 
 ok $w, 'created file chooser dialog';
 $w->show_all;
-
-Gapp->main;

@@ -30,7 +30,7 @@ method perform ( Str $action, @args ) {
     $self->meta->throw_error( qq[action ($action) does not exist] )
         if ! $self->has_action( $action );
         
-    $self->action( $action )->perform( @args );
+    $self->action( $action )->perform( $self, @args );
 }
 
 

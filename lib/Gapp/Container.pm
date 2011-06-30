@@ -25,6 +25,9 @@ sub add {
 
 sub BUILD {
     my ( $self ) = @_;
+    
+    print $self, "[[[[[]]]]]", @{$self->content}, "\n";
+    
     for my $child ( @{$self->content} ) {
         $child->set_parent( $self );
         #$child->set_layout( $self->layout ) if $self->has_layout;

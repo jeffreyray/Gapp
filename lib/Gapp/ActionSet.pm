@@ -31,8 +31,9 @@ method add_action ( Str $name, Object|HashRef $action ) {
 method perform ( Str $action, @args ) {
     $self->meta->throw_error( qq[action ($action) does not exist] )
         if ! $self->has_action( $action );
-        
-    $self->action( $action )->perform( @args );
+    
+    my $action_obj = $self->action( $action );
+    $action_obj->perform( @args );
 }
 
 

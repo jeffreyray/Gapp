@@ -3,6 +3,9 @@ package Gapp::Button;
 use Moose;
 use MooseX::SemiAffordanceAccessor;
 
+use Gapp::Types qw( GappActionOrArrayRef );
+use MooseX::Types::Moose qw( Undef );
+
 extends 'Gapp::Widget';
 with 'Gapp::Meta::Widget::Native::Trait::FormField';
 
@@ -10,10 +13,42 @@ has '+class' => (
     default => 'Gtk2::Button',
 );
 
+has 'action' => (
+    is => 'rw',
+    isa => GappActionOrArrayRef|Undef,
+);
+
 has 'label' => (
     is => 'rw',
-    isa => 'Str|Undef',
+    isa => 'Maybe[Str]',
 );
+
+has 'icon' => (
+    is => 'rw',
+    isa => 'Maybe[Str]',
+);
+
+has 'image' => (
+    is => 'rw',
+    isa => 'Maybe[Gapp::Image]',
+);
+
+has 'stock_id' => (
+    is => 'rw',
+    isa => 'Maybe[Str]',
+);
+
+has 'tooltip' => (
+    is => 'rw',
+    isa => 'Maybe[Str]',
+);
+
+
+before '_construct_gtk_widget' => sub {
+    my ( $self ) = @_;
+
+};
+
 
 sub BUILDARGS {
     my $class = shift;
