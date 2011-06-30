@@ -33,10 +33,24 @@ sub _build_stash {
 
 # update the user variables
 sub apply {
-    my ( $self ) = ( @_ );
-    
-    my $cx = $self->context;
-    
+    my ( $self ) = @_;
+    $self->update_stash;
+    $self->context->update_from_stash( $self->stash );
+}
+
+sub ok {
+    my ( $self ) = @_;
+    $self->apply;
+}
+
+sub cancel {
+    my ( $self ) = @_;
+    $self->close;
+}
+
+sub close {
+    my ( $self ) = @_;
+    $self->gtk_widget->close;
 }
 
 # update the values in the form
