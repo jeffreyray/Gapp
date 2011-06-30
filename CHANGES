@@ -1,6 +1,13 @@
 Changes for Gapp
 
 0.19
+- added MenuBar widget
+- added FileChooserDialog
+- added 'create_gtk_image' method to Gapp::Action
+- added 'clear' method to Gapp::Gtk2::List::Simple
+- can attach actions to Gapp::ToolButton widgets
+- added MenuBar widget
+
 
 0.18
 - added EventBox widget

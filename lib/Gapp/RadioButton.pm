@@ -30,7 +30,6 @@ sub _construct_gtk_widget {
         $self->parent->{_rdo_groups}{ $self->field } ||= $w->get_group;
     }
     
-    
     return $w;
 }
 

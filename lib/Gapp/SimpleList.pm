@@ -19,13 +19,11 @@ has 'content' => (
     default => sub { [ ] },
 );
 
+has '+gtk_widget' => (
+    handles => [qw( show show_all hide clear append )],
+);
 
 
-
-after '_build_gtk_widget' => sub {
-    my $self = shift;
-    print "after build\n";
-};
 
 1;
 

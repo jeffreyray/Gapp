@@ -15,21 +15,21 @@ action New => (
     label => 'New',
     tooltip => 'New',
     icon => 'gtk-new',
-    code => sub { print 'action: ' . $_[0]->name, "\n" },
+    code => sub { print 'action: ' , @_, "\n" },
 );
 
 action Edit => (
     label => 'Edit',
     tooltip => 'Edit',
     icon => 'gtk-edit',
-    code => sub { print 'action: ' . $_[0]->name, "\n"  },
+    code => sub { print 'action: ' , @_, "\n"  },
 );
 
 action Delete => (
     label => 'Delete',
     tooltip => 'Delete',
     icon => 'gtk-delete',
-    code => sub { print 'action: ' . $_[0]->name, "\n"  },
+    code => sub { print 'action: ' , @_, "\n"  },
 );
 
 my $w = Gapp::Window->new(

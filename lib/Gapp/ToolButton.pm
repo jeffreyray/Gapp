@@ -1,8 +1,11 @@
 package Gapp::ToolButton;
 
 use Moose;
+use MooseX::Types::Moose qw( ArrayRef );
 use MooseX::SemiAffordanceAccessor;
+
 extends 'Gapp::ToolItem';
+
 
 has '+class' => (
     default => 'Gtk2::ToolButton',
@@ -18,36 +21,77 @@ has 'icon' => (
     isa => 'Str',
 );
 
-has 'label' => (
+has 'icon_size' => (
     is => 'rw',
     isa => 'Str',
+    default => 'dnd',
 );
 
-sub BUILDARGS {
-    my $class = shift;
-    my %args = @_ == 1 && is_HashRef( $_[0] ) ? %{$_[0]} : @_;
+has 'label' => (
+    is => 'rw',
+    isa => 'Maybe[Str]',
+);
+
+
+before '_build_gtk_widget' => sub {
+    my $self = shift;
     
-    $args{label} = $args{action}->label if $args{action} && ! exists $args{label};
-    $args{icon} = $args{action}->icon if $args{action} && ! exists $args{icon};
+    my $action = $self->action;
+    $action = is_ArrayRef( $action ) ? $action->[0] : $action;
     
-    if ( exists $args{stock_id} ) {
-        $args{constructor} = 'new_from_stock';
-        $args{args} = [ $args{stock_id} ];
+    if ( $action ) {
+        my $icon = $self->icon ? $self->icon : $action->icon;
+        my $label = defined $self->label ? $self->label : $action->label;
+        $self->set_constructor( 'new' );
+        $self->set_args ( [Gtk2::Image->new_from_stock( $icon , $self->icon_size ), $label] );
+    }
+    
+    elsif ( $self->stock_id ) {
+        $self->set_constructor( 'new_from_stock' );
+        $self->set_args( [ $self->stock_id] );
+    }
+    elsif ( $self->icon ) {
+        $self->set_constructor( 'new' );
+        $self->set_args ( [Gtk2::Image->new_from_stock( $self->icon , $self->icon_size ), defined $self->label ? $self->label : ''] );
     }
     else {
-        if ( ! $args{icon} ) {
-            warn 'must set icon or stock_id';
-        }
-        else {
-            $args{args} = [
-                Gtk2::Image->new_from_stock( $args{icon} , 'dnd' ),
-                $args{label},
-            ];
-        }
+        $self->set_constructor( 'new' );
+        $self->set_args ( [Gtk2::Image->new_from_stock( 'gtk-dialog-error' , $self->icon_size ), defined $self->label ? $self->label : ''] );
     }
-    
-    __PACKAGE__->SUPER::BUILDARGS( %args );
-}
+};
+
+
+
+
+
+
+
+
+#sub BUILDARGS {
+#    my $class = shift;
+#    my %args = @_ == 1 && is_HashRef( $_[0] ) ? %{$_[0]} : @_;
+#    
+#    #$args{label} = $args{action}->label if $args{action} && ! exists $args{label};
+#    #$args{icon} = $args{action}->icon if $args{action} && ! exists $args{icon};
+#    
+#    if ( exists $args{stock_id} ) {
+#        $args{constructor} = 'new_from_stock';
+#        $args{args} = [ $args{stock_id} ];
+#    }
+#    else {
+#        if ( ! $args{icon} ) {
+#            warn 'must set icon or stock_id';
+#        }
+#        else {
+#            $args{args} = [
+#                Gtk2::Image->new_from_stock( $args{icon} , 'dnd' ),
+#                $args{label},
+#            ];
+#        }
+#    }
+#    
+#    __PACKAGE__->SUPER::BUILDARGS( %args );
+#}
 
 1;
 

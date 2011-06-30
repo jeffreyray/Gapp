@@ -1,35 +1,40 @@
-package Gapp::Dialog;
+package Gapp::FileChooserDialog;
 
 use Moose;
 use MooseX::SemiAffordanceAccessor;
 use MooseX::Types::Moose qw( ArrayRef );
 
-extends 'Gapp::Window';
-
-has 'buttons' => (
-    is => 'rw',
-    isa => ArrayRef,
-    default => sub { [ ] },
-);
+extends 'Gapp::Dialog';
 
 has '+class' => (
-    default => 'Gtk2::Dialog',
+    default => 'Gtk2::FileChooserDialog',
 );
 
 has '+gtk_widget' => (
     handles => ['run'],
 );
 
-after '_build_gtk_widget' => sub {
-    shift->gtk_widget->vbox->show_all;
+has 'action' => (
+    is => 'rw',
+    isa => 'Str',
+    default => 'open',
+);
+
+has 'parent' => (
+    is => 'rw',
+    isa => 'Maybe[Object]',
+    default => undef,
+);
+
+
+
+before '_build_gtk_widget' => sub {
+    my $self = shift;
+    $self->set_args( [ $self->properties->{title} ? $self->properties->{title} : '' ,
+                      $self->parent ? $self->parent->gtk_widget : undef,
+                      $self->action ] );
 };
-
-
-
-
-
-
-
+    
 
 
 1;
