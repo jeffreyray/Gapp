@@ -1,6 +1,6 @@
 package Gapp;
 
-our $VERSION = 0.21;
+our $VERSION = 0.22;
 
 use Gtk2 '-init';
 
@@ -18,6 +18,7 @@ use Gapp::Dialog;
 use Gapp::Entry;
 use Gapp::EventBox;
 use Gapp::FileChooserDialog;
+use Gapp::FileFilter;
 use Gapp::Form::Context;
 use Gapp::Form::Stash;
 use Gapp::HBox;
@@ -35,6 +36,8 @@ use Gapp::NoticeBox;
 use Gapp::ProgressBar;
 use Gapp::RadioButton;
 use Gapp::ScrolledWindow;
+use Gapp::SeparatorMenuItem;
+use Gapp::SeparatorToolItem;
 use Gapp::SimpleList;
 use Gapp::SSNEntry;
 use Gapp::Table;
@@ -57,6 +60,7 @@ use Gapp::Meta::Widget::Native::Trait::ErrorDialog;
 use Gapp::Meta::Widget::Native::Trait::Form;
 use Gapp::Meta::Widget::Native::Trait::FormField;
 use Gapp::Meta::Widget::Native::Trait::FromUIManager;
+use Gapp::Meta::Widget::Native::Trait::MessageDialog;
 use Gapp::Meta::Widget::Native::Trait::OkCancelDialog;
 
 sub main { Gtk2->main };

@@ -20,6 +20,12 @@ has 'transient_for' => (
     isa => 'Maybe[Gapp::Window]',
 );
 
+has 'modal' => (
+    is => 'rw',
+    isa => 'Maybe[Int]',
+);
+
+
 has 'position' => (
     is => 'rw',
     isa => 'Maybe[Str]',

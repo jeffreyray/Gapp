@@ -1,5 +1,18 @@
 Changes for Gapp
 
+0.22
+- added FileFilter
+- added SeparatorMenuItem
+- added SeparatorToolItem
+- added MessageDialog widget trait
+- Gapp::Actions::Util now exports three new keywords: perform, parse_action, actioncb
+- FileChooseDialog now has "filters" attribute
+- added "clear" method to Gtk2::List::Simple
+- MenuItems now have "action" attribute
+- added "model" attribute to Window
+
+
+
 0.21
 - Gapp::Actions now implement MooseX::Clone
 - added 'buttons' attribute to Gapp::ButtonBox

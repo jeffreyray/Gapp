@@ -172,7 +172,16 @@ sub set {
 
 sub clear {
     my ( $self ) = @_;
-    $self->{rows} = [],
+    
+    while ( @{$self->{rows}} ) {
+	my $record = pop @{ $self->{rows} };
+	
+	my $path = Gtk2::TreePath->new;
+	$path->append_index( $record->{pos} );
+	
+	$self->row_deleted ( $path );
+    }
+
 }
 
 

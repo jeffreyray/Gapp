@@ -131,13 +131,13 @@ sub _apply_signals {
         if ( is_GappAction( $action ) ) {
             $self->gtk_widget->signal_connect( $name => sub {
                 my ( $gtkw, @gtkargs ) = @_;
-                $action->perform( $self, \@args, $gtkw,  \@gtkargs );
+                return $action->perform( $self, \@args, $gtkw,  \@gtkargs );
             });
         }
         else {
             $self->gtk_widget->signal_connect( $name => sub {
                 my ( $gtkw, @gtkargs ) = @_;
-                $action->( $self, \@args, $gtkw,  \@gtkargs );
+                return $action->( $self, \@args, $gtkw,  \@gtkargs );
             });
         }
     }
@@ -237,7 +237,7 @@ has 'padding' => (
 # to a container widget
 has 'parent' => (
     is => 'rw',
-    isa => 'Gapp::Widget',
+    isa => 'Maybe[Gapp::Widget]',
     weak_ref => 1,
 );
 
@@ -245,7 +245,12 @@ has 'parent' => (
 has 'properties' => (
     is => 'ro',
     isa => 'HashRef',
+    traits => [qw( Hash )],
     default => sub { { } },
+    handles => {
+        get_property => 'get',
+        set_property => 'set',
+    }
 );
 
 
@@ -324,12 +329,8 @@ sub interpolate_class {
     return ( wantarray ? ( $class, @traits ) : $class );
 }
 
-1;
 
-sub get_property {
-    my ( $self, $name ) = @_;
-    $self->properties->{$name};
-}
+
 
 sub find_ancestors {
     my ( $self ) = @_;
@@ -339,13 +340,11 @@ sub find_ancestors {
 
 sub find_toplevel {
     my ( $self ) = @_;
-    my @ancestors = $self->find_ancestors;
-    
-    print "---->", $self->parent, "\n";
-    
+    my @ancestors = $self->find_ancestors;   
     return @ancestors ? $ancestors[-1] : $self;
 }
 
+1;
 
 __END__
 

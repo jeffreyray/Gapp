@@ -56,7 +56,7 @@ sub import {
         
 
     # and on to the real exporter
-    my @new_args = (@args, map { 'do_' . $_ } @actions); #, keys %add);
+    my @new_args = ( @args, map { 'do_' . $_ } @actions ); #, keys %add);
     return $class->$exporter(@new_args);
 }
 

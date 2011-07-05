@@ -4,6 +4,10 @@ use Moose;
 use MooseX::SemiAffordanceAccessor;
 extends 'Gapp::Bin';
 
+
+use Gapp::Types qw(GappActionOrArrayRef);
+use MooseX::Types::Moose qw(Undef);
+
 has '+class' => (
     default => 'Gtk2::MenuItem',
 );
@@ -19,6 +23,11 @@ has '+args' => (
 has 'label' => (
     is => 'rw',
     isa => 'Str',
+);
+
+has 'action' => (
+    is => 'rw',
+    isa => GappActionOrArrayRef|Undef,
 );
 
 
@@ -48,6 +57,18 @@ Gapp::MenuItem - MenuItem Widget
 =back
 
 =head1 PROVIDED ATTRIBUTES
+
+=over 4
+
+=item B<action>
+
+=over 4
+
+=item isa GappActionOrArrayRef|Undef
+
+=back
+
+=back
 
 =over 4
 

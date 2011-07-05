@@ -8,6 +8,7 @@ FormStash
 GappAction
 GappAction
 GappActionOrArrayRef
+GappCallback
 GappCellRenderer
 GappContainer
 GappDialog
@@ -29,7 +30,10 @@ class_type GappAction,
     { class => 'Gapp::Action' };
     
 subtype GappActionOrArrayRef,
-    as GappAction|ArrayRef;     
+    as GappAction|ArrayRef;
+
+subtype GappCallback,
+    as GappAction|ArrayRef|CodeRef;
 
 # GappContainer
 class_type GappContainer,

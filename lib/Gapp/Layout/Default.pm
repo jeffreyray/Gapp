@@ -3,6 +3,7 @@ use Gapp::Layout;
 use strict;
 use warnings;
 
+use Gapp::Actions::Util qw( actioncb parse_action );
 use Gapp::Types qw( GappAction GappActionOrArrayRef );
 use MooseX::Types::Moose qw( ArrayRef CodeRef Str );
 
@@ -162,6 +163,19 @@ build 'Gapp::FileChooserDialog', sub {
         $gtk_w->add_button( $b, $i );
         $i++;
     }
+    
+    map { $w->gtk_widget->add_filter( $_->gtk_widget ) } $w->filters;
+};
+
+# FileFilter
+
+build 'Gapp::FileFilter', sub {
+    my ( $l, $w ) = @_;
+    
+    my $gtkw = $w->gtk_widget;
+    $gtkw->set_name( $w->name );
+    map { $gtkw->add_pattern( $_ ) } $w->patterns;
+    map { $gtkw->add_mime_type( $_ ) } $w->mime_types; 
 };
 
 
@@ -191,14 +205,34 @@ build 'Gapp::Image', sub {
 build 'Gapp::ImageMenuItem', sub {
     my ( $l, $w ) = @_;
     my $gtkw = $w->gtk_widget;
-    $gtkw->get_child->set_text( $w->label ) if $w->label;
-    $gtkw->set_image( Gtk2::Image->new_from_stock( $w->icon, 'menu' ) ) if $w->icon;
+    
+    my ( $label, $icon, $tooltip );
+    
+    my ( $action, @args ) = parse_action( $w->action );
+    
+    if ( is_CodeRef($action) ) {
+	$gtkw->signal_connect( 'activate', $action, \@args );
+    }
+    elsif ( is_GappAction( $action) ) {
+	$icon = $action->icon if ! defined $icon;
+	$label = $action->label if ! defined $label;
+	$tooltip = $action->tooltip if ! defined $tooltip;
+	$gtkw->signal_connect( activate => actioncb( $action, $w, \@args ) );
+    }
+    
+    $gtkw->get_child->set_text( $label ) if defined $label;
+    $gtkw->set_tooltip_text( $w->tooltip ) if defined $w->tooltip;
+    $gtkw->set_image( Gtk2::Image->new_from_stock( $icon, 'menu' ) ) if defined $icon;
 };
 
 add 'Gapp::MenuItem', to 'Gapp::Menu', sub {
     my ( $l, $w, $c ) = @_;
     $c->gtk_widget->append( $w->gtk_widget );
 };
+
+
+
+
 
 
 # MenuItem
@@ -212,6 +246,39 @@ add 'Gapp::MenuItem', to 'Gapp::MenuShell', sub {
     my ( $l, $w, $c ) = @_;
     $c->gtk_widget->append( $w->gtk_widget );
 };
+
+
+# ToolButton
+
+build 'Gapp::MenuToolButton', sub {
+    my ( $l, $w ) = @_;
+    my $gtkw = $w->gtk_widget;
+    
+    $gtkw->set_stock_id( $w->stock_id ) if $w->stock_id;
+    $gtkw->set_label( $w->label ) if defined $w->label;
+    $gtkw->set_tooltip_text( $w->tooltip ) if defined $w->tooltip;
+    
+    my $action = is_ArrayRef( $w->action ) ? $w->action->[0] : $w->action;
+    my ( $cb, @args );
+    @args = is_ArrayRef( $w->action ) ? @{$w->action} : ();
+    shift @args;
+    
+    if ( is_CodeRef($action) ) {
+	$cb = $action;
+	$gtkw->signal_connect( 'clicked', $cb, \@args );
+    }
+    elsif ( is_GappAction( $action) ) {
+	$gtkw->set_stock_id( $action->icon ) if $action->icon;
+	$gtkw->set_label( $action->label ) if $action->label;
+	$gtkw->set_tooltip_text( $action->tooltip ) if defined $action->tooltip;
+	
+	$gtkw->signal_connect( clicked => actioncb( $action, $w, \@args ) );
+    }
+    
+    $w->menu->gtk_widget->show_all;
+    $w->gtk_widget->set_menu( $w->menu->gtk_widget ) if $w->menu;
+};
+
 
 
 # Notice
@@ -437,6 +504,8 @@ add 'Gapp::Widget', to 'Gapp::Window', sub {
 build 'Gapp::Window', sub {
     my ( $l, $w ) = @_;
     $w->gtk_widget->set_icon( $w->gtk_widget->render_icon( $w->icon, 'dnd' ) ) if $w->icon;
+    $w->gtk_widget->set_transient_for( $w->transient_for->gtk_widget ) if $w->transient_for;
+    $w->gtk_widget->set_modal( $w->modal ) if $w->modal;
 };
 
 

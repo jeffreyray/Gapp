@@ -20,10 +20,20 @@ has 'action' => (
     default => 'open',
 );
 
-has 'parent' => (
+has '+parent' => (
     is => 'rw',
     isa => 'Maybe[Object]',
     default => undef,
+);
+
+has 'filters' => (
+    isa => 'ArrayRef',
+    default => sub { [] },
+    traits => [qw( Array )],
+    handles => {
+        add_filter => 'push',
+        filters => 'elements',
+    }
 );
 
 
@@ -45,7 +55,7 @@ __END__
 
 =head1 NAME
 
-Gapp::Dialog - Dialog Widget
+Gapp::FileChooserDialog - Dialog Widget
 
 =head1 OBJECT HIERARCHY
 
@@ -59,31 +69,33 @@ Gapp::Dialog - Dialog Widget
 
 =item ........+-- L<Gapp::Dialog>
 
+=item ............+-- L<Gapp::FileChooserDialog>
+
 =back
 
 =head1 PROVIDED ATTRIBUTES
 
 =over 4
 
-=item B<buttons>
+=item B<action>
 
 =over 4
 
-=item isa ArrayRef
+=item isa Str
 
 =back
 
 =back
 
-=head1 DELEGATES TO GTK
-
-=head2 Methods
+=item B<filters>
 
 =over 4
 
-=item B<run>
+=item isa Array
 
-=back 
+=back
+
+=back
 
 =head1 AUTHORS
 

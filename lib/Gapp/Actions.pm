@@ -26,7 +26,7 @@ sub import {
         
         for my $action (@orig_declare) {
             
-            croak q[could not create action ($action): actions may not contain containing '::']
+            croak q[could not create action ($action): actions may not contain '::']
                 if $action =~ /::/;
             
             # add action to library and remember to export
