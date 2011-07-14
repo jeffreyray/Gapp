@@ -15,6 +15,7 @@ use Gapp::Moose::Meta::Attribute::Trait::GappBox;
 use Gapp::Moose::Meta::Attribute::Trait::GappButton;
 use Gapp::Moose::Meta::Attribute::Trait::GappFileChooserDialog;
 use Gapp::Moose::Meta::Attribute::Trait::GappFileFilter;
+use Gapp::Moose::Meta::Attribute::Trait::GappFrame;
 use Gapp::Moose::Meta::Attribute::Trait::GappHBox;
 use Gapp::Moose::Meta::Attribute::Trait::GappHButtonBox;
 use Gapp::Moose::Meta::Attribute::Trait::GappImage;

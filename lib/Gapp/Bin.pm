@@ -5,6 +5,10 @@ use MooseX::SemiAffordanceAccessor;
 
 extends 'Gapp::Container';
 
+has '+class' => (
+    default => 'Gtk2::Bin',
+);
+
 1;
 
 

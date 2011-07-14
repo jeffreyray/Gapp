@@ -129,7 +129,7 @@ sub ITER_NTH_CHILD {
 
 	# special case: if parent == NULL, set iter to n-th top-level row
 
-	return undef if $n >= @{$self->{rows}};
+	return undef if ! defined $self->{rows} || $n >= @{$self->{rows}};
 
 	my $record = $self->{rows}[$n];
 

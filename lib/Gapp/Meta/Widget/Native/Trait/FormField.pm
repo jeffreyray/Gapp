@@ -30,7 +30,7 @@ sub _widget_value_changed {
     return if $self->is_updating;
     
     my $form = $self->form;
-    $self->widget_to_stash( $form->stash );
+    $self->widget_to_stash( $form->stash ) if $form;
     $self->on_change->( $self ) if $self->on_change;
 }
 

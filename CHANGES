@@ -1,5 +1,18 @@
 Changes for Gapp
 
+
+0.24
+
+- added Frame
+BUG FIXES:
+- Gapp::Gtk2::List::Simple was throwing errors if there was no content
+- widgets with the FormField role threw errors when the value changed if there
+was no parent widget with a Form role
+
+0.23
+
+- added TextView
+
 0.22
 - added FileFilter
 - added SeparatorMenuItem
