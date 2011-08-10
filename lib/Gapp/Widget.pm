@@ -34,6 +34,11 @@ has 'connected_signals' => (
 sub signal_connect {
     my ( $self, $name, $code, @args ) = @_;
     push @{ $self->connected_signals }, [ $name, $code, @args ];
+    
+    # attach the signal if the gtk widget has been constructed
+    if ( $self->has_gtk_widget ) {
+        $self->_apply_signal( [ $name, $code, @args ] );
+    }
 }
 
 
@@ -83,6 +88,7 @@ has 'gtk_widget' => (
     isa => 'Object',
     lazy_build => 1,
     handles => [qw( show show_all hide )],
+    predicate => 'has_gtk_widget',
 );
 
 has 'tooltip' => (
@@ -122,26 +128,26 @@ sub _apply_properties {
 # apply any signals to the gtk_widget
 sub _apply_signals {
     my ( $self ) = @_;
+    map { $self->_apply_signal( $_ ) } @{ $self->connected_signals };
+}
 
-    # apply signals to the widget
-    for my $s ( @{ $self->connected_signals } ) {
-        my ( $name, $action, @args ) = @$s;
-        use Scalar::Util qw( blessed );
-        
-        if ( is_GappAction( $action ) ) {
-            $self->gtk_widget->signal_connect( $name => sub {
-                my ( $gtkw, @gtkargs ) = @_;
-                return $action->perform( $self, \@args, $gtkw,  \@gtkargs );
-            });
-        }
-        else {
-            $self->gtk_widget->signal_connect( $name => sub {
-                my ( $gtkw, @gtkargs ) = @_;
-                return $action->( $self, \@args, $gtkw,  \@gtkargs );
-            });
-        }
+
+sub _apply_signal {
+    my ( $self, $signal ) = @_;
+    my ( $name, $action, @args ) = @$signal;
+    
+    if ( is_GappAction( $action ) ) {
+        $self->gtk_widget->signal_connect( $name => sub {
+            my ( $gtkw, @gtkargs ) = @_;
+            return $action->perform( $self, \@args, $gtkw,  \@gtkargs );
+        });
     }
-
+    else {
+        $self->gtk_widget->signal_connect( $name => sub {
+            my ( $gtkw, @gtkargs ) = @_;
+            return $action->( $self, \@args, $gtkw,  \@gtkargs );
+        });
+    }
 }
 
 # create and set the actual gtk_widget
@@ -164,8 +170,8 @@ sub _build_gtk_widget {
     $self->_apply_stylers;
     my $w = $self->_construct_gtk_widget( @_ );
     $self->_apply_properties;
-    $self->_apply_signals;
     $self->_apply_builders;
+    $self->_apply_signals;
     $self->_apply_customize;
     
     return $w;

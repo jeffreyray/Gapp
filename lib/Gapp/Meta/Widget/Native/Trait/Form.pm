@@ -19,6 +19,12 @@ has 'stash' => (
     lazy_build => 1,
 );
 
+has 'sync' => (
+    is => 'rw',
+    isa => 'Bool',
+    default => 1,
+);
+
 sub _build_stash {
     my $self = shift;
     my $stash = Gapp::Form::Stash->new;

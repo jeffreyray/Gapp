@@ -28,7 +28,7 @@ has 'writer_prefix' => (
 
 sub lookup {
     my ( $self, $attr ) = @_;
-    $self->meta->throw( 'you did not supply an attribute to lookup' ) if ! $attr;
+    $self->meta->throw( 'you did not supply an attribute to lookup' ) if ! defined $attr;
     
     if ( $self->accessor ) {
         return $self->accessor->( $self->content, $attr );
@@ -41,7 +41,7 @@ sub lookup {
 
 sub modify {
     my ( $self, $attr, $value ) = @_;
-    $self->meta->throw( 'you did not supply an attribute to lookup' ) if ! $attr;
+    $self->meta->throw_error( 'you did not supply an attribute to lookup' ) if ! defined $attr;
     $self->meta->throw_error( 'you must supply a value' ) if @_ <= 2;
     
     if ( $self->accessor ) {

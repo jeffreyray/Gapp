@@ -314,6 +314,16 @@ build 'Gapp::SimpleList', sub {
     map { $w->gtk_widget->append( $_ ) } @{ $w->content };
 };
 
+
+# SpinButton
+build 'Gapp::SpinButton', sub {
+    my ( $l, $w ) = @_;
+    $w->gtk_widget->set_increments( $w->step, $w->page ) if $w->page;
+};
+
+
+
+
 # ScrolledWindow
 build 'Gapp::ScrolledWindow', sub {
     my ( $l, $w ) = @_;

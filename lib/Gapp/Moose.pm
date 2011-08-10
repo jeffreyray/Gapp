@@ -27,6 +27,7 @@ use Gapp::Moose::Meta::Attribute::Trait::GappMenu;
 use Gapp::Moose::Meta::Attribute::Trait::GappMenuBar;
 use Gapp::Moose::Meta::Attribute::Trait::GappNoticeBox;
 use Gapp::Moose::Meta::Attribute::Trait::GappScrolledWindow;
+use Gapp::Moose::Meta::Attribute::Trait::GappSpinButton;
 use Gapp::Moose::Meta::Attribute::Trait::GappStatusIcon;
 use Gapp::Moose::Meta::Attribute::Trait::GappTable;
 use Gapp::Moose::Meta::Attribute::Trait::GappTextView;

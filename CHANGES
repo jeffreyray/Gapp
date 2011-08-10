@@ -1,8 +1,18 @@
 Changes for Gapp
 
+0.25
+- added SpinButton
+- added action ::Actions::Basic::DestroyWindow
+- added Gapp::Gtk2::List
+- added Gtk2::TreeDragDest:: interface to Gapp::Gtk2::List::Simple
+- added remove method to Gapp::gtk2::List::Simple
+- added TreeViewListFormField widget trait
+- added TreeViewToggleListFormField widget trait
+BUG FIXES:
+- fix bug where if user used the signal_connect method on a GappWidget after the gtk_widget was constructed, the signal was not attached
+
 
 0.24
-
 - added Frame
 BUG FIXES:
 - Gapp::Gtk2::List::Simple was throwing errors if there was no content

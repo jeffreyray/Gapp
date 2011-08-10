@@ -1,4 +1,4 @@
-package Gapp::Gtk2::List::Simple;
+package Gapp::Gtk2::List;
 
 use Glib qw(TRUE FALSE);
 use Gtk2;
@@ -9,13 +9,11 @@ use warnings;
 
 use Glib::Object::Subclass
 	Glib::Object::,
-	interfaces => [ Gtk2::TreeModel::, Gtk2::TreeDragDest:: ],
+	interfaces => [ Gtk2::TreeModel:: ],
 	;
 
 sub INIT_INSTANCE {
 	my $self = shift;
-	$self->{n_columns} = 1;
-	$self->{column_types} = [ 'Glib::Scalar' ];
 	$self->{rows}     = [];
 	$self->{stamp} = sprintf '%d', rand (1<<31);
 }
@@ -27,12 +25,13 @@ sub FINALIZE_INSTANCE {
 	$self->{column_types} = undef;
 }
 
+
 sub GET_FLAGS { [qw/list-only/] }
-sub GET_N_COLUMNS { shift->{n_columns}; }
+sub GET_N_COLUMNS { undef }
 
 sub GET_COLUMN_TYPE {
     my ($self, $index) = @_;
-    return $self->{column_types}[$index];
+    return 'Glib::Scalar';
 }
 
 sub GET_ITER {
@@ -80,7 +79,7 @@ sub GET_VALUE {
 
     die "bad iter" if $record->{pos} >= @{$self->{rows}};
 
-    return $record->{value};
+    return $record->{value}[$column];
 }
 
 sub ITER_NEXT {
@@ -142,12 +141,31 @@ sub ITER_NTH_CHILD {
 
 sub ITER_PARENT { FALSE }
 
-
-
 sub append {
-	my ( $self, $object ) = @_;
+	my ( $self, %data ) = @_;
 	
-	my $record = { value => $object };
+	my @record_data;
+	for my $pos ( keys %data ) {
+	    $record_data[$pos] = $data{$pos};
+	}
+	
+	my $record = { value => \@record_data };
+	
+	push @{ $self->{rows} }, $record;
+	$record->{pos} = @{$self->{rows}} - 1;
+	
+	my $path = Gtk2::TreePath->new;
+	$path->append_index( $record->{pos} );
+	
+	my $iter = $self->get_iter( $path );
+	$self->row_inserted( $path, $iter );
+	return $self->get_iter( $path );
+}
+
+sub append_record {
+	my ( $self, @data ) = @_;
+	
+	my $record = { value => \@data };
 	
 	push @{ $self->{rows} }, $record;
 	$record->{pos} = @{$self->{rows}} - 1;
@@ -162,12 +180,15 @@ sub append {
 
 
 sub set {
-    my ( $self, $treeiter, $value ) = @_;
+    my ( $self, $treeiter, %data ) = @_;
 
 	my $iter = $treeiter->to_arrayref($self->{stamp});
 	
 	my $record = $iter->[2];
-	$record->{value} = $value;
+	
+	for my $pos ( keys %data ) {
+	    $record->{value}[$pos] = $data{$pos};
+	}
 
 	$self->row_changed ($self->get_path ($treeiter), $treeiter);
 }
@@ -226,7 +247,8 @@ __END__
 
 =head1 NAME
 
-Gapp::Gtk2::List::Simple - A sngle column list that can hold arbitrary values
+Gapp::Gtk2::List - A list with no set number of columns which can hold arbitrary
+values
 
 =head1 SYNOPSIS
 
@@ -234,18 +256,20 @@ Gapp::Gtk2::List::Simple - A sngle column list that can hold arbitrary values
 
   use Gapp::Gtk2;
 
-  $list = Gapp::Gtk2::List::Simple->new;
+  $list = Gapp::Gtk2::List->new;
 
-  $iter = $list->append( $value );
+  $iter = $list->append( 0 => $value1, 1 => $value2 );
+  
+  $iter = $list->append_record( $value3, $value4 );
 
-  $list->set( $iter, $new_value );
+  $list->set( $iter, 0, $new_value );
   
    
 =head1 DESCRIPTION
 
-<Gapp::Gtk2::List::Simple> is a very simpleL<Gtk2::TreeModel|http://library.gnome.org/devel/gtk/stable/GtkTreeModel.html>
-that is implmented in perl. It has only one column with no restrictions on the data
-type it can hold. Nodes can not have children.
+<Gapp::Gtk2::List> is a L<Gtk2::TreeModel|http://library.gnome.org/devel/gtk/stable/GtkTreeModel.html>
+implmented in perl. It has an undefined number of columns which can hold any
+arbitrary data type.
 
 =head1 OBJECT HEIRARCHY
 
@@ -253,7 +277,7 @@ type it can hold. Nodes can not have children.
 
 =item  L<Glib::Object|http://gtk2-perl.sourceforge.net/doc/pod/Glib/Object.html>
 
-=item  +--L<Gapp::Gtk2::List::Simple>
+=item  +--L<Gapp::Gtk2::List>
 
 =back 
   
@@ -269,9 +293,14 @@ type it can hold. Nodes can not have children.
 
 =over 4
 
-=item B<append ( $value )>
+=item B<append ( $col => $value, [$col => $value, ...] )>
 
-Adds the value to the list, returns an C<$iter> to reference the position.
+Adds an entry to the list and sets the values of the given columns.
+
+=item B<append_record( $value, [$value, $value, ...] );
+
+Adds an entry to the list and sets the values of given columns (using the
+position of the supplied values).
 
 =item B<clear>
 
@@ -281,7 +310,7 @@ Clears the list.
 
 Removes a row from the model.
 
-=item B<set( $iter, $value )>
+=item B<set( $iter, $col => $value, [$col => $value, ...] )>
 
 Sets the value at the position referenced by the C<$iter>.
 

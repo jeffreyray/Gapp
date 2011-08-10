@@ -41,6 +41,12 @@ sub BUILDARGS {
         $args{columns} = \@columns;
     }
     
+    # headers visible
+    if ( exists $args{headers_visible} ) {
+        $args{properties}{headers_visible} = $args{headers_visible};
+        delete $args{headers_visible};
+    }
+    
     __PACKAGE__->SUPER::BUILDARGS( %args );
 }
 

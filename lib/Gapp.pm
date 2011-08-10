@@ -1,6 +1,6 @@
 package Gapp;
 
-our $VERSION = 0.24;
+our $VERSION = 0.25;
 
 use Gtk2 '-init';
 
@@ -39,6 +39,7 @@ use Gapp::RadioButton;
 use Gapp::ScrolledWindow;
 use Gapp::SeparatorMenuItem;
 use Gapp::SeparatorToolItem;
+use Gapp::SpinButton;
 use Gapp::SimpleList;
 use Gapp::SSNEntry;
 use Gapp::Table;
@@ -53,7 +54,6 @@ use Gapp::VBox;
 use Gapp::VButtonBox;
 use Gapp::Widget;
 use Gapp::Window;
-use Gapp::WYSIWYG;
 
 
 use Gapp::Layout::Default;
@@ -64,7 +64,9 @@ use Gapp::Meta::Widget::Native::Trait::Form;
 use Gapp::Meta::Widget::Native::Trait::FormField;
 use Gapp::Meta::Widget::Native::Trait::FromUIManager;
 use Gapp::Meta::Widget::Native::Trait::MessageDialog;
-use Gapp::Meta::Widget::Native::Trait::OkCancelDialog;
+use Gapp::Meta::Widget::Native::Trait::OkCancelDialog; # deprecated
+use Gapp::Meta::Widget::Native::Trait::TreeViewListFormField;
+use Gapp::Meta::Widget::Native::Trait::TreeViewToggleListFormField;
 
 sub main { Gtk2->main };
 sub quit { Gtk2->main_quit };

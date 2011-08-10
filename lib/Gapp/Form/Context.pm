@@ -60,6 +60,8 @@ sub lookup {
     
     my ( $name, $attr ) = split /\./, $path;
     my $node = $self->get_node( $name );
+    
+    $self->meta->throw_error( qq[could not find node "$name" in context] ) if ! $node;
     $node->lookup( $attr );
 }
 
@@ -70,6 +72,7 @@ sub modify {
     $self->meta->throw_error( 'you must supply a value' ) if @_ <= 2;
     
     my ( $name, $attr ) = split /\./, $path;
+    
     my $node = $self->get_node( $name );
     $node->modify( $attr, $value );
     # $self->_value_changed( $path, $value ) if ! $self->in_update( $path );
