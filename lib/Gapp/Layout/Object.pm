@@ -111,6 +111,7 @@ sub find_packer {
 sub find_styler {
     my ( $self, $w ) = @_;
     $w = $w->meta->name if ref $w;
+    
     $w = ($w->meta->superclasses)[0]->meta->name if $w->meta->name =~ /__ANON__/;
     return $self->get_styler( $w->meta->name ) if $self->get_styler( $w->meta->name );
     return $self->parent ? $self->parent->find_styler( $w ) : undef;

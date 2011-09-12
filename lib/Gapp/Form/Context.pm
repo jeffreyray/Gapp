@@ -74,6 +74,7 @@ sub modify {
     my ( $name, $attr ) = split /\./, $path;
     
     my $node = $self->get_node( $name );
+    return if ! $node;
     $node->modify( $attr, $value );
     # $self->_value_changed( $path, $value ) if ! $self->in_update( $path );
 }
@@ -82,6 +83,7 @@ sub update_from_stash {
     my ( $self, $stash ) = @_;
     
     for my $path ( $stash->elements ) {
+        next if $path eq '';
         
         my $value = $stash->fetch( $path );
         

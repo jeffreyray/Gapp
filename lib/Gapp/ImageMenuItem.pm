@@ -1,6 +1,7 @@
 package Gapp::ImageMenuItem;
 
 use Moose;
+use MooseX::StrictConstructor;
 use MooseX::SemiAffordanceAccessor;
 extends 'Gapp::MenuItem';
 
@@ -12,6 +13,14 @@ has 'icon' => (
     is => 'rw',
     isa => 'Str',
 );
+
+sub BUILDARGS {
+    my $class = shift;
+    my %args = @_ == 1 && is_HashRef( $_[0] ) ? %{$_[0]} : @_;
+    
+    __PACKAGE__->SUPER::BUILDARGS( %args );
+}
+
 
 1;
 

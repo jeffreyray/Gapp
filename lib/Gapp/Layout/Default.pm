@@ -3,7 +3,8 @@ use Gapp::Layout;
 use strict;
 use warnings;
 
-use Gapp::Actions::Util qw( actioncb parse_action );
+use Gapp::Util qw( replace_entities );
+use Gapp::Actions::Util qw( actioncb parse_action);
 use Gapp::Types qw( GappAction GappActionOrArrayRef );
 use MooseX::Types::Moose qw( ArrayRef CodeRef Str );
 
@@ -12,6 +13,16 @@ use MooseX::Types::Moose qw( ArrayRef CodeRef Str );
 build 'Gapp::Assistant', sub {
     my ( $l, $w ) = @_;
     $w->gtk_widget->set_icon( $w->gtk_widget->render_icon( $w->icon, 'dnd' ) ) if $w->icon;
+    
+    if ( $w->forward_page_func ) {
+	
+	my ( $cb, @args ) = parse_action $w->forward_page_func;
+	
+	$w->gtk_widget->set_forward_page_func( sub {
+	    my ( $pagenum, $w ) = @_;
+	    $cb->( $w, \@args, $w->gtk_widget, [$pagenum] );
+	}, $w);
+    }
 };
 
 
@@ -44,6 +55,9 @@ build 'Gapp::Button', sub {
     
     if ( $w->icon ) {
 	$image = Gtk2::Image->new_from_stock( $w->icon, 'button' );
+    }
+    if ( $w->image ) {
+	$image = $w->image->gtk_widget;
     }
     
     if ( $w->action ) {
@@ -81,18 +95,19 @@ build 'Gapp::ComboBox', sub {
     my ( $l, $w ) = @_;
     my $gtkw = $w->gtk_widget;
     
+    my $model = $w->model->isa('Gapp::Widget') ? $w->model->gtk_widget : $w->model;
     
     # populate the module with values
     if ( $w->values ) {
         
-        my $model = $w->model->gtk_widget;
+        my $model = $w->model->isa('Gapp::Widget') ? $w->model->gtk_widget : $w->model;
         
         my @values = is_CodeRef($w->values) ? &{$w->values}($w) : @{$w->values};
         $model->append( $_ ) for ( @values );
         
-        #$model->set( $model->append, 0 => $_ ) for @{ $w->values };
-        $gtkw->set_model( $model );
     }
+    
+    $gtkw->set_model( $model );
     
     # create the renderer to display the values
     my $gtkr = $w->renderer->gtk_widget;
@@ -110,7 +125,7 @@ build 'Gapp::ComboBox', sub {
             
             my $value = $model->get( $iter ) if defined $w->data_column;
             
-            $gtkrenderer->set_property( 'markup' => $value );
+            $gtkrenderer->set_property( 'markup' => defined $value ? replace_entities( $value ) : '' );
         });
     }
     elsif ( $w->data_func ) {
@@ -130,7 +145,7 @@ build 'Gapp::ComboBox', sub {
                 $value = defined $_ ? $_->$method : '';
             }
 
-            $gtkrenderer->set_property( 'markup' => $value );
+            $gtkrenderer->set_property( 'markup' => defined $value ? replace_entities( $value ) : '' );
             
         });
     }
@@ -145,9 +160,19 @@ build 'Gapp::Dialog', sub {
     $w->gtk_widget->set_icon( $w->gtk_widget->render_icon( $w->icon, 'dnd' ) ) if $w->icon;
     $w->gtk_widget->set_position( $w->position ) if $w->position;
     $w->gtk_widget->set_transient_for( $w->transient_for->gtk_widget ) if $w->transient_for;
-    my $i = 0; for my $b ( @{ $w->buttons } ) {
-        $gtk_w->add_button( $b, $i );
-        $i++;
+    
+    my $i = 0;
+    if ( $w->action_widgets ) {
+	for my $b ( @{ $w->action_widgets } ) {
+	    $gtk_w->add_action_widget( $b->gtk_widget, $i );
+	    $i++;
+	}
+    }
+    if ( $w->buttons ) {
+	for my $b ( @{ $w->buttons } ) {
+	    $gtk_w->add_button( $b, $i );
+	    $i++;
+	}
     }
 };
 
@@ -207,6 +232,9 @@ build 'Gapp::ImageMenuItem', sub {
     my $gtkw = $w->gtk_widget;
     
     my ( $label, $icon, $tooltip );
+    $label = $w->label;
+    $icon = $w->icon;
+    $tooltip = $w->tooltip;
     
     my ( $action, @args ) = parse_action( $w->action );
     
@@ -228,6 +256,7 @@ build 'Gapp::ImageMenuItem', sub {
 add 'Gapp::MenuItem', to 'Gapp::Menu', sub {
     my ( $l, $w, $c ) = @_;
     $c->gtk_widget->append( $w->gtk_widget );
+    $c->gtk_widget->show;
 };
 
 
@@ -245,6 +274,7 @@ build 'Gapp::MenuItem', sub {
 add 'Gapp::MenuItem', to 'Gapp::MenuShell', sub {
     my ( $l, $w, $c ) = @_;
     $c->gtk_widget->append( $w->gtk_widget );
+    $c->gtk_widget->show;
 };
 
 
@@ -402,7 +432,6 @@ build 'Gapp::TreeView', sub {
 build 'Gapp::TreeViewColumn', sub {
     my ( $l, $w ) = @_;
     
-    
     my $gtkw = $w->gtk_widget;
     
     my $gtkr = $w->renderer->gtk_widget;
@@ -417,25 +446,24 @@ build 'Gapp::TreeViewColumn', sub {
         $gtkw->add_attribute( $gtkr, $w->renderer->property => $w->data_column );
     }
     elsif ( $w->data_func ) {
-        
         $gtkw->set_cell_data_func($gtkr, sub {
-            
             my ( $col, $gtkrenderer, $model, $iter, @args ) = @_;
-            
-            local $_ = $model->get( $iter, $w->data_column ) if defined $w->data_column;
-            
-            my $value;
-            if ( is_CodeRef( $w->data_func ) ) {
-                $value = &{ $w->data_func }( @_ );
-            }
-            elsif ( is_Str( $w->data_func ) ) {
-                my $method = $w->data_func;
-                $value = $_ ? $_->$method : '';
-            }
-            
+	    my $value = $w->get_cell_value( $model->get( $iter, $w->data_column ) );
             $gtkrenderer->set_property( $w->renderer->property => $value );
-            
         });
+    }
+    
+    # if sorting enabled
+    if ( $w->sort_enabled ) {
+	$w->gtk_widget->set_clickable( 1 );
+	$w->gtk_widget->signal_connect( 'clicked', sub {
+	    $w->gtk_widget->get_tree_view->get_model->set_default_sort_func( sub {
+		my ( $model, $itera, $iterb, $w ) = @_;
+		my $a = $model->get( $itera, $w->data_column );
+		my $b = $model->get( $itera, $w->data_column );
+		$w->sort_func->( $w, $a, $b );
+	    }, $w)
+	} );
     }
 
 };
@@ -516,6 +544,7 @@ build 'Gapp::Window', sub {
     $w->gtk_widget->set_icon( $w->gtk_widget->render_icon( $w->icon, 'dnd' ) ) if $w->icon;
     $w->gtk_widget->set_transient_for( $w->transient_for->gtk_widget ) if $w->transient_for;
     $w->gtk_widget->set_modal( $w->modal ) if $w->modal;
+    $w->gtk_widget->set_position( $w->position ) if $w->position;
 };
 
 

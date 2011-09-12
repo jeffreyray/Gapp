@@ -30,6 +30,7 @@ sub _build_stash {
     my $stash = Gapp::Form::Stash->new;
     
     for my $w ( $self->find_fields ) {
+        next if ! $w->field;
         $stash->store( $w->field, undef ) if ! $stash->contains( $w->field );
     }
     
@@ -133,6 +134,15 @@ sub update_fields {
         $w->stash_to_widget( $self->stash );
         $w->set_is_updating( 0 );
     }
+}
+
+sub update_from_context {
+    my ( $self ) = @_;
+    return if ! $self->context;
+    
+    $self->stash->update_from_context( $self->context );
+    $self->update_fields;
+    $self->stash->set_modified( 0 );
 }
 
 

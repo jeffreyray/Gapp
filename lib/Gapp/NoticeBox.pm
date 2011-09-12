@@ -48,7 +48,7 @@ sub display {
     my $screen = $gtkw->get_screen;
     my ($width, $height) = $gtkw->get_size;
     
-    $gtkw->move( $screen->get_width - $width, $screen->get_height - $height - 40 );
+    $gtkw->move( 0, $screen->get_height - $height - 40 );
     
     my $x = 0;
     Glib::Timeout->add(50, sub {

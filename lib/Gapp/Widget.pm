@@ -87,7 +87,7 @@ has 'gtk_widget' => (
     is => 'rw',
     isa => 'Object',
     lazy_build => 1,
-    handles => [qw( show show_all hide )],
+    handles => [qw( destroy hide present show show_all )],
     predicate => 'has_gtk_widget',
 );
 

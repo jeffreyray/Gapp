@@ -1,6 +1,6 @@
 package Gapp;
 
-our $VERSION = 0.25;
+our $VERSION = 0.26;
 
 use Gtk2 '-init';
 
@@ -41,8 +41,10 @@ use Gapp::SeparatorMenuItem;
 use Gapp::SeparatorToolItem;
 use Gapp::SpinButton;
 use Gapp::SimpleList;
+use Gapp::StatusIcon;
 use Gapp::SSNEntry;
 use Gapp::Table;
+use Gapp::TimeEntry;
 use Gapp::ToggleButton;
 use Gapp::Toolbar;
 use Gapp::ToolButton;

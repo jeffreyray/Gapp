@@ -13,7 +13,10 @@ has 'content' => (
     traits => [qw( Array )],
     trigger => sub {
         my ( $self, $content ) = @_;
-        map { $_->set_parent( $self ) } @$content;
+        map {
+            confess 'cannot add undefined value to ' . $self if ! $_;
+            $_->set_parent( $self );
+        } @$content;
     },
     handles => {
         _add_content => 'push',

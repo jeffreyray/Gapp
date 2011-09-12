@@ -1,6 +1,7 @@
 package Gapp::Actions::Basic;
 
 use Gapp::Actions -declare => [qw(
+HideWindow
 DestroyWindow
 Quit
 )];
@@ -8,19 +9,27 @@ Quit
 
 use Gtk2;
 
+action HideWindow => (
+    label => 'Hide',
+    tooltip => 'Hide',
+    code => sub {
+        my ( $action, $widget, $args, $gtkw, $gtkargs ) = @_;
+        $gtkw->hide;
+        return 1;
+    }
+);
+
 action DestroyWindow => (
-    name => 'Close',
     label => 'Close',
     tooltip => 'Close',
     icon => 'gtk-cancel',
     code => sub {
-        my ( $widget, $args, $gtkw, $gtkargs ) = @_;
+        my ( $action,  $widget, $args, $gtkw, $gtkargs ) = @_;
         $gtkw->destroy;
     }
 );
 
 action Quit => (
-    name => 'Quit',
     label => 'Quit',
     tooltip => 'Quit',
     icon => 'gtk-quit',

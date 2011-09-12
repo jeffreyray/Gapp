@@ -20,6 +20,7 @@ has 'text' => (
 );
 
 
+
 sub BUILDARGS {
     my $class = shift;
     my %args = @_ == 1 && is_HashRef( $_[0] ) ? %{$_[0]} : @_;
@@ -28,8 +29,12 @@ sub BUILDARGS {
         $args{args} = [ $args{text} ];
         #delete $args{text};
     }
-    
-   
+    if ( exists $args{xalign} ) {
+        $args{properties}{xalign} = delete $args{xalign};
+    }    
+     if ( exists $args{yalign} ) {
+        $args{properties}{yalign} = delete $args{yalign};
+    }    
     __PACKAGE__->SUPER::BUILDARGS( %args );
 }
 

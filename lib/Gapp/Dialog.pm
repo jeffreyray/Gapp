@@ -8,8 +8,12 @@ extends 'Gapp::Window';
 
 has 'buttons' => (
     is => 'rw',
-    isa => ArrayRef,
-    default => sub { [ ] },
+    isa => 'Maybe[ArrayRef]',
+);
+
+has 'action_widgets' => (
+    is => 'rw',
+    isa => 'Maybe[ArrayRef]',
 );
 
 has '+class' => (

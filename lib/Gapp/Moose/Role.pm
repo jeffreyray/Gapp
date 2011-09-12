@@ -1,9 +1,9 @@
-package Gapp::Moose;
+package Gapp::Moose::Role;
 
 our $VERSION = 0.01;
 our $AUTHORITY = 'cpan:JHALLOCK';
 
-use Moose;
+use Moose::Role;
 use Moose::Meta::Method;
 use Moose::Exporter;
 
@@ -11,8 +11,8 @@ use Gapp;
 use Gapp::Gtk2;
 use Gapp::Moose::Meta::Attribute::Trait::GappActionGroup;
 use Gapp::Moose::Meta::Attribute::Trait::GappAssistant;
-use Gapp::Moose::Meta::Attribute::Trait::GappBox;
 use Gapp::Moose::Meta::Attribute::Trait::GappComboBox;
+use Gapp::Moose::Meta::Attribute::Trait::GappBox;
 use Gapp::Moose::Meta::Attribute::Trait::GappButton;
 use Gapp::Moose::Meta::Attribute::Trait::GappDateEntry;
 use Gapp::Moose::Meta::Attribute::Trait::GappEventBox;
@@ -45,12 +45,12 @@ use Gapp::Moose::Meta::Attribute::Trait::GappVButtonBox;
 
 Moose::Exporter->setup_import_methods(
     with_meta => ['widget'],
-    also      => ['Moose' ],
+    also      => [ 'Moose::Role' ],
 );
 
 sub init_meta {
     shift;
-    return Moose->init_meta( @_ );
+    return Moose::Role->init_meta( @_ );
 }
 
 sub widget {   
@@ -66,7 +66,7 @@ sub widget {
     push @{ $args{traits} }, 'GappWidget';
 
     # pass on to moose to handle
-    &Moose::has( $meta, $name, %args );
+    &Moose::Role::has( $meta, $name, %args );
 }
 
 1;
@@ -79,13 +79,13 @@ __END__
 
 =head1 NAME
 
-Gapp::Moose - Gapp widgets for your Moose classes
+Gapp::Moose::Role - Gapp widgets for your roles
 
 =head1 SYNOPSIS
 
   package Foo::Bar;
  
-  use Gapp::Moose;
+  use Gapp::Moose::Role;
 
   widget 'label' => (
     is => 'ro',
@@ -116,14 +116,14 @@ Gapp::Moose - Gapp widgets for your Moose classes
  Gapp->main;
 =head1 DESCRIPTION
 
-L<Gapp::Moose> provides sugar for adding L<Gapp> widgets to your L<Moose>
-classes.
+L<Gapp::Moose::Role> provides sugar for adding L<Gapp> widgets to your L<Moose>
+roles.
 
 =head1 SUGAR
 
 =head2 C<widget>
 
-Internally, this calls C<&Moose::has> to create a new attribute with the
+Internally, this calls C<&Moose::Role::has> to create a new attribute with the
 C<GappWidget> trait applied. 
 
 Alternatively, you could apply the GappWidget trait yourself

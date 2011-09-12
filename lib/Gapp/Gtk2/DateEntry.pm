@@ -55,14 +55,13 @@ sub SET_PROPERTY {
 
 sub get_value {
     my $self = shift;
-    $self->{datetime};
+    $self->{datetime} ? $self->{datetime}->clone : undef;
 }
 
 sub set_value {
     carp 'usage $date_entry->set_value($new_value)' unless @_ == 2;
     my $self = shift;
     my $newval = shift;
-    
    
     # parse the new value if defined
     if ( defined $newval && ! ref $newval ) {

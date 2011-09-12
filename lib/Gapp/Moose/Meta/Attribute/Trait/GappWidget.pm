@@ -28,11 +28,14 @@ before '_process_options' => sub {
         
         $opts->{default} = sub {
             my ( $self ) = @_;
-            
-            my $att = $self->meta->get_attribute( $name );
+            my $att = $self->meta->find_attribute_by_name( $name );
             
             my $wclass = $att->class;
             my $wmethod = $att->constructor;
+            
+            if ( ! $wclass ) {
+                confess "Could not consruct widget '$name', you did not supply a widget class";
+            }
             
             my %opts;
             for ( $att->construct ) {

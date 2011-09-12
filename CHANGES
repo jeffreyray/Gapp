@@ -1,5 +1,30 @@
 Changes for Gapp
 
+
+0.26
+- added ::StatusIcon
+- added ::TimeEntry
+- added ::Gtk2::TimeEntry
+- added HideWindow To ::Actions::Basic
+- added 'forward_page_func' property to ::Assistant
+- added 'set_current_page' method to ::Assistant
+- ::Container throws error upon adding undefined child
+- added 'action_widgets' property to ::Dialog
+- ::Entry now delegates 'width_chars' to the 'proprties' attribute
+- updated ::Form::Context/::Form::Stash (throws errors with stack trace)
+- 'xalign' and 'yalign' of ::Label delegate to 'properties' attribute
+- updated ::Layout::Default
+- added 'update_from_context' method to ::Widget::Native::Trait::Form
+- added 'block_on_change' property to ::Widget::Native::Trait::FormField
+- added ::GappComboBox, ::GappDateEntry, ::GappEventBox, ::GappNoticeBox,
+:: GappTimeEntry to Gapp::Moose::Meta::Attribute::Trait namespace
+- added Gapp::Moose::Role
+- added Gapp::NoticeBox
+- added sorting to ::TreeViewColmn
+- added 'replace_entities' function to Gapp::Util
+
+
+
 0.25
 - added SpinButton
 - added action ::Actions::Basic::DestroyWindow

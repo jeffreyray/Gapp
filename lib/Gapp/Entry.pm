@@ -19,8 +19,10 @@ sub BUILDARGS {
         delete $args{text};
     }
     if ( exists $args{xalign} ) {
-        $args{properties}{xalign} = $args{xalign};
-        delete $args{xalign};
+        $args{properties}{xalign} = delete $args{xalign};
+    }
+    if ( exists $args{width_chars} ) {
+        $args{properties}{width_chars} = delete $args{width_chars};
     }
     __PACKAGE__->SUPER::BUILDARGS( %args );
 }

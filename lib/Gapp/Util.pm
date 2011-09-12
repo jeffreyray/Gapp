@@ -4,15 +4,11 @@ use Moose;
 use Sub::Exporter;
 
 Sub::Exporter::setup_exporter({
-    exports => [qw( resolve_widget_trait_alias )],
-    groups  => { all => [qw( resolve_widget_trait_alias )] }
+    exports => [qw( resolve_widget_trait_alias replace_entities)],
+    groups  => { all => [qw( resolve_widget_trait_alias replace_entities )] }
 });
 
 # resolve custom widget trait names
-sub resolve_widget_trait_alias {
-    return resolve_widget_class_alias( @_, trait => 1 );
-}
-
 sub _build_alias_package_name {
     my ( $type, $name, $trait ) = @_;
     return 'Gapp::Meta::'
@@ -48,4 +44,18 @@ sub _build_alias_package_name {
     }
 }
 
+
+sub resolve_widget_trait_alias {
+    return resolve_widget_class_alias( @_, trait => 1 );
+}
+
+
+
+# convert entities for passing to markup properties
+sub replace_entities {
+    my ( $str ) = @_;
+    
+    $str =~ s/&/&amp;/g;
+    return $str;
+}
 1;
