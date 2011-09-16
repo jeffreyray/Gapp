@@ -6,7 +6,6 @@ use MooseX::SemiAffordanceAccessor;
 use Gapp::Gtk2::DateEntry;
 
 extends 'Gapp::Entry';
-with 'Gapp::Meta::Widget::Native::Trait::FormField';
 
 has '+class' => (
     default => 'Gapp::Gtk2::DateEntry',

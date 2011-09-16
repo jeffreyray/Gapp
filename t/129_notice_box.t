@@ -23,5 +23,3 @@ use_ok 'Gapp::NoticeBox';
     });
 }
 
-Gapp->main;
-

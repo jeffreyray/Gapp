@@ -1,5 +1,10 @@
 Changes for Gapp
 
+0.27
+- added 'menu' attribute to Gapp::MenuItem
+BUG FIX:
+- fixed bug in DateEntry that called 'on_change' handler twice
+
 
 0.26
 - added ::StatusIcon

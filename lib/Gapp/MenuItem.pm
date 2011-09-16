@@ -25,6 +25,11 @@ has 'label' => (
     isa => 'Str',
 );
 
+has 'menu' => (
+    is => 'rw',
+    isa => 'Maybe[Gapp::Widget]',
+);
+
 has 'action' => (
     is => 'rw',
     isa => GappActionOrArrayRef|Undef,

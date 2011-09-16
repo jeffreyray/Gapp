@@ -251,6 +251,10 @@ build 'Gapp::ImageMenuItem', sub {
     $gtkw->get_child->set_text( $label ) if defined $label;
     $gtkw->set_tooltip_text( $w->tooltip ) if defined $w->tooltip;
     $gtkw->set_image( Gtk2::Image->new_from_stock( $icon, 'menu' ) ) if defined $icon;
+    
+    if ( $w->menu ) {
+	$gtkw->set_submenu( $w->menu->gtk_widget );
+    }
 };
 
 add 'Gapp::MenuItem', to 'Gapp::Menu', sub {
@@ -265,9 +269,14 @@ add 'Gapp::MenuItem', to 'Gapp::Menu', sub {
 
 
 # MenuItem
-
 build 'Gapp::MenuItem', sub {
     my ( $l, $w ) = @_;
+    
+    my $gtkw = $w->gtk_widget;
+    if ( $w->menu ) {
+	$gtkw->set_submenu( $w->menu->gtk_widget );
+    }
+    
     $w->gtk_widget->get_child->set_text( $w->label ) if $w->label;
 };
 
@@ -398,24 +407,27 @@ build 'Gapp::ToolButton', sub {
     $gtkw->set_label( $w->label ) if defined $w->label;
     $gtkw->set_tooltip_text( $w->tooltip ) if defined $w->tooltip;
     
-    my $action = is_ArrayRef( $w->action ) ? $w->action->[0] : $w->action;
-    my ( $cb, @args );
-    @args = is_ArrayRef( $w->action ) ? @{$w->action} : ();
-    shift @args;
     
-    if ( is_CodeRef($action) ) {
-	$cb = $action;
-	$gtkw->signal_connect( 'clicked', $cb, @args );
-    }
-    else {
-	$gtkw->set_stock_id( $action->icon ) if $action->icon;
-	$gtkw->set_label( $action->label ) if $action->label;
-	$gtkw->set_tooltip_text( $action->tooltip ) if defined $action->tooltip;
+    if ( $w->action ) {
+	my $action = is_ArrayRef( $w->action ) ? $w->action->[0] : $w->action;
+	my ( $cb, @args );
+	@args = is_ArrayRef( $w->action ) ? @{$w->action} : ();
+	shift @args;
 	
-	$gtkw->signal_connect( clicked => sub {
-	    my ( $gtkw, @gtkargs ) = @_;
-	    $action->perform( $w, \@args, $gtkw, \@gtkargs );
-	});
+	if ( is_CodeRef($action) ) {
+	    $cb = $action;
+	    $gtkw->signal_connect( 'clicked', $cb, @args );
+	}
+	else {
+	    $gtkw->set_stock_id( $action->icon ) if $action->icon;
+	    $gtkw->set_label( $action->label ) if $action->label;
+	    $gtkw->set_tooltip_text( $action->tooltip ) if defined $action->tooltip;
+	    
+	    $gtkw->signal_connect( clicked => sub {
+		my ( $gtkw, @gtkargs ) = @_;
+		$action->perform( $w, \@args, $gtkw, \@gtkargs );
+	    });
+	}
     }
 };
 

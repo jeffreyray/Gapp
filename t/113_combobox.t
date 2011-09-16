@@ -65,5 +65,4 @@ use Gapp;
     $iter = $model->iter_next( $iter );
     ok $model->get( $iter ), 'got baz';
     
-    Gapp::Window->new( content => [ $w ] )->show_all;
 }

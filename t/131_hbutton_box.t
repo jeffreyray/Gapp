@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 1;
+use Test::More tests => 2;
 
 use Gapp;
 
@@ -56,7 +56,5 @@ use Gapp;
     );
     ok $w, 'created button box';
     
-    my $window = Gapp::Window->new( content => [$w] );
-    $window->show_all;
-    Gapp->main;
+
 }
