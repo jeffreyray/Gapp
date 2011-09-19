@@ -1,5 +1,12 @@
 Changes for Gapp
 
+0.28
+- TreeViewColumn 'data_column' attribute now defaults to 0
+- TreeViewColumn now delegates properties 'min_width' and 'resizable' to the
+gtk_widget
+BUG FIX:
+- Layout builder for TreeViewColum was passing incorrect values to 'sort_func'
+
 0.27
 - added 'menu' attribute to Gapp::MenuItem
 BUG FIX:

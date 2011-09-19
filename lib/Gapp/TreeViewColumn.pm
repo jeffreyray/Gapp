@@ -30,7 +30,7 @@ has 'renderer' => (
 has 'data_column' => (
     is => 'rw',
     isa => 'Int|Undef',
-    default => undef,
+    default => 0,
 );
 
 has 'data_func' => (
@@ -42,20 +42,21 @@ has 'sort_enabled' => (
     is => 'rw',
     isa => 'Bool',
     default => 0,
-    trigger => sub {
-        my ( $self ) = @_;
-        if ( $self->has_gtk_widget ) {
-            $self->gtk_widget->set_clickable( 1 );
-            $self->gtk_widget->signal_connect( 'clicked', sub {
-                $self->gtk_widget->get_tree_view->get_model->set_default_sort_func( sub {
-                    my ( $model, $itera, $iterb, $self ) = @_;
-                    my $a = $model->get( $itera, $self->data_column );
-                    my $b = $model->get( $iterb, $self->data_column );
-                    $self->sort_func->( $self, $a, $b );
-                }, $self)
-            } );
-        }
-    }
+    #trigger => sub {
+    #    my ( $self ) = @_;
+    #    if ( $self->has_gtk_widget ) {
+    #        $self->gtk_widget->set_clickable( 1 );
+    #        $self->gtk_widget->signal_connect( 'clicked', sub {
+    #            $self->gtk_widget->get_tree_view->get_model->set_default_sort_func( sub {
+    #                my ( $model, $itera, $iterb, $self ) = @_;
+    #                my $a = $model->get( $itera, $self->data_column );
+    #                my $b = $model->get( $iterb, $self->data_column );
+    #                print $a, ' - ', $b, "\n\t";
+    #                $self->sort_func->( $self, $a, $b );
+    #            }, $self)
+    #        } );
+    #    }
+    #}
 );
 
 has 'sort_func' => (
@@ -64,8 +65,7 @@ has 'sort_func' => (
     default => sub {
         sub {
             my ( $self, $a, $b ) = @_;
-            print $self->get_cell_value( $a ), " cmp ",  $self->get_cell_value( $b ), "\n";
-            lc $self->get_cell_value( $a ) cmp lc $self->get_cell_value( $b )
+            lc $self->get_cell_value( $a ) cmp lc $self->get_cell_value( $b );
         };
     },
 );
@@ -79,6 +79,10 @@ sub BUILDARGS {
         $args{properties}{title} = $args{title};
         delete $args{title};
     }
+    $args{properties}{min_width} = delete $args{min_width} if exists $args{min_width};
+    $args{properties}{resizable} = delete $args{resizable} if exists $args{resizable};
+    
+    
     __PACKAGE__->SUPER::BUILDARGS( %args );
 }
 

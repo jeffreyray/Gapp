@@ -472,7 +472,7 @@ build 'Gapp::TreeViewColumn', sub {
 	    $w->gtk_widget->get_tree_view->get_model->set_default_sort_func( sub {
 		my ( $model, $itera, $iterb, $w ) = @_;
 		my $a = $model->get( $itera, $w->data_column );
-		my $b = $model->get( $itera, $w->data_column );
+		my $b = $model->get( $iterb, $w->data_column );
 		$w->sort_func->( $w, $a, $b );
 	    }, $w)
 	} );
