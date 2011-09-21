@@ -42,21 +42,20 @@ has 'sort_enabled' => (
     is => 'rw',
     isa => 'Bool',
     default => 0,
-    #trigger => sub {
-    #    my ( $self ) = @_;
-    #    if ( $self->has_gtk_widget ) {
-    #        $self->gtk_widget->set_clickable( 1 );
-    #        $self->gtk_widget->signal_connect( 'clicked', sub {
-    #            $self->gtk_widget->get_tree_view->get_model->set_default_sort_func( sub {
-    #                my ( $model, $itera, $iterb, $self ) = @_;
-    #                my $a = $model->get( $itera, $self->data_column );
-    #                my $b = $model->get( $iterb, $self->data_column );
-    #                print $a, ' - ', $b, "\n\t";
-    #                $self->sort_func->( $self, $a, $b );
-    #            }, $self)
-    #        } );
-    #    }
-    #}
+    trigger => sub {
+        my ( $self ) = @_;
+        if ( $self->has_gtk_widget ) {
+            $self->gtk_widget->set_clickable( 1 );
+            $self->gtk_widget->signal_connect( 'clicked', sub {
+                $self->gtk_widget->get_tree_view->get_model->set_default_sort_func( sub {
+                    my ( $model, $itera, $iterb, $self ) = @_;
+                    my $a = $model->get( $itera, $self->data_column );
+                    my $b = $model->get( $iterb, $self->data_column );
+                    $self->sort_func->( $self, $a, $b );
+                }, $self)
+            } );
+        }
+    }
 );
 
 has 'sort_func' => (
