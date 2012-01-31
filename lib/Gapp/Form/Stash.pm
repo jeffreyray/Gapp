@@ -4,6 +4,7 @@ use Moose;
 use MooseX::StrictConstructor;
 use MooseX::SemiAffordanceAccessor;
 
+use Try::Tiny;
 
 has 'storage' => (
     is => 'bare',
@@ -44,7 +45,12 @@ sub update_from_context {
     my ( $self, $cx ) = @_;
     
     for my $field ( $self->elements ) {
-        $self->store( $field, $cx->lookup( $field ) );
+        
+        try {
+            my $value = $cx->lookup( $field );
+            $self->store( $field, $value );
+        }
+       
     }
     
     $self->set_modified( 0 );

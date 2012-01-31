@@ -72,12 +72,22 @@ build 'Gapp::Button', sub {
 	
         $label = defined $w->label ? $w->label : $action->label;
 	$image ||= $action->create_gtk_image( 'button' );
-	$tooltip = defined $w->tooltip ? $w->tooltip : $action->tooltip;
 	
-	$gtkw->signal_connect( clicked => sub {
-	    my ( $gtkw, @gtkargs ) = @_;
-	    $action->perform( $w, \@args, $gtkw, \@gtkargs );
-	});
+	
+	if ( is_CodeRef( $action ) ) {
+	    $tooltip = $w->tooltip;
+	    $label = $w->label;
+	    
+	    $w->signal_connect( 'clicked', $action, @args );
+	}
+	else {
+	    $tooltip = defined $w->tooltip ? $w->tooltip : $action->tooltip;
+	    
+	    $gtkw->signal_connect( clicked => sub {
+		my ( $gtkw, @gtkargs ) = @_;
+		$action->perform( $w, \@args, $gtkw, \@gtkargs );
+	    });
+	}
     }
     else {
 	$label = $w->label;
@@ -138,7 +148,7 @@ build 'Gapp::ComboBox', sub {
             local $_ = $value;
             
             if ( is_CodeRef( $w->data_func ) ) {
-                $value = &{ $w->data_func }( @_ );
+                $value = &{ $w->data_func }( $_ );
             }
             elsif ( is_Str( $w->data_func ) ) {
                 my $method = $w->data_func;

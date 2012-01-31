@@ -122,7 +122,7 @@ sub update_stash {
     my $stash = $self->stash;
     
     for my $w ( $self->find_fields ) {
-        $w->widget_to_stash( $stash );
+        $w->widget_to_stash( $stash ) if $w->field;
     }
 }
 
@@ -131,7 +131,7 @@ sub update_fields {
     
     for my $w ( $self->find_fields ) {
         $w->set_is_updating( 1 );
-        $w->stash_to_widget( $self->stash );
+        $w->stash_to_widget( $self->stash ) if $w->field;
         $w->set_is_updating( 0 );
     }
 }

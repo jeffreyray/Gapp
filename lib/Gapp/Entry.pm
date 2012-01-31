@@ -15,7 +15,7 @@ sub BUILDARGS {
     my %args = @_ == 1 && is_HashRef( $_[0] ) ? %{$_[0]} : @_;
     
     if ( exists $args{text} ) {
-        $args{properties}{text} = [ $args{text} ];
+        $args{properties}{text} = $args{text};
         delete $args{text};
     }
     if ( exists $args{xalign} ) {

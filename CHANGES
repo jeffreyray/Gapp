@@ -1,5 +1,13 @@
 Changes for Gapp
 
+0.29
+BUG FIX:
+- Fixed bug where text property of ::Entry was being set to array instead of a string
+- Can assign code-refs to the action property of ::Button objects
+- ::Form::Stash no longer dies when it cannot find a field in the context
+- Fixed bug that threw errors when updating a form the had elements with no field
+attribute specified
+
 0.28
 - TreeViewColumn 'data_column' attribute now defaults to 0
 - TreeViewColumn now delegates properties 'min_width' and 'resizable' to the
