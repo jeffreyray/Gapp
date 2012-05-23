@@ -73,7 +73,11 @@ sub set_field_value {
         $self->gtk_widget->get_model->foreach( sub{
             my ( $model, $path, $iter ) = @_;
             my $check_value = $model->get( $iter, $self->data_column );
-            if ( $value eq $check_value ) {
+            
+            if ( ! defined $value && defined $check_value || defined $value && ! defined $check_value ) {
+                return;
+            }
+            elsif ( ! defined $value && ! defined $check_value || $value eq $check_value ) {
                 $self->gtk_widget->set_active_iter( $iter );
                 return 1;
             }
@@ -99,6 +103,9 @@ sub _connect_changed_handler {
       changed => sub { $self->_widget_value_changed },
     );
 }
+
+
+
 
 1;
 

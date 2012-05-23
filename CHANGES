@@ -1,5 +1,10 @@
 Changes for Gapp
 
+0.30
+- Gapp::ComboBox doesn't throw errors when comparing undefined values
+- Added update, enable, disable methods to FormField trait
+- Added attribute/property delegation "type" to Window widget
+
 0.29
 BUG FIX:
 - Fixed bug where text property of ::Entry was being set to array instead of a string

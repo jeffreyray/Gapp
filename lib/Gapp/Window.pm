@@ -32,7 +32,6 @@ has 'position' => (
 );
 
 
-
 sub BUILDARGS {
     my $class = shift;
     my %args = @_ == 1 && is_HashRef( $_[0] ) ? %{$_[0]} : @_;
@@ -45,6 +44,9 @@ sub BUILDARGS {
         $args{properties}{'default-width'} = $args{default_size}[0];
         $args{properties}{'default-height'} = $args{default_size}[1];
         delete $args{default_size};
+    }
+    if ( exists $args{type} ) {
+        $args{args} = [ delete $args{type} ];
     }
     
     __PACKAGE__->SUPER::BUILDARGS( %args );

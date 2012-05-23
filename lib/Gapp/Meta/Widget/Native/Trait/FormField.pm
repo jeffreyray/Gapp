@@ -56,6 +56,26 @@ before _apply_signals => sub {
     $self->_connect_changed_handler if $self->can('_connect_changed_handler');
 };
 
+sub update {
+    my ( $self ) = @_;
+    $self->set_is_updating( 1 );
+    $self->stash_to_widget( $self->form->stash ) if $self->field;
+    $self->set_is_updating( 0 );
+}
+
+
+sub enable {
+    my ( $self ) = @_;
+    $self->gtk_widget->set_sensitive( 1 );
+}
+
+sub disable {
+    my ( $self ) = @_;
+    $self->gtk_widget->set_sensitive( 0 );
+}
+
+
+
 package Gapp::Meta::Widget::Custom::Trait::FormField;
 sub register_implementation { 'Gapp::Meta::Widget::Native::Trait::FormField' };
 
