@@ -1,5 +1,16 @@
 Changes for Gapp
 
+
+0.31.1
+BUG FIX:
+- Reverse changes made in 0.31 - change was not correct funcationality
+
+
+0.31
+BUG FIX:
+- do_Action callbacks were not passing arguments to the underlying callback correctly,
+added 'undef' value for gtk widget parameters
+
 0.30
 - Gapp::ComboBox doesn't throw errors when comparing undefined values
 - Added update, enable, disable methods to FormField trait
