@@ -3,7 +3,6 @@ package Gapp::Action::Undefined;
 use Moose;
 use MooseX::SemiAffordanceAccessor;
 use MooseX::StrictConstructor;
-use MooseX::Method::Signatures;
 
 use Carp;
 
@@ -33,8 +32,9 @@ has 'icon' => (
     default => undef,
 );
 
-method perform ( @args ) {
-    carp 'you are calling "perform" on an undefind action (' . $_[0]->name . ')';
+sub perform {
+    my ( $self, @args ) = @_;
+    carp 'you are calling "perform" on an undefind action (' . $self->name . ')';
 }
 
 sub create_gtk_action {

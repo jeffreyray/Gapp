@@ -3,7 +3,6 @@ package Gapp::Action::Registry;
 use Moose;
 use MooseX::SemiAffordanceAccessor;
 use MooseX::StrictConstructor;
-use MooseX::Method::Signatures;
 
 use MooseX::Types::Moose qw( Object HashRef );
 
@@ -21,12 +20,17 @@ has 'actions' => (
     }
 );
 
-method add_action ( $action ) {
+sub add_action {
+    my ( $self, $action ) = @_;
+    
+    
     $action = Gapp::Action->new( $action ) if ! is_Object($action);
     $self->_set_action( $action->name, $action );
 }
 
-method perform ( Str $action, @args ) {
+sub perform {
+    my ( $self, $action, @args ) = @_;
+    
     $self->meta->throw_error( qq[action ($action) does not exist] )
         if ! $self->has_action( $action );
         

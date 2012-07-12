@@ -13,13 +13,13 @@ use_ok 'Gapp::Window';
     ok $w->gtk_widget, 'created gtk widget';
 }
 
-{ # transient for
-    my $t = Gapp::Window->new;
-    my $w = Gapp::Window->new( type => 'popup' );
-    ok $w, 'created gapp window';
-    ok $w->gtk_widget, 'created gtk widget';
-    ok $w->gtk_widget->get_transient_for, 'set window transient for';
-    ok $w->gtk_widget->get_position, 'set window position';
-}
-
+#{ # transient for
+#    my $t = Gapp::Window->new;
+#    my $w = Gapp::Window->new( type => 'popup' );
+#    ok $w, 'created gapp window';
+#    ok $w->gtk_widget, 'created gtk widget';
+#    ok $w->gtk_widget->get_transient_for, 'set window transient for';
+#    ok $w->gtk_widget->get_position, 'set window position';
+#}
+#
 

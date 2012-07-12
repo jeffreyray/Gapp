@@ -3,7 +3,6 @@ package Gapp::Layout::Object;
 use Moose;
 use MooseX::StrictConstructor;
 use MooseX::SemiAffordanceAccessor;
-use MooseX::Method::Signatures;
 
 use MooseX::Types::Moose qw( :all );
 

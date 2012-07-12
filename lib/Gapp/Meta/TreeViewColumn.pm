@@ -3,7 +3,6 @@ package Gapp::Meta::TreeViewColumn;
 use Moose;
 use MooseX::SemiAffordanceAccessor;
 use MooseX::StrictConstructor;
-use MooseX::Method::Signatures;
 
 use MooseX::Types::Moose qw( ClassName CodeRef Int Str Undef );
 

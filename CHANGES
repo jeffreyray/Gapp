@@ -1,6 +1,10 @@
 Changes for Gapp
 
 
+0.32
+- Removed dependancy on MooseX::Method::Signatures
+
+
 0.31.1
 BUG FIX:
 - Reverse changes made in 0.31 - change was not correct funcationality

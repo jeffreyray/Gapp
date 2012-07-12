@@ -4,7 +4,6 @@ use Moose;
 use MooseX::Clone;
 use MooseX::SemiAffordanceAccessor;
 use MooseX::StrictConstructor;
-use MooseX::Method::Signatures;
 
 use MooseX::Types::Moose qw( CodeRef HashRef Object Str  );
 
