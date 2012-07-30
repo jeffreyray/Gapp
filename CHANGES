@@ -1,6 +1,10 @@
 Changes for Gapp
 
 
+0.33
+- Work with Moose 1.25
+- Update prerequisite requirements
+
 0.32
 - Removed dependancy on MooseX::Method::Signatures
 

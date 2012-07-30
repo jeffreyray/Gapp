@@ -1,6 +1,6 @@
 package Gapp;
 
-our $VERSION = 0.32;
+our $VERSION = 0.33;
 
 use Gtk2 '-init';
 
@@ -160,7 +160,7 @@ more information. (see L<Gapp::Actions>, L<Gapp::TableMap>)
 
 =head1 COPYRIGHT & LICENSE
 
-    Copyright (c) 2011 Jeffrey Ray Hallock.
+    Copyright (c) 2011-2012 Jeffrey Ray Hallock.
     
     This program is free software; you can redistribute it and/or
     modify it under the same terms as Perl itself.
