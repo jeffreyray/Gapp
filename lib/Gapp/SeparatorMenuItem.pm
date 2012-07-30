@@ -8,6 +8,14 @@ has '+class' => (
     default => 'Gtk2::SeparatorMenuItem',
 );
 
+has '+constructor' => (
+    default => 'new',
+);
+
+has '+args' => (
+    default => undef,
+);
+
 
 1;
 
