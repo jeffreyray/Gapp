@@ -1,6 +1,7 @@
 package Gapp::Meta::Widget::Native::Trait::TreeViewToggleListFormField;
 
 use Moose::Role;
+use MooseX::SemiAffordanceAccessor;
 with 'Gapp::Meta::Widget::Native::Trait::FormField';
 
 

@@ -6,7 +6,6 @@ FormContext
 FormField
 FormStash
 GappAction
-GappAction
 GappActionOrArrayRef
 GappCallback
 GappCellRenderer
@@ -93,11 +92,6 @@ class_type FormContext,
 class_type FormStash,
     { class => 'Gapp::Form::Stash' };
 
-
-# GappAction
-class_type GappAction,
-    { class => 'Gapp::Action' };
-
 # GappCellRenderer
 class_type GappCellRenderer,
     { class => 'Gapp::CellRenderer' };
@@ -178,9 +172,7 @@ coerce GappUIManager,
     from HashRef,
     via { 'Gapp::UIManager'->new( %$_ ) };
 
-# GappWidget
-class_type GappWidget,
-    { class => 'Gapp::Widget' };
+
 
 
 1;

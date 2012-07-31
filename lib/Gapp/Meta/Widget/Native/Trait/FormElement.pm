@@ -1,6 +1,7 @@
 package Gapp::Meta::Widget::Native::Trait::FormElement;
 
 use Moose::Role;
+use MooseX::SemiAffordanceAccessor;
 
 has 'form' => (
     is => 'ro',

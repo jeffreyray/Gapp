@@ -1,5 +1,8 @@
 Changes for Gapp
 
+0.35
+- Work with Moose 2.0+
+
 0.34
 - Fixed SeparatorMenuItem bug
 

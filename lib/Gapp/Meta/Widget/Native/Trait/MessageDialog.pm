@@ -1,6 +1,7 @@
 package Gapp::Meta::Widget::Native::Trait::MessageDialog;
 
 use Moose::Role;
+use MooseX::SemiAffordanceAccessor;
 use Gapp::Types qw( GappDialogImage );
 
 has 'image' => (

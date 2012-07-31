@@ -1,6 +1,7 @@
 package Gapp::Meta::Widget::Native::Trait::FormField;
 
 use Moose::Role;
+use MooseX::SemiAffordanceAccessor;
 with 'Gapp::Meta::Widget::Native::Trait::FormElement';
 
 # the field name to use when storing the value

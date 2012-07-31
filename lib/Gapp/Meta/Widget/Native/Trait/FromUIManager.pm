@@ -1,6 +1,7 @@
 package Gapp::Meta::Widget::Native::Trait::FromUIManager;
 
 use Moose::Role;
+use MooseX::SemiAffordanceAccessor;
 use MooseX::LazyRequire;
 
 use Gapp::Types qw( GappUIManager );

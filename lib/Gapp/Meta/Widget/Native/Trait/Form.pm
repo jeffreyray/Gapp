@@ -1,6 +1,8 @@
 package Gapp::Meta::Widget::Native::Trait::Form;
 
 use Moose::Role;
+use MooseX::SemiAffordanceAccessor;
+
 use Gapp::Form::Stash;
 use Gapp::Types qw( FormContext FormField FormStash );
 with 'Gapp::Meta::Widget::Native::Trait::FormElement';
