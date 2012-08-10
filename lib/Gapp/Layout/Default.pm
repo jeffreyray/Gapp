@@ -517,6 +517,17 @@ add 'Gapp::Widget', to 'Gapp::VBox', sub {
     $c->gtk_widget->pack_start( $w->gtk_widget, $w->expand, $w->fill, $w->padding );
 };
 
+add 'Gapp::Widget', to 'Gapp::Paned', sub {
+    my ($l,  $w, $c ) = @_;
+    
+    if ( ! $c->gtk_widget->get_child1 ) {
+	$c->gtk_widget->pack1( $w->gtk_widget, $c->resize1, $c->shrink1 );
+    }
+    else {
+	$c->gtk_widget->pack2( $w->gtk_widget, $c->resize1, $c->shrink2 );
+    }
+};
+
 add 'Gapp::Widget', to 'Gapp::Dialog', sub {
     my ($l,  $w, $c ) = @_;
     $c->gtk_widget->vbox->pack_start( $w->gtk_widget, $w->expand, $w->fill, $w->padding );
@@ -552,6 +563,16 @@ add 'Gapp::Widget', to 'Gapp::Table', sub {
     
     
     1;
+};
+
+add 'Gapp::Widget', to 'Gapp::ToolItemGroup', sub {
+    my ($l,  $w, $c ) = @_;
+    $c->gtk_widget->add( $w->gtk_widget );
+};
+
+add 'Gapp::Widget', to 'Gapp::ToolPalette', sub {
+    my ($l,  $w, $c ) = @_;
+    $c->gtk_widget->add( $w->gtk_widget );
 };
 
 add 'Gapp::Widget', to 'Gapp::Window', sub {

@@ -1,6 +1,6 @@
 package Gapp;
 
-our $VERSION = 0.35;
+our $VERSION = 0.36;
 
 use Gtk2 '-init';
 
@@ -23,6 +23,7 @@ use Gapp::Form::Context;
 use Gapp::Form::Stash;
 use Gapp::Frame;
 use Gapp::HBox;
+use Gapp::HPaned;
 use Gapp::HButtonBox;
 use Gapp::Image;
 use Gapp::ImageMenuItem;
@@ -44,15 +45,18 @@ use Gapp::SimpleList;
 use Gapp::StatusIcon;
 use Gapp::SSNEntry;
 use Gapp::Table;
+use Gapp::TextView;
 use Gapp::TimeEntry;
 use Gapp::ToggleButton;
 use Gapp::Toolbar;
 use Gapp::ToolButton;
-use Gapp::TextView;
+use Gapp::ToolItemGroup;
+use Gapp::ToolPalette;
 use Gapp::TreeView;
 use Gapp::TreeViewColumn;
 use Gapp::UIManager;
 use Gapp::VBox;
+use Gapp::VPaned;
 use Gapp::VButtonBox;
 use Gapp::Widget;
 use Gapp::Window;
