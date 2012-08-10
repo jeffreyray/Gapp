@@ -27,7 +27,4 @@ use Gapp;
     );
     
     ok $palette, "Created palette with group";
-
-    Gapp::Window->new( content => [$palette] )->show_all;
-    Gapp->main;
 }

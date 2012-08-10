@@ -1,5 +1,8 @@
 Changes for Gapp
 
+0.36
+- added HPaned, VPaned, ToolItemGroup, ToolPalette
+
 0.35
 - Work with Moose 2.0+
 
