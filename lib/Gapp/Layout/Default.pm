@@ -524,7 +524,7 @@ add 'Gapp::Widget', to 'Gapp::Paned', sub {
 	$c->gtk_widget->pack1( $w->gtk_widget, $c->resize1, $c->shrink1 );
     }
     else {
-	$c->gtk_widget->pack2( $w->gtk_widget, $c->resize1, $c->shrink2 );
+	$c->gtk_widget->pack2( $w->gtk_widget, $c->resize2, $c->shrink2 );
     }
 };
 

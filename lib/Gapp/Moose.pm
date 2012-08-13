@@ -36,6 +36,8 @@ use Gapp::Moose::Meta::Attribute::Trait::GappTable;
 use Gapp::Moose::Meta::Attribute::Trait::GappTextView;
 use Gapp::Moose::Meta::Attribute::Trait::GappTimeEntry;
 use Gapp::Moose::Meta::Attribute::Trait::GappToolbar;
+use Gapp::Moose::Meta::Attribute::Trait::GappToolItemGroup;
+use Gapp::Moose::Meta::Attribute::Trait::GappToolPalette;
 use Gapp::Moose::Meta::Attribute::Trait::GappTreeView;
 use Gapp::Moose::Meta::Attribute::Trait::GappUIManager;
 use Gapp::Moose::Meta::Attribute::Trait::GappWindow;

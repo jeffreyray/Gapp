@@ -1,5 +1,8 @@
 Changes for Gapp
 
+0.37
+- added traits for ToolItemGroup, ToolPalette
+
 0.36
 - added HPaned, VPaned, ToolItemGroup, ToolPalette
 
