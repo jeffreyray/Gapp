@@ -3,11 +3,19 @@ package Gapp::TextView;
 use Moose;
 use MooseX::SemiAffordanceAccessor;
 
+
 extends 'Gapp::Widget';
 with 'Gapp::Meta::Widget::Native::Trait::FormField';
 
+use Gapp::TextBuffer;
+
 has '+class' => (
     default => 'Gtk2::TextView',
+);
+
+has 'buffer' => (
+    is => 'rw',
+    isa => 'Maybe[Gapp::TextBuffer]',
 );
 
 has 'get_hidden_chars' => (
@@ -73,6 +81,25 @@ Gapp::TextView - TextView Widget
 =over 4
 
 =item L<Gapp::Meta::Widget::Native::Trait::FormField>
+
+=back
+
+
+=head1 PROVIDED ATTRIBUTES
+
+=over 4
+
+=item B<buffer>
+
+=over 4
+
+=item isa: Gapp::TextBuffer|Undef
+
+=item default: undef
+
+=back
+
+Assigned to the TextView upon construction.
 
 =back
 

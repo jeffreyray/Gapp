@@ -4,6 +4,8 @@ use Moose;
 use MooseX::LazyRequire;
 use MooseX::SemiAffordanceAccessor;
 use MooseX::StrictConstructor;
+extends 'Gapp::Object';
+
 use MooseX::Types::Moose qw( ArrayRef HashRef Str Undef );
 
 use Gtk2;

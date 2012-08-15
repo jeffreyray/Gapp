@@ -392,6 +392,12 @@ add 'Gapp::Widget', to 'Gapp::ScrolledWindow', sub {
 };
 
 
+# TextView
+build 'Gapp::TextView', sub {
+    my ( $l, $w ) = @_;
+    $w->gtk_widget->set_buffer( $w->buffer->gtk_widget ) if $w->buffer;
+};
+
 
 # Toolbar
 build 'Gapp::Toolbar', sub {

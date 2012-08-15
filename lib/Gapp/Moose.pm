@@ -33,6 +33,7 @@ use Gapp::Moose::Meta::Attribute::Trait::GappScrolledWindow;
 use Gapp::Moose::Meta::Attribute::Trait::GappSpinButton;
 use Gapp::Moose::Meta::Attribute::Trait::GappStatusIcon;
 use Gapp::Moose::Meta::Attribute::Trait::GappTable;
+use Gapp::Moose::Meta::Attribute::Trait::GappTextBuffer;
 use Gapp::Moose::Meta::Attribute::Trait::GappTextView;
 use Gapp::Moose::Meta::Attribute::Trait::GappTimeEntry;
 use Gapp::Moose::Meta::Attribute::Trait::GappToolbar;

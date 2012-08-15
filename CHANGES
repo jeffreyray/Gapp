@@ -1,5 +1,8 @@
 Changes for Gapp
 
+0.38
+- added TextBuffer, trait for TextBuffer
+
 0.37
 - added traits for ToolItemGroup, ToolPalette
 
