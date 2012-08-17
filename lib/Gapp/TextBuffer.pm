@@ -7,7 +7,7 @@ extends 'Gapp::Widget';
 
 use Gapp::TextTagTable;
 
-has '+class' => (
+has '+gclass' => (
     default => 'Gtk2::TextBuffer',
 );
 
@@ -26,7 +26,7 @@ sub BUILDARGS {
     }
     
     if ( exists $args{tag_table} && defined $args{tag_table} ) {
-        $args{args} = [ $args{tag_table}->gtk_widget ];
+        $args{args} = [ $args{tag_table}->gobject ];
     }
     
     __PACKAGE__->SUPER::BUILDARGS( %args );

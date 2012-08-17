@@ -9,7 +9,7 @@ with 'Gapp::Meta::Widget::Native::Trait::FormField';
 
 use Gapp::TextBuffer;
 
-has '+class' => (
+has '+gclass' => (
     default => 'Gtk2::TextView',
 );
 
@@ -27,13 +27,13 @@ has 'get_hidden_chars' => (
 # returns the value of the widget
 sub get_field_value {
     my ( $self ) = @_;
-    my $buffer = $self->gtk_widget->get_buffer;
+    my $buffer = $self->gobject->get_buffer;
     $buffer->get_text( $buffer->get_start_iter, $buffer->get_end_iter, $self->get_hidden_chars );
 }
 
 sub set_field_value {
     my ( $self, $value ) = @_;
-    my $buffer = $self->gtk_widget->get_buffer;
+    my $buffer = $self->gobject->get_buffer;
     $buffer->set_text( defined $value ? $value : '' );
 }
 
@@ -50,7 +50,7 @@ sub stash_to_widget {
 sub _connect_changed_handler {
     my ( $self ) = @_;
 
-    $self->gtk_widget->get_buffer->signal_connect (
+    $self->gobject->get_buffer->signal_connect (
       changed => sub { $self->_widget_value_changed },
     );
 }
@@ -109,7 +109,7 @@ Jeffrey Ray Hallock E<lt>jeffrey.hallock at gmail dot comE<gt>
 
 =head1 COPYRIGHT & LICENSE
 
-    Copyright (c) 2011 Jeffrey Ray Hallock.
+    Copyright (c) 2011-2012 Jeffrey Ray Hallock.
 
     This program is free software; you can redistribute it and/or
     modify it under the same terms as Perl itself.

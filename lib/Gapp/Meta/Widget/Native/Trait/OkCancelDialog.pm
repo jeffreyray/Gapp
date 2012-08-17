@@ -89,15 +89,15 @@ around BUILDARGS => sub {
     return $class->$orig( %opts );
 };
 
-before '_build_gtk_widget' => sub {
+before '_build_gobject' => sub {
     my ( $self ) = @_;
     $self->add( $self->hbox );
 };
 
-after '_build_gtk_widget' => sub {
+after '_build_gobject' => sub {
     my ( $self ) = @_;
     
-    $self->hbox->gtk_widget->show_all;
+    $self->hbox->gobject->show_all;
 };
 
 package Gapp::Meta::Widget::Custom::Trait::OkCancelDialog;

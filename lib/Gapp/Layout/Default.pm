@@ -14,15 +14,15 @@ use Carp qw( confess );
 
 build 'Gapp::Assistant', sub {
     my ( $l, $w ) = @_;
-    $w->gtk_widget->set_icon( $w->gtk_widget->render_icon( $w->icon, 'dnd' ) ) if $w->icon;
+    $w->gobject->set_icon( $w->gobject->render_icon( $w->icon, 'dnd' ) ) if $w->icon;
     
     if ( $w->forward_page_func ) {
 	
 	my ( $cb, @args ) = parse_action $w->forward_page_func;
 	
-	$w->gtk_widget->set_forward_page_func( sub {
+	$w->gobject->set_forward_page_func( sub {
 	    my ( $pagenum, $w ) = @_;
-	    $cb->( $w, \@args, $w->gtk_widget, [$pagenum] );
+	    $cb->( $w, \@args, $w->gobject, [$pagenum] );
 	}, $w);
     }
 };
@@ -37,8 +37,8 @@ build 'Gapp::AssistantPage', sub {
 add 'Gapp::AssistantPage', to 'Gapp::Assistant', sub {
    my ( $l, $w, $c) = @_;
    
-    my $gtk_w = $w->gtk_widget;
-    my $assistant = $c->gtk_widget;
+    my $gtk_w = $w->gobject;
+    my $assistant = $c->gobject;
    
     my $page_num = $assistant->append_page( $gtk_w );
     $w->set_num( $page_num );
@@ -51,7 +51,7 @@ add 'Gapp::AssistantPage', to 'Gapp::Assistant', sub {
 
 build 'Gapp::Button', sub {
     my ( $l, $w ) = @_;
-    my $gtkw = $w->gtk_widget;
+    my $gtkw = $w->gobject;
     
     my ( $label, $image, $tooltip );
     
@@ -59,7 +59,7 @@ build 'Gapp::Button', sub {
 	$image = Gtk2::Image->new_from_stock( $w->icon, 'button' );
     }
     if ( $w->image ) {
-	$image = $w->image->gtk_widget;
+	$image = $w->image->gobject;
     }
     
     if ( $w->action ) {
@@ -105,14 +105,14 @@ build 'Gapp::Button', sub {
 
 build 'Gapp::ComboBox', sub {
     my ( $l, $w ) = @_;
-    my $gtkw = $w->gtk_widget;
+    my $gtkw = $w->gobject;
     
-    my $model = $w->model->isa('Gapp::Widget') ? $w->model->gtk_widget : $w->model;
+    my $model = $w->model->isa('Gapp::Widget') ? $w->model->gobject : $w->model;
     
     # populate the module with values
     if ( $w->values ) {
         
-        my $model = $w->model->isa('Gapp::Widget') ? $w->model->gtk_widget : $w->model;
+        my $model = $w->model->isa('Gapp::Widget') ? $w->model->gobject : $w->model;
         
         my @values = is_CodeRef($w->values) ? &{$w->values}($w) : @{$w->values};
         $model->append( $_ ) for ( @values );
@@ -122,7 +122,7 @@ build 'Gapp::ComboBox', sub {
     $gtkw->set_model( $model );
     
     # create the renderer to display the values
-    my $gtkr = $w->renderer->gtk_widget;
+    my $gtkr = $w->renderer->gobject;
     $gtkw->{renderer} = $gtkr;
     
     # add the renderer to the column
@@ -168,15 +168,15 @@ build 'Gapp::ComboBox', sub {
 
 build 'Gapp::Dialog', sub {
     my ( $l, $w ) = @_;
-    my $gtk_w = $w->gtk_widget;
-    $w->gtk_widget->set_icon( $w->gtk_widget->render_icon( $w->icon, 'dnd' ) ) if $w->icon;
-    $w->gtk_widget->set_position( $w->position ) if $w->position;
-    $w->gtk_widget->set_transient_for( $w->transient_for->gtk_widget ) if $w->transient_for;
+    my $gtk_w = $w->gobject;
+    $w->gobject->set_icon( $w->gobject->render_icon( $w->icon, 'dnd' ) ) if $w->icon;
+    $w->gobject->set_position( $w->position ) if $w->position;
+    $w->gobject->set_transient_for( $w->transient_for->gobject ) if $w->transient_for;
     
     my $i = 0;
     if ( $w->action_widgets ) {
 	for my $b ( @{ $w->action_widgets } ) {
-	    $gtk_w->add_action_widget( $b->gtk_widget, $i );
+	    $gtk_w->add_action_widget( $b->gobject, $i );
 	    $i++;
 	}
     }
@@ -192,10 +192,10 @@ build 'Gapp::Dialog', sub {
 
 build 'Gapp::FileChooserDialog', sub {
     my ( $l, $w ) = @_;
-    my $gtk_w = $w->gtk_widget;
-    $w->gtk_widget->set_icon( $w->gtk_widget->render_icon( $w->icon, 'dnd' ) ) if $w->icon;
-    $w->gtk_widget->set_position( $w->position ) if $w->position;
-    $w->gtk_widget->set_transient_for( $w->transient_for->gtk_widget ) if $w->transient_for;
+    my $gtk_w = $w->gobject;
+    $w->gobject->set_icon( $w->gobject->render_icon( $w->icon, 'dnd' ) ) if $w->icon;
+    $w->gobject->set_position( $w->position ) if $w->position;
+    $w->gobject->set_transient_for( $w->transient_for->gobject ) if $w->transient_for;
     
     if ( $w->buttons ) {
 	my $i = 0; for my $b ( @{ $w->buttons } ) {
@@ -206,7 +206,7 @@ build 'Gapp::FileChooserDialog', sub {
     
 
     
-    map { $w->gtk_widget->add_filter( $_->gtk_widget ) } $w->filters;
+    map { $w->gobject->add_filter( $_->gobject ) } $w->filters;
 };
 
 # FileFilter
@@ -214,7 +214,7 @@ build 'Gapp::FileChooserDialog', sub {
 build 'Gapp::FileFilter', sub {
     my ( $l, $w ) = @_;
     
-    my $gtkw = $w->gtk_widget;
+    my $gtkw = $w->gobject;
     $gtkw->set_name( $w->name );
     map { $gtkw->add_pattern( $_ ) } $w->patterns;
     map { $gtkw->add_mime_type( $_ ) } $w->mime_types; 
@@ -226,9 +226,9 @@ build 'Gapp::FileFilter', sub {
 build 'Gapp::Label', sub {
     my ( $l, $w ) = @_;
 
-    my $gtkw = $w->gtk_widget;
-    $gtkw->set_text( $w->text ) if defined $w->text;
-    $gtkw->set_markup( $w->markup ) if defined $w->markup;
+    my $gtkw = $w->gobject;
+    #$gtkw->set_text( $w->text ) if defined $w->text;
+    #$gtkw->set_markup( $w->markup ) if defined $w->markup;
 };
 
 # Image
@@ -236,7 +236,7 @@ build 'Gapp::Label', sub {
 build 'Gapp::Image', sub {
     my ( $l, $w ) = @_;
     
-    my $gtkw = $w->gtk_widget;
+    my $gtkw = $w->gobject;
     if ( $w->stock ) {
         $gtkw->set_from_stock( $w->stock->[0], $w->stock->[1] );
     }
@@ -246,7 +246,7 @@ build 'Gapp::Image', sub {
 
 build 'Gapp::ImageMenuItem', sub {
     my ( $l, $w ) = @_;
-    my $gtkw = $w->gtk_widget;
+    my $gtkw = $w->gobject;
     
     my ( $label, $icon, $tooltip );
     $label = $w->label;
@@ -270,14 +270,14 @@ build 'Gapp::ImageMenuItem', sub {
     $gtkw->set_image( Gtk2::Image->new_from_stock( $icon, 'menu' ) ) if defined $icon;
     
     if ( $w->menu ) {
-	$gtkw->set_submenu( $w->menu->gtk_widget );
+	$gtkw->set_submenu( $w->menu->gobject );
     }
 };
 
 add 'Gapp::MenuItem', to 'Gapp::Menu', sub {
     my ( $l, $w, $c ) = @_;
-    $c->gtk_widget->append( $w->gtk_widget );
-    $c->gtk_widget->show;
+    $c->gobject->append( $w->gobject );
+    $c->gobject->show;
 };
 
 
@@ -289,18 +289,18 @@ add 'Gapp::MenuItem', to 'Gapp::Menu', sub {
 build 'Gapp::MenuItem', sub {
     my ( $l, $w ) = @_;
     
-    my $gtkw = $w->gtk_widget;
+    my $gtkw = $w->gobject;
     if ( $w->menu ) {
-	$gtkw->set_submenu( $w->menu->gtk_widget );
+	$gtkw->set_submenu( $w->menu->gobject );
     }
     
-    $w->gtk_widget->get_child->set_text( $w->label ) if $w->label;
+    $w->gobject->get_child->set_text( $w->label ) if $w->label;
 };
 
 add 'Gapp::MenuItem', to 'Gapp::MenuShell', sub {
     my ( $l, $w, $c ) = @_;
-    $c->gtk_widget->append( $w->gtk_widget );
-    $c->gtk_widget->show;
+    $c->gobject->append( $w->gobject );
+    $c->gobject->show;
 };
 
 
@@ -308,7 +308,7 @@ add 'Gapp::MenuItem', to 'Gapp::MenuShell', sub {
 
 build 'Gapp::MenuToolButton', sub {
     my ( $l, $w ) = @_;
-    my $gtkw = $w->gtk_widget;
+    my $gtkw = $w->gobject;
     
     $gtkw->set_stock_id( $w->stock_id ) if $w->stock_id;
     $gtkw->set_label( $w->label ) if defined $w->label;
@@ -331,8 +331,8 @@ build 'Gapp::MenuToolButton', sub {
 	$gtkw->signal_connect( clicked => actioncb( $action, $w, \@args ) );
     }
     
-    $w->menu->gtk_widget->show_all;
-    $w->gtk_widget->set_menu( $w->menu->gtk_widget ) if $w->menu;
+    $w->menu->gobject->show_all;
+    $w->gobject->set_menu( $w->menu->gobject ) if $w->menu;
 };
 
 
@@ -340,7 +340,7 @@ build 'Gapp::MenuToolButton', sub {
 build 'Gapp::Notebook', sub {
     my ( $l, $w ) = @_;
 
-    my $gtkw = $w->gtk_widget;
+    my $gtkw = $w->gobject;
     
 };
 
@@ -348,14 +348,14 @@ build 'Gapp::Notebook', sub {
 add 'Gapp::Widget', to 'Gapp::Notebook', sub {
     my ( $l, $w, $c) = @_;
    
-    my $gtkw = $w->gtk_widget;
+    my $gtkw = $w->gobject;
     
     # check that widget is a NotebookPage
     if ( ! $w->does('Gapp::Meta::Widget::Native::Trait::NotebookPage') ) {
 	die qq[ Could not add $w to $c, $w must have the NotebookPage trait applied.];
     }
     
-    my $gtknb = $c->gtk_widget;
+    my $gtknb = $c->gobject;
     
     $gtknb->append_page( $gtkw );
     
@@ -369,7 +369,7 @@ add 'Gapp::Widget', to 'Gapp::Notebook', sub {
 build 'Gapp::Notice', sub {
     my ( $l, $w ) = @_;
 
-    my $gtkw = $w->gtk_widget;
+    my $gtkw = $w->gobject;
     
 };
 
@@ -388,21 +388,21 @@ style 'Gapp::NoticeBox', sub {
 build 'Gapp::NoticeBox', sub {
     my ( $l, $w ) = @_;
 
-    my $gtkw = $w->gtk_widget;
+    my $gtkw = $w->gobject;
     $gtkw->set_keep_above( 1 );
 };
 
 # SimpleList
 build 'Gapp::SimpleList', sub {
     my ( $l, $w ) = @_;
-    map { $w->gtk_widget->append( $_ ) } @{ $w->content };
+    map { $w->gobject->append( $_ ) } @{ $w->content };
 };
 
 
 # SpinButton
 build 'Gapp::SpinButton', sub {
     my ( $l, $w ) = @_;
-    $w->gtk_widget->set_increments( $w->step, $w->page ) if $w->page;
+    $w->gobject->set_increments( $w->step, $w->page ) if $w->page;
 };
 
 
@@ -411,17 +411,17 @@ build 'Gapp::SpinButton', sub {
 # ScrolledWindow
 build 'Gapp::ScrolledWindow', sub {
     my ( $l, $w ) = @_;
-    $w->gtk_widget->set_policy( @{ $w->policy }) if $w->policy;
+    $w->gobject->set_policy( @{ $w->policy }) if $w->policy;
 };
 
 add 'Gapp::Widget', to 'Gapp::ScrolledWindow', sub {
     my ($l, $w, $c) = @_;
     
     if ( $c->use_viewport ) {
-	$c->gtk_widget->add_with_viewport( $w->gtk_widget );
+	$c->gobject->add_with_viewport( $w->gobject );
     }
     else {
-	$c->gtk_widget->add( $w->gtk_widget );
+	$c->gobject->add( $w->gobject );
     }
     
 };
@@ -430,7 +430,7 @@ add 'Gapp::Widget', to 'Gapp::ScrolledWindow', sub {
 # TextBuffer
 build 'Gapp::TextView', sub {
     my ( $l, $w ) = @_;
-    $w->gtk_widget->set_buffer( $w->buffer->gtk_widget ) if $w->buffer;
+    $w->gobject->set_buffer( $w->buffer->gobject ) if $w->buffer;
 };
 
 
@@ -438,21 +438,21 @@ build 'Gapp::TextView', sub {
 # TextView
 build 'Gapp::TextView', sub {
     my ( $l, $w ) = @_;
-    $w->gtk_widget->set_buffer( $w->buffer->gtk_widget ) if $w->buffer;
+    $w->gobject->set_buffer( $w->buffer->gobject ) if $w->buffer;
 };
 
 
 # Toolbar
 build 'Gapp::Toolbar', sub {
     my ( $l, $w ) = @_;
-    $w->gtk_widget->set_icon_size( $w->icon_size ) if $w->icon_size;
+    $w->gobject->set_icon_size( $w->icon_size ) if $w->icon_size;
 };
 
 # ToolItem
 
 add 'Gapp::ToolItem', to 'Gapp::Toolbar', sub {
     my ($l,  $w, $c) = @_;
-    $c->gtk_widget->insert( $w->gtk_widget, -1 );
+    $c->gobject->insert( $w->gobject, -1 );
 };
 
 
@@ -460,7 +460,7 @@ add 'Gapp::ToolItem', to 'Gapp::Toolbar', sub {
 
 build 'Gapp::ToolButton', sub {
     my ( $l, $w ) = @_;
-    my $gtkw = $w->gtk_widget;
+    my $gtkw = $w->gobject;
     
     $gtkw->set_stock_id( $w->stock_id ) if $w->stock_id;
     $gtkw->set_label( $w->label ) if defined $w->label;
@@ -494,8 +494,8 @@ build 'Gapp::ToolButton', sub {
 
 build 'Gapp::TreeView', sub {
     my ( $l, $w ) = @_;
-    my $gtkw = $w->gtk_widget;
-    $gtkw->set_model( $w->model->isa('Gapp::Widget') ? $w->model->gtk_widget : $w->model ) if $w->model;
+    my $gtkw = $w->gobject;
+    $gtkw->set_model( $w->model->isa('Gapp::Widget') ? $w->model->gobject : $w->model ) if $w->model;
 };
 
 # TreeViewColumn
@@ -503,9 +503,9 @@ build 'Gapp::TreeView', sub {
 build 'Gapp::TreeViewColumn', sub {
     my ( $l, $w ) = @_;
     
-    my $gtkw = $w->gtk_widget;
+    my $gtkw = $w->gobject;
     
-    my $gtkr = $w->renderer->gtk_widget;
+    my $gtkr = $w->renderer->gobject;
     $gtkw->{renderer} = $gtkr;
     
     # add the renderer to the column
@@ -526,9 +526,9 @@ build 'Gapp::TreeViewColumn', sub {
     
     # if sorting enabled
     if ( $w->sort_enabled ) {
-	$w->gtk_widget->set_clickable( 1 );
-	$w->gtk_widget->signal_connect( 'clicked', sub {
-	    $w->gtk_widget->get_tree_view->get_model->set_default_sort_func( sub {
+	$w->gobject->set_clickable( 1 );
+	$w->gobject->signal_connect( 'clicked', sub {
+	    $w->gobject->get_tree_view->get_model->set_default_sort_func( sub {
 		my ( $model, $itera, $iterb, $w ) = @_;
 		my $a = $model->get( $itera, $w->data_column );
 		my $b = $model->get( $iterb, $w->data_column );
@@ -543,44 +543,44 @@ build 'Gapp::TreeViewColumn', sub {
 
 add 'Gapp::Widget', to 'Gapp::AssistantPage', sub {
     my ($l,  $w, $c ) = @_;
-    $c->gtk_widget->pack_start( $w->gtk_widget, $w->expand, $w->fill, $w->padding );
+    $c->gobject->pack_start( $w->gobject, $w->expand, $w->fill, $w->padding );
 };
 
 add 'Gapp::Widget', to 'Gapp::Bin', sub {
     my ($l,  $w, $c ) = @_;
-    $c->gtk_widget->add( $w->gtk_widget );
+    $c->gobject->add( $w->gobject );
 };
 
 add 'Gapp::Widget', to 'Gapp::Container', sub {
     my ($l,  $w, $c) = @_;
-    $c->gtk_widget->pack_start( $w->gtk_widget, $w->expand, $w->fill, $w->padding );
+    $c->gobject->pack_start( $w->gobject, $w->expand, $w->fill, $w->padding );
 };
 
 add 'Gapp::Widget', to 'Gapp::HBox', sub {
     my ($l,  $w, $c ) = @_;
-    $c->gtk_widget->pack_start( $w->gtk_widget, $w->expand, $w->fill, $w->padding );
+    $c->gobject->pack_start( $w->gobject, $w->expand, $w->fill, $w->padding );
 };
 
 add 'Gapp::Widget', to 'Gapp::VBox', sub {
     my ($l,  $w, $c ) = @_;
-    $c->gtk_widget->pack_start( $w->gtk_widget, $w->expand, $w->fill, $w->padding );
+    $c->gobject->pack_start( $w->gobject, $w->expand, $w->fill, $w->padding );
 };
 
 add 'Gapp::Widget', to 'Gapp::Paned', sub {
     my ($l,  $w, $c ) = @_;
     
-    if ( ! $c->gtk_widget->get_child1 ) {
-	$c->gtk_widget->pack1( $w->gtk_widget, $c->resize1, $c->shrink1 );
+    if ( ! $c->gobject->get_child1 ) {
+	$c->gobject->pack1( $w->gobject, $c->resize1, $c->shrink1 );
     }
     else {
-	$c->gtk_widget->pack2( $w->gtk_widget, $c->resize2, $c->shrink2 );
+	$c->gobject->pack2( $w->gobject, $c->resize2, $c->shrink2 );
     }
 };
 
 add 'Gapp::Widget', to 'Gapp::Dialog', sub {
     my ($l,  $w, $c ) = @_;
-    $c->gtk_widget->vbox->pack_start( $w->gtk_widget, $w->expand, $w->fill, $w->padding );
-    $w->gtk_widget->show;
+    $c->gobject->vbox->pack_start( $w->gobject, $w->expand, $w->fill, $w->padding );
+    $w->gobject->show;
 };
 
 add 'Gapp::Widget', to 'Gapp::Table', sub {
@@ -588,7 +588,7 @@ add 'Gapp::Widget', to 'Gapp::Table', sub {
     
     my $cell = $c->next_cell;
     
-    my $gtk_widget;
+    my $gobject;
     if ( defined $cell->xalign || defined $cell->yalign ) {
         my ( $xa, $ya ) = ( $cell->xalign, $cell->yalign );
         my $xs = $xa == -1 ? 1 : 0; # x-scale
@@ -597,16 +597,16 @@ add 'Gapp::Widget', to 'Gapp::Table', sub {
         $ya = 0 if $ya == -1; # y-align
         
         my $gtk_align = Gtk2::Alignment->new( $xa, $ya, $xs, $ys );
-        $gtk_align->add( $w->gtk_widget );
-        $gtk_widget = $gtk_align;
+        $gtk_align->add( $w->gobject );
+        $gobject = $gtk_align;
     }
     else {
-        $gtk_widget = $w->gtk_widget;
+        $gobject = $w->gobject;
     }
     
     
-    $c->gtk_widget->attach(
-        $gtk_widget, $cell->table_attach, 
+    $c->gobject->attach(
+        $gobject, $cell->table_attach, 
         0, 0
     );
     
@@ -616,27 +616,27 @@ add 'Gapp::Widget', to 'Gapp::Table', sub {
 
 add 'Gapp::Widget', to 'Gapp::ToolItemGroup', sub {
     my ($l,  $w, $c ) = @_;
-    $c->gtk_widget->add( $w->gtk_widget );
+    $c->gobject->add( $w->gobject );
 };
 
 add 'Gapp::Widget', to 'Gapp::ToolPalette', sub {
     my ($l,  $w, $c ) = @_;
-    $c->gtk_widget->add( $w->gtk_widget );
+    $c->gobject->add( $w->gobject );
 };
 
 add 'Gapp::Widget', to 'Gapp::Window', sub {
     my ($l,  $w, $c ) = @_;
-    $c->gtk_widget->add( $w->gtk_widget );
+    $c->gobject->add( $w->gobject );
 };
 
 # Window
 
 build 'Gapp::Window', sub {
     my ( $l, $w ) = @_;
-    $w->gtk_widget->set_icon( $w->gtk_widget->render_icon( $w->icon, 'dnd' ) ) if $w->icon;
-    $w->gtk_widget->set_transient_for( $w->transient_for->gtk_widget ) if $w->transient_for;
-    $w->gtk_widget->set_modal( $w->modal ) if $w->modal;
-    $w->gtk_widget->set_position( $w->position ) if $w->position;
+    $w->gobject->set_icon( $w->gobject->render_icon( $w->icon, 'dnd' ) ) if $w->icon;
+    $w->gobject->set_transient_for( $w->transient_for->gobject ) if $w->transient_for;
+    $w->gobject->set_modal( $w->modal ) if $w->modal;
+    $w->gobject->set_position( $w->position ) if $w->position;
 };
 
 

@@ -10,9 +10,9 @@ extends 'Gapp::Layout::Default';
 build 'Gapp::Dialog', sub {
     my ( $layout, $widget ) = @_;
     $layout->parent->build_widget( $widget ) if $layout->has_parent;
-    $widget->gtk_widget->set_border_width( 6 );
-    $widget->gtk_widget->vbox->set_spacing( 6 );
-    $widget->gtk_widget->set_default_size( 300, 100 );
+    $widget->gobject->set_border_width( 6 );
+    $widget->gobject->vbox->set_spacing( 6 );
+    $widget->gobject->set_default_size( 300, 100 );
 };
 
 use Test::More qw( no_plan );
@@ -33,7 +33,7 @@ my $w = Gapp::Dialog->new(
     #traits => [qw( )],
 );
 #ok $w, 'created gapp window';
-#ok $w->gtk_widget, 'created gtk widget';
+#ok $w->gobject, 'created gtk widget';
 #
-#$w->gtk_widget->show_all;
-#$w->gtk_widget->run;
+#$w->gobject->show_all;
+#$w->gobject->run;

@@ -4,11 +4,11 @@ use Moose;
 use MooseX::SemiAffordanceAccessor;
 use MooseX::Types::Moose qw( ArrayRef ClassName HashRef Object );
 
-extends 'Gapp::Widget';
+extends 'Gapp::Object';
 
 use Gapp::Actions::Util;
 
-has '+class' => (
+has '+gclass' => (
     default => 'Gtk2::ActionGroup',
 );
 
@@ -41,9 +41,9 @@ has 'action_args' => (
     };
 }
 
-after _construct_gtk_widget => sub {
+after _construct_gobject => sub {
     my ( $self ) = @_;
-    my $gtk_widget = $self->gtk_widget;
+    my $gobject = $self->gobject;
     
     my @actions;
     for my $a ( @{ $self->actions } ) {
@@ -66,7 +66,43 @@ after _construct_gtk_widget => sub {
     
     # create the gtk action widgets and add them
     # the the action group gtk widget
-    map { $gtk_widget->add_action( $_->create_gtk_action( args => $self->action_args ) ) } @actions;
+    map { $gobject->add_action( $_->create_gtk_action( args => $self->action_args ) ) } @actions;
 };
 
 1;
+
+
+
+
+__END__
+
+=pod
+
+=head1 NAME
+
+Gapp::ActionGroup - ActionGroup Widget
+
+=head1 OBJECT HIERARCHY
+
+=over 4
+
+=item L<Gapp::Object>
+
+=item +-- L<Gapp::ActionGroup>
+
+=back
+
+=head1 AUTHORS
+
+Jeffrey Ray Hallock E<lt>jeffrey.hallock at gmail dot comE<gt>
+
+=head1 COPYRIGHT & LICENSE
+
+    Copyright (c) 2011-2012 Jeffrey Ray Hallock.
+
+    This program is free software; you can redistribute it and/or
+    modify it under the same terms as Perl itself.
+
+=cut
+
+

@@ -9,6 +9,6 @@ use Gapp;
 my $w = Gapp::ToolItemGroup->new;
 
 isa_ok $w, 'Gapp::ToolItemGroup';
-isa_ok $w->gtk_widget,  'Gtk2::ToolItemGroup';
+isa_ok $w->gobject,  'Gtk2::ToolItemGroup';
 
 

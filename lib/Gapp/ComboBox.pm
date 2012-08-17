@@ -11,19 +11,19 @@ with 'Gapp::Meta::Widget::Native::Trait::FormField';
 
 use Gapp::SimpleList;
 
-has '+class' => (
+has '+gclass' => (
     default => 'Gtk2::ComboBox',
-);
-
-has 'data_func' => (
-    is => 'rw',
-    isa => 'Str|CodeRef|Undef',
 );
 
 has 'data_column' => (
     is => 'rw',
     isa => 'Int|Undef',
     default => 0,
+);
+
+has 'data_func' => (
+    is => 'rw',
+    isa => 'Str|CodeRef|Undef',
 );
 
 has 'model' => (
@@ -35,7 +35,7 @@ has 'model' => (
 has 'renderer' => (
     is => 'rw',
     isa => GappCellRenderer,
-    default => sub { Gapp::CellRenderer->new( class => 'Gtk2::CellRendererText', property => 'markup' ) },
+    default => sub { Gapp::CellRenderer->new( gclass => 'Gtk2::CellRendererText', property => 'markup' ) },
     coerce => 1,
 );
 
@@ -45,17 +45,14 @@ has 'values' => (
 );
 
 
-
-
-
 # returns the value of the widget
 sub get_field_value {
     my $self = shift;
     
-    my $iter = $self->gtk_widget->get_active_iter;
+    my $iter = $self->gobject->get_active_iter;
     return undef if ! $iter;
     
-    my $value = $self->gtk_widget->get_model->get( $iter, $self->data_column );
+    my $value = $self->gobject->get_model->get( $iter, $self->data_column );
     return $value;
 }
 
@@ -65,12 +62,12 @@ sub set_field_value {
     
     # clear widget if no value
     if ( ! defined $value ) {
-        $self->gtk_widget->set_active( -1 );
+        $self->gobject->set_active( -1 );
     }
     
     # find value and set appropriately
     else {
-        $self->gtk_widget->get_model->foreach( sub{
+        $self->gobject->get_model->foreach( sub{
             my ( $model, $path, $iter ) = @_;
             my $check_value = $model->get( $iter, $self->data_column );
             
@@ -78,7 +75,7 @@ sub set_field_value {
                 return;
             }
             elsif ( ! defined $value && ! defined $check_value || $value eq $check_value ) {
-                $self->gtk_widget->set_active_iter( $iter );
+                $self->gobject->set_active_iter( $iter );
                 return 1;
             }
         });
@@ -99,7 +96,7 @@ sub stash_to_widget {
 sub _connect_changed_handler {
     my ( $self ) = @_;
 
-    $self->gtk_widget->signal_connect (
+    $self->gobject->signal_connect (
       changed => sub { $self->_widget_value_changed },
     );
 }
@@ -129,34 +126,65 @@ Gapp::ComboBox - ComboBox Widget
 
 =back
 
+=head2 Traits
+
+=over 4
+
+=item L<Gapp::Meta::Widget::Native::Trait::FormField>
+
+=back
+
 =head1 SYNOPSIS
 
   # basic combo-box
+
   Gapp::ComboBox->new(
+
     values => [ '', 'Option1', 'Option 2', 'Option 3' ],
+
   );
 
   # in this example the combo is populated with array-refs
+
   # the text is displayed to the user, and and the integer
+
   # can be referenced for programmer user
+
   Gapp::ComboBox->new(
+
     values => [
+
         [ 0, ' ' ],
+
         [ 1, 'Option 1' ],
+
         [ 2, 'Option 2' ],
+
         [ 3, 'Option 3' ],
+
     ],
+
     data_func => sub { $_->[1] },
+
   );
 
+
   # objects too
+
   Gapp::ComboBox->new(
+
     values => [
+
         $object1,
+
         $object2,
+
         $object3
+
     ],
+
     data_func => 'label',
+
   );
 
 =head1 PROVIDED ATTRIBUTES
@@ -197,6 +225,7 @@ the value held in the model at C<data_column> for your convienence.
 
 =back
 
+If specified, sets the model of the C<ComboBox>.
 
 =item B<renderer>
 
@@ -204,15 +233,21 @@ the value held in the model at C<data_column> for your convienence.
 
 =item isa L<Gapp::CellRenderer>
 
-=item default Gapp::CellRenderer->new( class => 'Gtk2::CellRendererText', property => 'markup' );
+=item default Gapp::CellRenderer->new( gclass => 'Gtk2::CellRendererText', property => 'markup' );
 
 =back
+
+Sets the renderer for the C<ComboBox>.
 
 =item B<values>
 
 =over 4
 
-=item isa ArrayRef
+=item isa ArrayRef|CodeRef|Undef
+
+If an C<ArrayRef> is given, the model is populated with the given values.
+If a C<CodeRef> is given, the model is populated with the return values of the C<CodeRef>.
+If C<Undef> no values will be added to the model.
 
 =back
 
@@ -224,7 +259,7 @@ Jeffrey Ray Hallock E<lt>jeffrey.hallock at gmail dot comE<gt>
 
 =head1 COPYRIGHT & LICENSE
 
-    Copyright (c) 2011 Jeffrey Ray Hallock.
+    Copyright (c) 2011-2012 Jeffrey Ray Hallock.
 
     This program is free software; you can redistribute it and/or
     modify it under the same terms as Perl itself.

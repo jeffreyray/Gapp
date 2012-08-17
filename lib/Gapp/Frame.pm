@@ -5,7 +5,7 @@ use MooseX::SemiAffordanceAccessor;
 
 extends 'Gapp::Bin';
 
-has '+class' => (
+has '+gclass' => (
     default => 'Gtk2::Frame',
 );
 
@@ -19,9 +19,8 @@ sub BUILDARGS {
     my $class = shift;
     my %args = @_ == 1 && is_HashRef( $_[0] ) ? %{$_[0]} : @_;
     
-    if ( exists $args{label} ) {
-        $args{properties}{label} = $args{label};
-        delete $args{label};
+    for my $att ( qw(label shadow_type) ) {
+        $args{properties}{$att} = delete $args{$att} if exists $args{$att};
     }
     
     if ( exists $args{label_align} ) {
@@ -30,10 +29,6 @@ sub BUILDARGS {
         delete $args{label_align};
     }
     
-    if ( exists $args{shadow_type} ) {
-        $args{properties}{shadow_type} = $args{shadow_type};
-        delete $args{shadow_type};
-    }
     __PACKAGE__->SUPER::BUILDARGS( %args );
 }
 
@@ -54,13 +49,15 @@ Gapp::Frame - Frame widget
 
 =over 4
 
-=item L<Gapp::Widget>
+=item L<Gapp::Object>
 
-=item +-- L<Gapp::Container>
+=item +-- L<Gapp::Widget>
 
-=item ....+-- L<Gapp::Bin>
+=item ....+-- L<Gapp::Container>
 
-=item ........+-- L<Gapp::Frame>
+=item ........+-- L<Gapp::Bin>
+
+=item ............+-- L<Gapp::Frame>
 
 =back
 
@@ -72,15 +69,17 @@ Gapp::Frame - Frame widget
 
 =over 4
 
-=item isa GappWidget
+=item is rw
+
+=item isa Maybe[L<Gapp::Widget>]
 
 =back
 
+The widget to use as the label for the frame.
+
 =back
 
-=head1 DELEGATES TO GTK
-
-=head2 Attributes
+=head1 DELEGATED PROPERTIES
 
 =over 4
 
@@ -98,7 +97,7 @@ Jeffrey Ray Hallock E<lt>jeffrey.hallock at gmail dot comE<gt>
 
 =head1 COPYRIGHT & LICENSE
 
-    Copyright (c) 2011 Jeffrey Ray Hallock.
+    Copyright (c) 2011-2012 Jeffrey Ray Hallock.
 
     This program is free software; you can redistribute it and/or
     modify it under the same terms as Perl itself.

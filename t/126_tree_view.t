@@ -21,6 +21,6 @@ my $w = Gapp::TreeView->new(
     ]
 );
 ok $w, 'created gapp widget';
-ok $w->gtk_widget, 'created gtk widget';
+ok $w->gobject, 'created gtk widget';
 
-print $w->gtk_widget->get_children, "\n";
+print $w->gobject->get_children, "\n";

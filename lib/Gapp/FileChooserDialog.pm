@@ -6,24 +6,24 @@ use MooseX::Types::Moose qw( ArrayRef );
 
 extends 'Gapp::Dialog';
 
-has '+class' => (
+has '+gclass' => (
     default => 'Gtk2::FileChooserDialog',
 );
 
-has '+gtk_widget' => (
+has '+gobject' => (
     handles => ['run'],
-);
-
-has 'action' => (
-    is => 'rw',
-    isa => 'Str',
-    default => 'open',
 );
 
 has '+parent' => (
     is => 'rw',
     isa => 'Maybe[Object]',
     default => undef,
+);
+
+has 'action' => (
+    is => 'rw',
+    isa => 'Str',
+    default => 'open',
 );
 
 has 'filters' => (
@@ -38,10 +38,10 @@ has 'filters' => (
 
 
 
-before '_build_gtk_widget' => sub {
+before '_build_gobject' => sub {
     my $self = shift;
     $self->set_args( [ $self->properties->{title} ? $self->properties->{title} : '' ,
-                      $self->parent ? $self->parent->gtk_widget : undef,
+                      $self->parent ? $self->parent->gobject : undef,
                       $self->action ] );
 };
     
@@ -55,21 +55,23 @@ __END__
 
 =head1 NAME
 
-Gapp::FileChooserDialog - Dialog Widget
+Gapp::FileChooserDialog - FileChooserDialog Widget
 
 =head1 OBJECT HIERARCHY
 
 =over 4
 
-=item L<Gapp::Widget>
+=item L<Gapp::Object>
 
-=item +-- L<Gapp::Container>
+=item +-- L<Gapp::Widget>
 
-=item ....+-- L<Gapp::Window>
+=item ....+-- L<Gapp::Container>
 
-=item ........+-- L<Gapp::Dialog>
+=item ........+-- L<Gapp::Window>
 
-=item ............+-- L<Gapp::FileChooserDialog>
+=item ............+-- L<Gapp::Dialog>
+
+=item ................+-- L<Gapp::FileChooserDialog>
 
 =back
 
@@ -81,9 +83,17 @@ Gapp::FileChooserDialog - Dialog Widget
 
 =over 4
 
+=item is rw
+
 =item isa Str
 
+=item default open
+
 =back
+
+Describes whether the C<FileChooser> is being used to open an existing file
+or to save to a possibly new file. The available options are: C<open>, C<save>,
+C<select-folder>, C<create-folder>.
 
 =back
 
@@ -91,9 +101,13 @@ Gapp::FileChooserDialog - Dialog Widget
 
 =over 4
 
-=item isa Array
+=item is rw
+
+=item isa ArrayRef[L<Gapp::FileFilter>]
 
 =back
+
+The file filters available to the user in the dialog.
 
 =back
 
@@ -103,7 +117,7 @@ Jeffrey Ray Hallock E<lt>jeffrey.hallock at gmail dot comE<gt>
 
 =head1 COPYRIGHT & LICENSE
 
-    Copyright (c) 2011 Jeffrey Ray Hallock.
+    Copyright (c) 2011-2012 Jeffrey Ray Hallock.
 
     This program is free software; you can redistribute it and/or
     modify it under the same terms as Perl itself.

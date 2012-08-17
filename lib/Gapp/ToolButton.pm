@@ -7,7 +7,7 @@ use MooseX::SemiAffordanceAccessor;
 extends 'Gapp::ToolItem';
 
 
-has '+class' => (
+has '+gclass' => (
     default => 'Gtk2::ToolButton',
 );
 
@@ -33,7 +33,7 @@ has 'label' => (
 );
 
 
-before '_build_gtk_widget' => sub {
+before '_build_gobject' => sub {
     my $self = shift;
     
     my $action = $self->action;
@@ -153,7 +153,7 @@ Jeffrey Ray Hallock E<lt>jeffrey.hallock at gmail dot comE<gt>
 
 =head1 COPYRIGHT & LICENSE
 
-    Copyright (c) 2011 Jeffrey Ray Hallock.
+    Copyright (c) 2011-2012 Jeffrey Ray Hallock.
 
     This program is free software; you can redistribute it and/or
     modify it under the same terms as Perl itself.

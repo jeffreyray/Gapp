@@ -33,18 +33,18 @@ sub display {
     my $ev = $self->_event_box;
     $ev->show;
     
-    for ( $ev->gtk_widget->get_children ) {
-        $ev->gtk_widget->remove( $_ );
+    for ( $ev->gobject->get_children ) {
+        $ev->gobject->remove( $_ );
     }
     
-    $ev->gtk_widget->add( $notice->gtk_widget );
-    $notice->gtk_widget->show_all;
+    $ev->gobject->add( $notice->gobject );
+    $notice->gobject->show_all;
     
     
-    $self->gtk_widget->set( opacity => 0 );
-    $self->gtk_widget->show;
+    $self->gobject->set( opacity => 0 );
+    $self->gobject->show;
     
-    my $gtkw = $self->gtk_widget;
+    my $gtkw = $self->gobject;
     my $screen = $gtkw->get_screen;
     my ($width, $height) = $gtkw->get_size;
     
@@ -53,7 +53,7 @@ sub display {
     my $x = 0;
     Glib::Timeout->add(50, sub {
         return 0 if $x >= .95;
-        $self->gtk_widget->set( opacity => $x );
+        $self->gobject->set( opacity => $x );
         $x += .07;
         return 1;
     });
@@ -61,14 +61,14 @@ sub display {
 
 sub hide {
     my $self = shift;
-    my $x = $self->gtk_widget->get( 'opacity' );
+    my $x = $self->gobject->get( 'opacity' );
     Glib::Timeout->add(50, sub {
         if ( $x <= 0 ) {
-            $self->gtk_widget->set( opacity => 0 );
+            $self->gobject->set( opacity => 0 );
             return 0;
         }
         else {
-            $self->gtk_widget->set( opacity => $x );
+            $self->gobject->set( opacity => $x );
             $x -= .07;
             return 1;
         }
@@ -106,7 +106,7 @@ Jeffrey Ray Hallock E<lt>jeffrey.hallock at gmail dot comE<gt>
 
 =head1 COPYRIGHT & LICENSE
 
-    Copyright (c) 2011 Jeffrey Ray Hallock.
+    Copyright (c) 2011-2012 Jeffrey Ray Hallock.
 
     This program is free software; you can redistribute it and/or
     modify it under the same terms as Perl itself.

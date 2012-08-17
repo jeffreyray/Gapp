@@ -444,7 +444,7 @@ Jeffrey Ray Hallock E<lt>jeffrey.hallock at gmail dot comE<gt>
 
     Copyright 2004-2006 by Jörn Reder.
 
-    Copyright (c) 2011 Jeffrey Ray Hallock.
+    Copyright (c) 2011-2012 Jeffrey Ray Hallock.
 
     This library is free software; you can redistribute it and/or modify
     it under the terms of the GNU Library General Public License as

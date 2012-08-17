@@ -9,4 +9,4 @@ use Gapp;
 my $w = Gapp::HPaned->new;
 
 isa_ok $w, 'Gapp::HPaned';
-isa_ok $w->gtk_widget,  'Gtk2::HPaned';
+isa_ok $w->gobject,  'Gtk2::HPaned';

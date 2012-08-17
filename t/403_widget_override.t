@@ -34,7 +34,7 @@ package main;
     ok $o, 'created object';
     ok $o->window, 'created widget';
     isa_ok $o->window, 'Gapp::Window', 'widget';
-    is $o->window->gtk_widget->get_title, 'Override', 'widget overridden';
+    is $o->window->gobject->get_title, 'Override', 'widget overridden';
 }
 
 { # basic subclass
@@ -42,7 +42,7 @@ package main;
     ok $o, 'created object';
     ok $o->window, 'created widget';
     isa_ok $o->window, 'Gapp::Window', 'widget';
-    is $o->window->gtk_widget->get_title, 'Subclass', 'widget subclassed';
+    is $o->window->gobject->get_title, 'Subclass', 'widget subclassed';
 }
 
 { # subclass with override
@@ -50,7 +50,7 @@ package main;
     ok $o, 'created object';
     ok $o->window, 'created widget';
     isa_ok $o->window, 'Gapp::Window', 'widget';
-    is $o->window->gtk_widget->get_title, 'Override', 'widget subclassed';
+    is $o->window->gobject->get_title, 'Override', 'widget subclassed';
 }
 
 

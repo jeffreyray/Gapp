@@ -74,7 +74,7 @@ sub add_handles {
             push @{ $orig }, @$handles;
         }
         
-        # and the new values ar a hash-ref
+        # and the new values are a hash-ref
         elsif ( is_HashRef $handles ) {
             
             # create new hash-ref containing all handles
@@ -104,6 +104,8 @@ sub add_handles {
     else {
         $orig = $handles;
     }
+    
+    return $orig;
 }
 
 1;

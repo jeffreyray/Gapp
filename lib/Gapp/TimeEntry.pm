@@ -8,7 +8,7 @@ use Gapp::Gtk2::DateEntry;
 extends 'Gapp::Entry';
 with 'Gapp::Meta::Widget::Native::Trait::FormField';
 
-has '+class' => (
+has '+gclass' => (
     default => 'Gapp::Gtk2::TimeEntry',
 );
 
@@ -27,18 +27,18 @@ sub BUILDARGS {
 
 # returns the value of the widget
 sub get_field_value {
-    $_[0]->gtk_widget->get_value;
+    $_[0]->gobject->get_value;
 }
 
 sub set_field_value {
     my ( $self, $value ) = @_;
-    $self->gtk_widget->set_value( $value );
+    $self->gobject->set_value( $value );
 }
 
 sub _connect_changed_handler {
     my ( $self ) = @_;
 
-    $self->gtk_widget->signal_connect (
+    $self->gobject->signal_connect (
       'value-changed' => sub { $self->_widget_value_changed },
     );
 }
@@ -83,7 +83,7 @@ Jeffrey Ray Hallock E<lt>jeffrey.hallock at gmail dot comE<gt>
 
 =head1 COPYRIGHT & LICENSE
 
-    Copyright (c) 2011 Jeffrey Ray Hallock.
+    Copyright (c) 2011-2012 Jeffrey Ray Hallock.
 
     This program is free software; you can redistribute it and/or
     modify it under the same terms as Perl itself.

@@ -8,12 +8,12 @@ use Gapp::Layout;
 
 add 'Gapp::Widget', to 'Gapp::Container', sub {
     my ( $container, $child ) = @_;
-    $container->gtk_widget->add( $child->gtk_widget );
+    $container->gobject->add( $child->gobject );
 };
 
 add 'Gapp::Label', to 'Gapp::Window', sub {
     my ( $container, $child ) = @_;
-    $container->gtk_widget->add( $child->gtk_widget );
+    $container->gobject->add( $child->gobject );
 };
 
 

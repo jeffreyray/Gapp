@@ -22,7 +22,7 @@ has 'action' => (
 );
 
 
-before '_build_gtk_widget' => sub {
+before '_build_gobject' => sub {
     my $self = shift;
     $self->set_content([
         $self->image ?

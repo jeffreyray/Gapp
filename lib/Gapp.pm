@@ -68,6 +68,8 @@ use Gapp::Window;
 use Gapp::Layout::Default;
 our $Layout = Gapp::Layout::Default->Layout;
 
+use Gapp::Meta::Widget::Native::Role::HasAction;
+
 use Gapp::Meta::Widget::Native::Trait::ErrorDialog;
 use Gapp::Meta::Widget::Native::Trait::Form;
 use Gapp::Meta::Widget::Native::Trait::FormField;

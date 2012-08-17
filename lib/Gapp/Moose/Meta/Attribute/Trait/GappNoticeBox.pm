@@ -5,7 +5,7 @@ use MooseX::Types::Moose qw( ArrayRef HashRef );
 
 before '_process_options' => sub {
     my ( $class, $name, $opts ) = @_;
-    $opts->{class} = 'Gapp::NoticeBox' if ! exists $opts->{class};
+    $opts->{gclass} = 'Gapp::NoticeBox' if ! exists $opts->{class};
     
     my @handles = qw( display hide );
 

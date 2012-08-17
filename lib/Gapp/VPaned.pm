@@ -3,7 +3,7 @@ package Gapp::VPaned;
 use Moose;
 extends 'Gapp::Paned';
 
-has '+class' => (
+has '+gclass' => (
     default => 'Gtk2::VPaned',
 );
 

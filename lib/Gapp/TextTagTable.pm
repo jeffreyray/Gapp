@@ -5,7 +5,7 @@ use MooseX::SemiAffordanceAccessor;
 
 extends 'Gapp::Widget';
 
-has '+class' => (
+has '+gclass' => (
     default => 'Gtk2::TextTagTable',
 );
 

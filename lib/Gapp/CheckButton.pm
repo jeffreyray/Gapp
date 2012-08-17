@@ -5,13 +5,13 @@ use MooseX::SemiAffordanceAccessor;
 
 extends 'Gapp::ToggleButton';
 
-has '+class' => (
+has '+gclass' => (
     default => 'Gtk2::CheckButton',
 );
 
 sub get_field_value {
     my $self = shift;
-    my $state = $self->gtk_widget->get_active;
+    my $state = $self->gobject->get_active;
     if ( $state ) {
         return $self->value;
     }
@@ -31,13 +31,15 @@ Gapp::CheckButton - CheckButton Widget
 
 =over 4
 
-=item L<Gapp::Widget>
+=item L<Gapp::Object>
 
-=item +-- L<Gapp::Button>
+=item +-- L<Gapp::Widget>
 
-=item ....+-- L<Gapp::ToggleButton>
+=item ....+-- L<Gapp::Button>
 
-=item ........+-- L<Gapp::CheckButton>
+=item ........+-- L<Gapp::ToggleButton>
+
+=item ............+-- L<Gapp::CheckButton>
 
 =back
 
@@ -47,7 +49,7 @@ Jeffrey Ray Hallock E<lt>jeffrey.hallock at gmail dot comE<gt>
 
 =head1 COPYRIGHT & LICENSE
 
-    Copyright (c) 2011 Jeffrey Ray Hallock.
+    Copyright (c) 2011-2012 Jeffrey Ray Hallock.
 
     This program is free software; you can redistribute it and/or
     modify it under the same terms as Perl itself.

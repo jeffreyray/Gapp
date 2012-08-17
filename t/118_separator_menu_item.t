@@ -13,5 +13,5 @@ my $menu = Gapp::Menu->new(
         $w
     ]
 );
-isa_ok $w->gtk_widget, "Gtk2::SeparatorMenuItem";
+isa_ok $w->gobject, "Gtk2::SeparatorMenuItem";
 

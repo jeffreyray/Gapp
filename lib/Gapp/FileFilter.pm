@@ -5,7 +5,7 @@ use MooseX::SemiAffordanceAccessor;
 
 extends 'Gapp::Widget';
 
-has '+class' => (
+has '+gclass' => (
     default => 'Gtk2::FileFilter',
 );
 
@@ -13,16 +13,6 @@ has 'name' => (
     is => 'rw',
     isa => 'Str',
     default => '',
-);
-
-has 'patterns' => (
-    isa => 'ArrayRef',
-    traits => [qw( Array )],
-    default => sub { [ ] },
-    handles => {
-        add_pattern => 'push',
-        patterns => 'elements',
-    }
 );
 
 has 'mime_types' => (
@@ -34,6 +24,18 @@ has 'mime_types' => (
         mime_types => 'elements',
     }
 );
+
+
+has 'patterns' => (
+    isa => 'ArrayRef',
+    traits => [qw( Array )],
+    default => sub { [ ] },
+    handles => {
+        add_pattern => 'push',
+        patterns => 'elements',
+    }
+);
+
 
 
 
@@ -54,7 +56,7 @@ Gapp::FileFilter - FileFilter Widget
 
 =over 4
 
-=item L<Gapp::Widget>
+=item L<Gapp::Object>
 
 =item +-- L<Gapp::FileFilter>
 
@@ -68,9 +70,13 @@ Gapp::FileFilter - FileFilter Widget
 
 =over 4
 
+=item is rw
+
 =item isa Str
 
 =back
+
+The name of the filter. This will be displayed to the user.
 
 =item B<mime_types>
 
@@ -80,7 +86,7 @@ Gapp::FileFilter - FileFilter Widget
 
 =back
 
-=back
+The mime types to add to be included in the filter.
 
 =item B<patterns>
 
@@ -90,6 +96,8 @@ Gapp::FileFilter - FileFilter Widget
 
 =back
 
+The file glob patters to be included in the filter.
+
 =back
 
 =head1 AUTHORS
@@ -98,7 +106,7 @@ Jeffrey Ray Hallock E<lt>jeffrey.hallock at gmail dot comE<gt>
 
 =head1 COPYRIGHT & LICENSE
 
-    Copyright (c) 2011 Jeffrey Ray Hallock.
+    Copyright (c) 2011-2012 Jeffrey Ray Hallock.
 
     This program is free software; you can redistribute it and/or
     modify it under the same terms as Perl itself.

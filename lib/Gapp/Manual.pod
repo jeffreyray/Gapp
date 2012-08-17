@@ -96,12 +96,12 @@ later.
 As previously mentioned, Gapp is a layer over Gtk2. A L<Gapp::Widget> is used to
 manage the construction of a L<Gtk2::Widget>.
 
-The L<Gtk2::Widget> is created on the first call to C<Gapp::gtk_widget>. Make
+The L<Gtk2::Widget> is created on the first call to C<Gapp::gobject>. Make
 all configurations to your widget before this happens; any change you make to
 the L<Gapp::Widget> will not be reflected in the Gtk widget once it has been
 constructed.
 
-In our example program, the call to C<gtk_widget> was made implicitly by calling
+In our example program, the call to C<gobject> was made implicitly by calling
 C<show_all> all on the window. This is because C<show_all> is set up to delegate
 to the Gtk widget's C<show_all> method. The documentation for the Gapp widget
 will provide more information on methods that have been setup for delegation.

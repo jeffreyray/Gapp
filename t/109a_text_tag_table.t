@@ -11,5 +11,5 @@ use_ok 'Gapp::TextTagTable';
 
 my $w = Gapp::TextTagTable->new;
 isa_ok $w, q[Gapp::TextTagTable];
-isa_ok $w->gtk_widget, q[Gtk2::TextTagTable];
+isa_ok $w->gobject, q[Gtk2::TextTagTable];
 

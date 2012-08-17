@@ -25,4 +25,4 @@ use_ok 'Gapp::VBox';
 use Gapp;
 my $w = Gapp::Dialog->new( traits => [qw( My::Widget::Trait )] );
 ok $w, 'created gapp widget';
-ok $w->gtk_widget, 'created gtk widget';
+ok $w->gobject, 'created gtk widget';

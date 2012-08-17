@@ -54,12 +54,12 @@ has 'data_column' => (
     default => undef,
 );
 
-sub gtk_widget  {
+sub gobject  {
     my ( $self ) = @_;
     
     my $r = $self->gtk_renderer;
     
-    my $w = $self->class->new_with_attributes( $self->label, $r );
+    my $w = $self->gclass->new_with_attributes( $self->label, $r );
     
     $w->{renderer} = $r;
     

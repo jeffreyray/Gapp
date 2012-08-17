@@ -7,7 +7,7 @@ use MooseX::Types::Moose qw( HashRef );
 extends 'Gapp::Widget';
 
 
-has '+class' => (
+has '+gclass' => (
     default => 'Gtk2::ListStore',
 );
 
@@ -84,7 +84,7 @@ Jeffrey Ray Hallock E<lt>jeffrey.hallock at gmail dot comE<gt>
 
 =head1 COPYRIGHT & LICENSE
 
-    Copyright (c) 2011 Jeffrey Ray Hallock.
+    Copyright (c) 2011-2012 Jeffrey Ray Hallock.
 
     This program is free software; you can redistribute it and/or
     modify it under the same terms as Perl itself.

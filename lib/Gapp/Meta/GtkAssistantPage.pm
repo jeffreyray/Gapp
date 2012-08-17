@@ -43,7 +43,7 @@ has 'build' => (
     isa => CodeRef|Undef,
 );
 
-sub gtk_widget  {
+sub gobject  {
     my ( $self, $gappw, $assistant ) = @_;
     
     my $w = is_ClassName($self->widget) ?
@@ -56,14 +56,14 @@ sub gtk_widget  {
 
 sub append_to {
     my ( $page, $gappw, $assistant ) = @_;
-    my $gtk_widget = $page->gtk_widget( $gappw, $assistant );
-    my $page_num = $assistant->append_page( $gtk_widget );
-    $gtk_widget->{pagenum} = $page_num;
-    $assistant->set_page_title     ($gtk_widget, $page->title );
-    $assistant->set_page_side_image($gtk_widget, $assistant->render_icon( $page->icon , 'dnd' ) );
-    $assistant->set_page_type      ($gtk_widget, $page->type );
-    $assistant->set_page_complete  ($gtk_widget, 1);
-    $assistant->{pages}{$page->name} = $gtk_widget;  
+    my $gobject = $page->gobject( $gappw, $assistant );
+    my $page_num = $assistant->append_page( $gobject );
+    $gobject->{pagenum} = $page_num;
+    $assistant->set_page_title     ($gobject, $page->title );
+    $assistant->set_page_side_image($gobject, $assistant->render_icon( $page->icon , 'dnd' ) );
+    $assistant->set_page_type      ($gobject, $page->type );
+    $assistant->set_page_complete  ($gobject, 1);
+    $assistant->{pages}{$page->name} = $gobject;  
 }
 
 1;

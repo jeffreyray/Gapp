@@ -5,7 +5,7 @@ use MooseX::SemiAffordanceAccessor;
 
 extends 'Gapp::Container';
 
-has '+class' => (
+has '+gclass' => (
     default => 'Gtk2::ToolPalette',
 );
 

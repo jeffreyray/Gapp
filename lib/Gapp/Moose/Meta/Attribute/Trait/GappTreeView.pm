@@ -3,7 +3,7 @@ use Moose::Role;
 
 before '_process_options' => sub {
     my ( $class, $name, $opts ) = @_;
-    $opts->{class} = 'Gapp::TreeView' if ! exists $opts->{class};
+    $opts->{gclass} = 'Gapp::TreeView' if ! exists $opts->{class};
 };
 
 package Moose::Meta::Attribute::Custom::Trait::GappTreeView;

@@ -14,9 +14,9 @@ use Gapp;
         values => [ 'foo', 'bar', 'baz', ]
     );
     ok $w, 'created gapp widget';
-    ok $w->gtk_widget, 'created gtk widget';
+    ok $w->gobject, 'created gtk widget';
     
-    my $model = $w->gtk_widget->get_model;
+    my $model = $w->gobject->get_model;
     my $iter = $model->get_iter_first;
     ok $model->get( $iter ), 'got foo';
     
@@ -33,9 +33,9 @@ use Gapp;
         values => sub { 'foo', 'bar', 'baz' }
     );
     ok $w, 'created gapp widget';
-    ok $w->gtk_widget, 'created gtk widget';
+    ok $w->gobject, 'created gtk widget';
     
-    my $model = $w->gtk_widget->get_model;
+    my $model = $w->gobject->get_model;
     my $iter = $model->get_iter_first;
     ok $model->get( $iter ), 'got foo';
     
@@ -53,9 +53,9 @@ use Gapp;
         values => sub { 'foo', 'bar', 'baz' }
     );
     ok $w, 'created gapp widget';
-    ok $w->gtk_widget, 'created gtk widget';
+    ok $w->gobject, 'created gtk widget';
     
-    my $model = $w->gtk_widget->get_model;
+    my $model = $w->gobject->get_model;
     my $iter = $model->get_iter_first;
     ok $model->get( $iter ), 'got foo';
     

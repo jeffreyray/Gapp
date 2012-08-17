@@ -67,12 +67,12 @@ sub update {
 
 sub enable {
     my ( $self ) = @_;
-    $self->gtk_widget->set_sensitive( 1 );
+    $self->gobject->set_sensitive( 1 );
 }
 
 sub disable {
     my ( $self ) = @_;
-    $self->gtk_widget->set_sensitive( 0 );
+    $self->gobject->set_sensitive( 0 );
 }
 
 

@@ -28,7 +28,7 @@ has 'equality_func' => (
 sub get_field_value {
     my $self = shift;
     
-    my $model = $self->gtk_widget->get_model;
+    my $model = $self->gobject->get_model;
     my $iter = $model->get_iter_first;
     
     my @values;
@@ -46,7 +46,7 @@ sub get_field_value {
 sub set_field_value {
     my ( $self, $value ) = @_;
     
-    my $model = $self->gtk_widget->get_model;
+    my $model = $self->gobject->get_model;
     my $iter = $model->get_iter_first;
     
     my %values;
@@ -80,7 +80,7 @@ sub stash_to_widget {
 sub _connect_changed_handler {
     my ( $self ) = @_;
     
-    $self->gtk_widget->get_model->signal_connect (
+    $self->gobject->get_model->signal_connect (
       row_changed => sub { $self->_widget_value_changed },
     );
 }

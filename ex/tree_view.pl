@@ -10,12 +10,12 @@ my $m = Gapp::ListStore->new(
     columns => [qw( Glib::Boolean Glib::String Glib::String Glib::String )]
 );
 
-my $iter = $m->gtk_widget->append;
-$m->gtk_widget->set( $iter, 0 => 0, 1 => 60489, 2 => 'Critical', 3 => 'Bug description' );
-$m->gtk_widget->set( $iter, 0 => 1, 1 => 60566, 2 => 'Standard', 3 => 'Bug 2' );
-$m->gtk_widget->set( $iter, 0 => 0, 1 => 60569, 2 => 'Critical', 3 => 'Antoher bug' );
-$m->gtk_widget->set( $iter, 0 => 1, 1 => 60662, 2 => 'Standard', 3 => 'Bugs eveywhere' );
-$m->gtk_widget->set( $iter, 0 => 0, 1 => 60783, 2 => 'Critical', 3 => 'Bugs?' );
+my $iter = $m->gobject->append;
+$m->gobject->set( $iter, 0 => 0, 1 => 60489, 2 => 'Critical', 3 => 'Bug description' );
+$m->gobject->set( $iter, 0 => 1, 1 => 60566, 2 => 'Standard', 3 => 'Bug 2' );
+$m->gobject->set( $iter, 0 => 0, 1 => 60569, 2 => 'Critical', 3 => 'Antoher bug' );
+$m->gobject->set( $iter, 0 => 1, 1 => 60662, 2 => 'Standard', 3 => 'Bugs eveywhere' );
+$m->gobject->set( $iter, 0 => 0, 1 => 60783, 2 => 'Critical', 3 => 'Bugs?' );
 
 my $w = Gapp::Window->new(
     title => 'Gapp Application',
@@ -52,12 +52,12 @@ sub _do_toggled {
     my ( $r, $cell, $path_str, $args ) = @_;
     my ( $model, $col ) = $args ? @$args : ();
     my $path = Gtk2::TreePath->new( $path_str );
-    my $iter = $model->gtk_widget->get_iter( $path );
+    my $iter = $model->gobject->get_iter( $path );
     
-    my ( $value ) = $model->gtk_widget->get( $iter, $col );
+    my ( $value ) = $model->gobject->get( $iter, $col );
     $value ^= 1;
     
-    $model->gtk_widget->set( $iter, $col, $value );
+    $model->gobject->set( $iter, $col, $value );
     
 }
 

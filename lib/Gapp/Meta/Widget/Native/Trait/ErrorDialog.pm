@@ -81,10 +81,10 @@ around BUILDARGS => sub {
     return $class->$orig( %opts );
 };
 
-after '_build_gtk_widget' => sub {
+after '_build_gobject' => sub {
     my ( $self ) = @_;
     $self->add( $self->hbox );
-    $self->hbox->gtk_widget->show_all;
+    $self->hbox->gobject->show_all;
 };
 
 package Gapp::Meta::Widget::Custom::Trait::ErrorDialog;

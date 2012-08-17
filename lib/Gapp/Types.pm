@@ -108,7 +108,7 @@ class_type GappCellRenderer,
         via {
             if ( exists $RENDERERS{ $_ } ) {
                 my ( $c, $p ) = ( @{ $RENDERERS{ $_ } } );
-                'Gapp::CellRenderer'->new( class => $c, property => $p );
+                'Gapp::CellRenderer'->new( gclass => $c, property => $p );
             }
         };
     
@@ -118,7 +118,7 @@ class_type GappCellRenderer,
     
     coerce GappCellRenderer,
         from ArrayRef,
-        via { 'Gapp::CellRenderer'->new( class => $_->[0], property => $_->[1] ) };
+        via { 'Gapp::CellRenderer'->new( gclass => $_->[0], property => $_->[1] ) };
 
 
 # GappTableMap

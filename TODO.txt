@@ -1,0 +1,17 @@
+
+TODO:
+
+- Make AssistantPages a trait instead of a subclass
+- FormElement and FormField should be Roles, not traits
+- Finish notebook
+- Revamp test suite
+- Fix examples
+
+- Clean up native traits
+
+- Should Gapp::Object actuall be Gapp::GObject???
+- Should I add a Gapp::GtkObject as well???
+
+- revamp documentation
+
+- release 1.0

@@ -9,6 +9,6 @@ use_ok 'Gapp::CheckButton';
 
 my $w = Gapp::CheckButton->new( label => 'Label' );
 ok $w, 'created gapp widget';
-ok $w->gtk_widget, 'created gtk widget';
+ok $w->gobject, 'created gtk widget';
 
 

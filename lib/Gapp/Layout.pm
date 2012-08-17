@@ -65,32 +65,52 @@ Gapp::Layout - Define how widgets are displayed
 =head1 SYNOPSIS
 
     package My::Custom::Layout;
+
     use Gapp::Layout;
+
     extends 'Gapp::Layout::Default';
-    
+
+
     # center all entry texts
+
     style 'Gapp::Entry', sub {
+
         ( $layout, $widget ) = @_;
+
         $widget->properties->{xalign} ||= .5 ;
+
         $layout->parent->style_widget( $widget );
+
     };
     
     # add a widget to bottom of all vboxes
     build 'Gapp::VBox', sub {
+
         ( $layout, $widget ) = @_;
-        $footer  = Gtk2::Label->new( 'footer!, 0, 0, 0 );        
-        $widget->gtk_widget->pack_end( $footer,  );
+
+        $footer  = Gtk2::Label->new( 'footer!, 0, 0, 0 );
+
+        $widget->gobject->pack_end( $footer,  );
+
         $layout->parent->build_widget( $widget );
+
     };
     
     # specify how buttons are packed into a button box
     add 'Gapp::Button', to 'Gapp::HButtonBox', sub {
+
         my ($l, $w, $c) = @_;
-        $c->gtk_widget->pack_end(
-            $w->gtk_widget,
+
+        $c->gobject->pack_end(
+
+            $w->gobject,
+    
             $w->expand,
+    
             $w->fill,
+    
             $w->padding
+    
         );
     };
   
@@ -110,8 +130,11 @@ A layout is defined in a package. It is recomended that you inherit from
 L<Gapp::Layout::Default>.
  
  package My::Custom::Layout;
+
  use Gapp::Layout;
+
  extends 'Gapp::Layout::Default';
+
  
 =head2 Stylers
 
@@ -143,7 +166,7 @@ builder to maniplulate things at the Gtk2 level.
 
         $footer  = Gtk2::Label->new( 'footer!, 0, 0, 0 );
 
-        $widget->gtk_widget->pack_end( $footer,  );
+        $widget->gobject->pack_end( $footer,  );
 
         $layout->parent->build_widget( $widget );
 
@@ -154,42 +177,69 @@ builder to maniplulate things at the Gtk2 level.
 Packers are used to position widgets in containers. 
 
     # specify how buttons are packed into a button box
+
     add 'Gapp::Button', to 'Gapp::HButtonBox', sub {
+
         my ( $layout, $widget, $container ) = @_;
-        $container->gtk_widget->pack_end(
-            $widget->gtk_widget,
+
+        $container->gobject->pack_end(
+
+            $widget->gobject,
+
             $widget->expand,
+
             $widget->fill,
+
             $widget->padding
+
         );
+
     };
     
 The above example is pretty specific, but you can define something much more
 general. Take the example below:
 
-    # widgets always fill/expand vboxs
+    # widgets always fill/expand vboxes
+
     add 'Gapp::Widget', to 'Gapp::VBox', sub {
+
         my ( $layout, $widget, $container ) = @_;
-        $container->gtk_widget->pack_end(
-            $widget->gtk_widget,
+
+        $container->gobject->pack_end(
+
+            $widget->gobject,
+
             1,
+
             1, #fill
+
             $widget->padding
+
         );
+
     };
 
 This will make any L<Gapp::Widget> in a L<Gapp::VBox> expand and fill. You could
 then override this, for a specific widget:
 
     # widgets always fill/expand vboxs
+
     add 'Gapp::Button', to 'Gapp::VBox', sub {
+
         my ( $layout, $widget, $container ) = @_;
-        $container->gtk_widget->pack_end(
-            $widget->gtk_widget,
+
+        $container->gobject->pack_end(
+
+            $widget->gobject,
+
             $widget->expand,
+
             $widget->fill,
+
             $widget->padding
+
         );
+
     };
 
 =head1 EXPORTED FUNCTIONS
@@ -216,7 +266,7 @@ Jeffrey Ray Hallock E<lt>jeffrey.hallock at gmail dot comE<gt>
 
 =head1 COPYRIGHT
 
-    Copyright (c) 2011 Jeffrey Ray Hallock.
+    Copyright (c) 2011-2012 Jeffrey Ray Hallock.
     This program is free software; you can redistribute it and/or
     modify it under the same terms as Perl itself.
 

@@ -38,9 +38,9 @@ Gapp::Assistant->new(
         ),
     ],
     signal_connect => [
-        ['delete-event' => sub { $_[0]->gtk_widget->destroy }],
-        ['close' =>  sub { $_[0]->gtk_widget->destroy }],
-        ['cancel' =>  sub { $_[0]->gtk_widget->destroy }],
+        ['delete-event' => sub { $_[0]->gobject->destroy }],
+        ['close' =>  sub { $_[0]->gobject->destroy }],
+        ['cancel' =>  sub { $_[0]->gobject->destroy }],
         ['destroy' => sub { Gtk2->main_quit }],
     ],
 )->show_all;

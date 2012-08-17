@@ -10,7 +10,7 @@ use_ok 'Gapp::ToolButton';
 
 my $w = Gapp::ToolButton->new( icon => 'gtk-new', label => 'new' );
 ok $w, 'created gapp widget';
-ok $w->gtk_widget, 'created gtk widget';
+ok $w->gobject, 'created gtk widget';
 
 
 $w = Gapp::ToolButton->new(

@@ -11,5 +11,5 @@ use Gapp;
 
 my $w = Gapp::Entry->new( text => 1 );
 ok $w, 'created gapp widget';
-ok $w->gtk_widget, 'created gtk widget';
+ok $w->gobject, 'created gtk widget';
 

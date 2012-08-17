@@ -9,4 +9,4 @@ use_ok 'Gapp::Label';
 
 my $w = Gapp::Label->new( text => 'Label' );
 ok $w, 'created gapp widget';
-ok $w->gtk_widget, 'created gtk widget';
+ok $w->gobject, 'created gtk widget';

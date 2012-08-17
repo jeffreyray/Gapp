@@ -16,5 +16,5 @@ my $w = Gapp::Assistant->new(
     ]
 );
 ok $w, 'created gapp widget';
-ok $w->gtk_widget, 'created gtk widget';
+ok $w->gobject, 'created gtk widget';
 

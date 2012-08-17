@@ -13,7 +13,7 @@ use Scalar::Util qw(refaddr);
 {
     my $w = Gapp::TextBuffer->new;
     isa_ok $w, q[Gapp::TextBuffer];
-    isa_ok $w->gtk_widget, q[Gtk2::TextBuffer];
+    isa_ok $w->gobject, q[Gtk2::TextBuffer];
 }
 
 
@@ -21,5 +21,5 @@ use Scalar::Util qw(refaddr);
     my $t = Gapp::TextTagTable->new;
     
     my $w = Gapp::TextBuffer->new( tag_table => $t );
-    is refaddr $w->gtk_widget->get_tag_table, refaddr $t->gtk_widget, q[tag_table assigned to buffer];
+    is refaddr $w->gobject->get_tag_table, refaddr $t->gobject, q[tag_table assigned to buffer];
 }

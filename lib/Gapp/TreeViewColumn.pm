@@ -10,7 +10,7 @@ use Gapp::Types qw( GappCellRenderer GappTreeViewColumn );
 use Moose::Util;
 use MooseX::Types::Moose qw( Str ArrayRef HashRef CodeRef );
 
-has '+class' => (
+has '+gclass' => (
     default => 'Gtk2::TreeViewColumn',
 );
 
@@ -23,7 +23,7 @@ has 'name' => (
 has 'renderer' => (
     is => 'rw',
     isa => GappCellRenderer,
-    default => sub { Gapp::CellRenderer->new( class => 'Gtk2::CellRendererText', property => 'markup' ) },
+    default => sub { Gapp::CellRenderer->new( gclass => 'Gtk2::CellRendererText', property => 'markup' ) },
     coerce => 1,
 );
 
@@ -44,10 +44,10 @@ has 'sort_enabled' => (
     default => 0,
     trigger => sub {
         my ( $self ) = @_;
-        if ( $self->has_gtk_widget ) {
-            $self->gtk_widget->set_clickable( 1 );
-            $self->gtk_widget->signal_connect( 'clicked', sub {
-                $self->gtk_widget->get_tree_view->get_model->set_default_sort_func( sub {
+        if ( $self->has_gobject ) {
+            $self->gobject->set_clickable( 1 );
+            $self->gobject->signal_connect( 'clicked', sub {
+                $self->gobject->get_tree_view->get_model->set_default_sort_func( sub {
                     my ( $model, $itera, $iterb, $self ) = @_;
                     my $a = $model->get( $itera, $self->data_column );
                     my $b = $model->get( $iterb, $self->data_column );
@@ -163,7 +163,7 @@ Gapp::TreeViewColumn - TreeViewColumn Widget
 
 =item isa: L<Gapp::CellRenderer>
 
-=item default: Gapp::CellRenderer->new( class => 'Gtk2::CellRendererText', property => 'markup' );
+=item default: Gapp::CellRenderer->new( gclass => 'Gtk2::CellRendererText', property => 'markup' );
 
 =back
 
@@ -193,7 +193,7 @@ Jeffrey Ray Hallock E<lt>jeffrey.hallock at gmail dot comE<gt>
 
 =head1 COPYRIGHT & LICENSE
 
-    Copyright (c) 2011 Jeffrey Ray Hallock.
+    Copyright (c) 2011-2012 Jeffrey Ray Hallock.
 
     This program is free software; you can redistribute it and/or
     modify it under the same terms as Perl itself.

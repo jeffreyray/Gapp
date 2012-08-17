@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 5;
+use Test::More tests => 6;
 
 use Gtk2 '-init';
 
@@ -16,7 +16,7 @@ use_ok 'Gapp::Notebook';
 { # basic construction test
     my $w = Gapp::Notebook->new;
     isa_ok $w, 'Gapp::Notebook';
-    isa_ok $w->gtk_widget,  'Gtk2::Notebook';
+    isa_ok $w->gobject,  'Gtk2::Notebook';
 }
 
 
@@ -38,10 +38,8 @@ use_ok 'Gapp::Notebook';
     
     ok $w, 'created notebook with page';
     
-    ok $w->gtk_widget->get_children, 'notebook has page';
+    ok $w->gobject->get_children, 'notebook has page';
     
-    Gapp::Window->new( content => [$w] )->show_all;
-    Gtk2->main;
 }
 
 

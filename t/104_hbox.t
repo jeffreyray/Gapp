@@ -11,4 +11,4 @@ use_ok 'Gapp::HBox';
 
 my $w = Gapp::HBox->new;
 ok $w, 'created gapp widget';
-ok $w->gtk_widget, 'created gtk widget';
+ok $w->gobject, 'created gtk widget';

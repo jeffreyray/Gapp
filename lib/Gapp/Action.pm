@@ -68,7 +68,7 @@ sub create_gtk_action {
 
 sub create_gapp_image {
     my ( $self, @args ) = @_;
-    Gapp::Image->new( gtk_widget => Gtk2::Image->new_from_stock( $self->icon , $args[0] ) );
+    Gapp::Image->new( gobject => Gtk2::Image->new_from_stock( $self->icon , $args[0] ) );
 }
 
 sub create_gtk_image {

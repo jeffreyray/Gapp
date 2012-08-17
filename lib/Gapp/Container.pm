@@ -24,11 +24,6 @@ has 'content' => (
     }
 );
 
-sub add {
-    my ( $self, @args ) = @_;
-    $_->set_parent( $self ) for @args;
-    $self->_add_content( @args );
-}
 
 sub BUILD {
     my ( $self ) = @_;
@@ -38,14 +33,21 @@ sub BUILD {
     }
 }
 
-after '_build_gtk_widget' => sub {
+after '_build_gobject' => sub {
     my $self = shift;
     $self->find_layout->pack_widget( $_, $self) for @{$self->content};
 };
 
+sub add {
+    my ( $self, @args ) = @_;
+    $_->set_parent( $self ) for @args;
+    $self->_add_content( @args );
+}
+
+
 # return a list of all descendants
 sub find_descendants {
-    my ( $self, $child ) = @_;
+    my ( $self ) = @_;
     
     my @descendants;
     
@@ -76,7 +78,9 @@ Gapp::Container - Container Widget
 
 =item L<Gapp::Widget>
 
-=item +-- L<Gapp::Container>
+=item +-- L<Gapp::Widget>
+
+=item ....+-- L<Gapp::Container>
 
 =back
 
@@ -88,13 +92,21 @@ Gapp::Container - Container Widget
 
 =over 4
 
-=item isa ArrayRef
+=item isa ArrayRef[Gapp::Widget]
 
 =back
+
+These widgets will be packed into the container at construction time.
 
 =back
 
 =head1 PROVIDED METHODS
+
+=over 4
+
+=item B<add @widgets>
+
+Adds widgets to C<content> to be packed into the container at construction time.
 
 =over 4
 
@@ -110,7 +122,7 @@ Jeffrey Ray Hallock E<lt>jeffrey.hallock at gmail dot comE<gt>
 
 =head1 COPYRIGHT & LICENSE
 
-    Copyright (c) 2011 Jeffrey Ray Hallock.
+    Copyright (c) 2011-2012 Jeffrey Ray Hallock.
 
     This program is free software; you can redistribute it and/or
     modify it under the same terms as Perl itself.

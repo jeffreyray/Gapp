@@ -10,9 +10,9 @@ use_ok 'Gapp::CellRenderer';
 use Gapp;
 
 my $w = Gapp::CellRenderer->new(
-    class => 'Gtk2::CellRendererText',
+    gclass => 'Gtk2::CellRendererText',
     property => 'text',
 );
 ok $w, 'created gapp widget';
-ok $w->gtk_widget, 'created gtk widget';
+ok $w->gobject, 'created gtk widget';
 

@@ -9,5 +9,5 @@ use_ok 'Gapp::ImageMenuItem';
 
 my $w = Gapp::ImageMenuItem->new( label => 'new' );
 ok $w, 'created gapp widget';
-ok $w->gtk_widget, 'created gtk widget';
+ok $w->gobject, 'created gtk widget';
 

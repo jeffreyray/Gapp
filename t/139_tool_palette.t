@@ -10,7 +10,7 @@ use Gapp;
 { # basic construction test
     my $w = Gapp::ToolPalette->new;
     isa_ok $w, 'Gapp::ToolPalette';
-    isa_ok $w->gtk_widget,  'Gtk2::ToolPalette';
+    isa_ok $w->gobject,  'Gtk2::ToolPalette';
 }
 
 { # construct with groups

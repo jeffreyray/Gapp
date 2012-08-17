@@ -9,5 +9,5 @@ use_ok 'Gapp::SSNEntry';
 
 my $w = Gapp::SSNEntry->new( value => '999-99-9999' );
 ok $w, 'created gapp widget';
-ok $w->gtk_widget, 'created gtk widget';
+ok $w->gobject, 'created gtk widget';
 

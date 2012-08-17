@@ -5,13 +5,11 @@ use MooseX::SemiAffordanceAccessor;
 
 extends 'Gapp::Container';
 
-has '+class' => (
+has '+gclass' => (
     default => 'Gtk2::Bin',
 );
 
 1;
-
-
 
 __END__
 
@@ -25,11 +23,13 @@ Gapp::Bin - Bin widget
 
 =over 4
 
-=item L<Gapp::Widget>
+=item L<Gapp::Object>
 
-=item +-- L<Gapp::Container>
+=item +-- L<Gapp::Widget>
 
-=item ....+-- L<Gapp::Bin>
+=item ....+-- L<Gapp::Container>
+
+=item ........+-- L<Gapp::Bin>
 
 =back
 
@@ -39,7 +39,7 @@ Jeffrey Ray Hallock E<lt>jeffrey.hallock at gmail dot comE<gt>
 
 =head1 COPYRIGHT & LICENSE
 
-    Copyright (c) 2011 Jeffrey Ray Hallock.
+    Copyright (c) 2011-2012 Jeffrey Ray Hallock.
 
     This program is free software; you can redistribute it and/or
     modify it under the same terms as Perl itself.

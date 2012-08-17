@@ -9,6 +9,6 @@ use_ok 'Gapp::RadioButton';
 
 my $w = Gapp::RadioButton->new( label => 'Label', value => '1' );
 ok $w, 'created gapp widget';
-ok $w->gtk_widget, 'created gtk widget';
+ok $w->gobject, 'created gtk widget';
 
 

@@ -2,10 +2,9 @@
 use strict;
 use warnings;
 
-use Test::More qw( no_plan );
+use Test::More tests => 3;
 
 use Gtk2 '-init';
-use Gapp;
 use_ok 'Gapp::ActionGroup';
 
 my $w = Gapp::ActionGroup->new(
@@ -19,5 +18,5 @@ my $w = Gapp::ActionGroup->new(
 );
 
 
-ok $w, 'created gapp widget';
-ok $w->gtk_widget, 'created gtk widget';
+isa_ok $w, 'Gapp::ActionGroup';
+ok $w->gobject, 'Gtk2::ActionGroup';

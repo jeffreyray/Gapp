@@ -9,7 +9,7 @@ use Gapp::Types qw( GappActionOrArrayRef );
 
 extends 'Gapp::Window';
 
-has '+class' => (
+has '+gclass' => (
     default => 'Gtk2::Assistant',
 );
 
@@ -17,6 +17,16 @@ has 'forward_page_func' => (
     is => 'rw',
     isa => GappActionOrArrayRef|Undef,
 );
+
+
+sub current_page {
+    my ( $self ) = @_;
+    my $num = $self->gobject->get_current_page;
+    
+    for my $page ( $self->children ) {
+        return $page if $page->num == $num;
+    }
+}
 
 sub find_page {
     my ( $self, $page_name ) = @_;
@@ -47,19 +57,11 @@ sub set_current_page {
     
     for my $page ( $self->children ) {
         if ( $page->name eq $page_name ) {
-            $self->gtk_widget->set_current_page( $page->num );
+            $self->gobject->set_current_page( $page->num );
         }
     }
 }
 
-sub current_page {
-    my ( $self ) = @_;
-    my $num = $self->gtk_widget->get_current_page;
-    
-    for my $page ( $self->children ) {
-        return $page if $page->num == $num;
-    }
-}
 
 
 
@@ -71,6 +73,84 @@ sub BUILD {
         $page->validate if $page->validator;
     }, $self);
 }
+
+
+1;
+
+__END__
+
+=pod
+
+=head1 NAME
+
+Gapp::Assistant - Assistant Widget
+
+=head1 OBJECT HIERARCHY
+
+=over 4
+
+=item L<Gapp::Object>
+
+=item +-- L<Gapp::Widget>
+
+=item ....+-- L<Gapp::Container>
+
+=item ........+-- L<Gapp::Bin>
+
+=item ............+-- L<Gapp::Window>
+
+=item ................+-- L<Gapp::Assistant>
+
+=back
+
+=head1 PROVIDED ATTRIBUTES
+
+=over 4
+
+=item B<forward_page_func>
+
+=over 4
+
+=item is rw
+
+=item isa CodeRef
+
+=back
+
+Called when user moves forward through the assistant.
+
+=back
+
+=head1 PROVIDED METHODS
+
+=over 4
+
+=item B<set_current_page $page>
+
+Sets the currently displayed page.
+
+=item B<find_page $page_name>
+
+Finds and returns the page with the given C<$page_name>.
+
+=item B<current_page>
+
+Returns the currently displayed page.
+
+=back
+
+=head1 AUTHORS
+
+Jeffrey Ray Hallock E<lt>jeffrey.hallock at gmail dot comE<gt>
+
+=head1 COPYRIGHT & LICENSE
+
+    Copyright (c) 2011-2012 Jeffrey Ray Hallock.
+
+    This program is free software; you can redistribute it and/or
+    modify it under the same terms as Perl itself.
+
+=cut
 
 
 

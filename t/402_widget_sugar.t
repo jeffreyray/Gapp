@@ -7,7 +7,7 @@ use Gapp::Moose;
 
 widget 'window' => (
     is => 'rw',
-    class => 'Gapp::Window',
+    gclass => 'Gapp::Window',
     construct => [
         title => 'Gapp Application',
     ]

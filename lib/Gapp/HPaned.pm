@@ -3,7 +3,7 @@ package Gapp::HPaned;
 use Moose;
 extends 'Gapp::Paned';
 
-has '+class' => (
+has '+gclass' => (
     default => 'Gtk2::HPaned',
 );
 
@@ -21,13 +21,15 @@ Gapp::HPaned - HPaned Widget
 
 =over 4
 
-=item L<Gapp::Widget>
+=item L<Gapp::Object>
 
-=item +-- L<Gapp::Container>
+=item +-- L<Gapp::Widget>
 
-=item ....+-- L<Gapp::Paned>
+=item ....+-- L<Gapp::Container>
 
-=item ........+-- L<Gapp::HPaned>
+=item ........+-- L<Gapp::Paned>
+
+=item ............+-- L<Gapp::HPaned>
 
 =back
 

@@ -57,7 +57,7 @@ sub validate {
         return $valid;
     }
     
-    $self->parent->gtk_widget->set_page_complete( $self->gtk_widget, $valid );
+    $self->parent->gobject->set_page_complete( $self->gobject, $valid );
     return $valid;
 }
 

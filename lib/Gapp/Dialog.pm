@@ -16,24 +16,17 @@ has 'action_widgets' => (
     isa => 'Maybe[ArrayRef]',
 );
 
-has '+class' => (
+has '+gclass' => (
     default => 'Gtk2::Dialog',
 );
 
-has '+gtk_widget' => (
+has '+gobject' => (
     handles => ['run'],
 );
 
-after '_build_gtk_widget' => sub {
-    shift->gtk_widget->vbox->show_all;
+after '_build_gobject' => sub {
+    shift->gobject->vbox->show_all;
 };
-
-
-
-
-
-
-
 
 
 1;
@@ -50,13 +43,15 @@ Gapp::Dialog - Dialog Widget
 
 =over 4
 
-=item L<Gapp::Widget>
+=item L<Gapp::Object>
 
-=item +-- L<Gapp::Container>
+=item +-- L<Gapp::Widget>
 
-=item ....+-- L<Gapp::Window>
+=item ....+-- L<Gapp::Container>
 
-=item ........+-- L<Gapp::Dialog>
+=item ........+-- L<Gapp::Window>
+
+=item ............+-- L<Gapp::Dialog>
 
 =back
 
@@ -64,25 +59,39 @@ Gapp::Dialog - Dialog Widget
 
 =over 4
 
+=item B<action_widgets>
+
+=over 4
+
+=item is rw
+
+=item isa Maybe[ArrayRef]
+
+=back
+
+Additional widgets to pack into the action area.  
+
 =item B<buttons>
 
 =over 4
 
-=item isa ArrayRef
+=item is rw
+
+=item isa Maybe[ArrayRef]
 
 =back
 
+Buttons to pack into the dialog. Can use C<GappAction> items here as well.
+
 =back
 
-=head1 DELEGATES TO GTK
-
-=head2 Methods
+=head1 DELEGATED METHODS
 
 =over 4
 
-=item B<run>
+=item max_run
 
-=back 
+=back
 
 =head1 AUTHORS
 
@@ -90,7 +99,7 @@ Jeffrey Ray Hallock E<lt>jeffrey.hallock at gmail dot comE<gt>
 
 =head1 COPYRIGHT & LICENSE
 
-    Copyright (c) 2011 Jeffrey Ray Hallock.
+    Copyright (c) 2011-2012 Jeffrey Ray Hallock.
 
     This program is free software; you can redistribute it and/or
     modify it under the same terms as Perl itself.

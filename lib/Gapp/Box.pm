@@ -5,7 +5,7 @@ use MooseX::SemiAffordanceAccessor;
 
 extends 'Gapp::Container';
 
-has '+class' => (
+has '+gclass' => (
     default => 'Gtk2::Box',
 );
 
@@ -13,15 +13,10 @@ sub BUILDARGS {
     my $class = shift;
     my %args = @_ == 1 && is_HashRef( $_[0] ) ? %{$_[0]} : @_;
     
-    if ( exists $args{spacing} ) {
-        $args{properties}{spacing} = $args{spacing};
-        delete $args{spacing};
+    for my $att ( qw[spacing homogeneous] ) {
+        $args{properties}{$att} = delete $args{$att} if exists $args{$att};
     }
-    if ( exists $args{homogeneous} ) {
-        $args{properties}{homogeneous} = $args{homogeneous};
-        delete $args{homogeneous};
-    }
-    
+
     __PACKAGE__->SUPER::BUILDARGS( %args );
 }
 
@@ -40,11 +35,13 @@ Gapp::Box - Box widget
 
 =over 4
 
-=item L<Gapp::Widget>
+=item L<Gapp::Object>
 
-=item +-- L<Gapp::Container>
+=item +-- L<Gapp::Widget>
 
-=item ....+-- L<Gapp::Box>
+=item ....+-- L<Gapp::Container>
+
+=item ........+-- L<Gapp::Box>
 
 =back
 
@@ -64,7 +61,7 @@ Jeffrey Ray Hallock E<lt>jeffrey.hallock at gmail dot comE<gt>
 
 =head1 COPYRIGHT & LICENSE
 
-    Copyright (c) 2011 Jeffrey Ray Hallock.
+    Copyright (c) 2011-2012 Jeffrey Ray Hallock.
 
     This program is free software; you can redistribute it and/or
     modify it under the same terms as Perl itself.

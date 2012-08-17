@@ -3,7 +3,7 @@ use Moose::Role;
 
 use MooseX::Types::Moose qw( ArrayRef CodeRef HashRef Int Str Undef );
 
-has 'class' => (
+has 'gclass' => (
     is => 'rw',
     isa => 'Str',
 );
@@ -30,7 +30,7 @@ before '_process_options' => sub {
             my ( $self ) = @_;
             my $att = $self->meta->find_attribute_by_name( $name );
             
-            my $wclass = $att->class;
+            my $wclass = $att->gclass;
             my $wmethod = $att->constructor;
             
             if ( ! $wclass ) {

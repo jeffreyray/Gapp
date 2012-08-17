@@ -11,7 +11,7 @@ use_ok 'Gapp::NoticeBox';
 { # basic test
     my $w = Gapp::NoticeBox->new;
     ok $w, 'created gapp window';
-    ok $w->gtk_widget, 'created gtk widget';
+    ok $w->gobject, 'created gtk widget';
     
     my $notice = Gapp::Notice->new( image => 'gtk-new', text => 'Hello World!', action =>
         Gapp::Action->new( code => sub { print qq[action\n] } ),

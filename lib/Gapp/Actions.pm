@@ -85,7 +85,7 @@ Gapp::Actions - Create Actions for Gapp Applications
         icon => 'gtk-print',
 
         code => sub {
-            my ( $action, $widget, $gtk_widget, $args, $gtk_args ) = @_;
+            my ( $action, $widget, $gobject, $args, $gtk_args ) = @_;
 
             my ( $stuff ) = @$args;
 
@@ -144,7 +144,7 @@ autarch: Dave Rolsky <autarch@urth.org>
 
     Copyright (c) 2007-2009 Robert Sedlacek <rs@474.at>
 
-    Copyright (c) 2011 Jeffrey Ray Hallock.
+    Copyright (c) 2011-2012 Jeffrey Ray Hallock.
 
     This program is free software; you can redistribute it and/or
     modify it under the same terms as Perl itself.

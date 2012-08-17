@@ -8,7 +8,7 @@ extends 'Gapp::Container';
 
 
 
-has '+class' => (
+has '+gclass' => (
     default => 'Gtk2::Notebook',
 );
 

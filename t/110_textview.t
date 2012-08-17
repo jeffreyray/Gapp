@@ -12,7 +12,7 @@ use Scalar::Util qw(refaddr);
 { # widget construction
     my $w = Gapp::TextView->new;
     isa_ok $w, q[Gapp::TextView];
-    isa_ok $w->gtk_widget, q[Gtk2::TextView];
+    isa_ok $w->gobject, q[Gtk2::TextView];
 }
 
 
@@ -20,5 +20,5 @@ use Scalar::Util qw(refaddr);
     my $b = Gapp::TextBuffer->new;
     my $w = Gapp::TextView->new( buffer => $b );
     
-    is refaddr $w->gtk_widget->get_buffer, refaddr $b->gtk_widget, q[gtk_widget buffer set from attr];
+    is refaddr $w->gobject->get_buffer, refaddr $b->gobject, q[gobject buffer set from attr];
 }

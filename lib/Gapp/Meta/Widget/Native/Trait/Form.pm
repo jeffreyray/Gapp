@@ -43,7 +43,7 @@ sub _build_stash {
 
 sub close {
     my ( $self ) = @_;
-    $self->gtk_widget->destroy;
+    $self->gobject->destroy;
 }
 
 sub do_before_close {

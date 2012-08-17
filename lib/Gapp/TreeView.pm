@@ -9,7 +9,7 @@ use Gapp::Types qw( GappTreeViewColumn );
 use Moose::Util;
 use MooseX::Types::Moose qw( ArrayRef HashRef );
 
-has '+class' => (
+has '+gclass' => (
     default => 'Gtk2::TreeView',
 );
 
@@ -50,12 +50,12 @@ sub BUILDARGS {
     __PACKAGE__->SUPER::BUILDARGS( %args );
 }
 
-after '_build_gtk_widget' => sub {
+after '_build_gobject' => sub {
     my $self = shift;
 
     for my $c ( @{ $self->columns } ) {
-        $self->gtk_widget->append_column( $c->gtk_widget );
-        $self->gtk_widget->{columns}{$c->name} = $c->gtk_widget;
+        $self->gobject->append_column( $c->gobject );
+        $self->gobject->{columns}{$c->name} = $c->gobject;
     }
 };
 
@@ -121,7 +121,7 @@ Jeffrey Ray Hallock E<lt>jeffrey.hallock at gmail dot comE<gt>
 
 =head1 COPYRIGHT & LICENSE
 
-    Copyright (c) 2011 Jeffrey Ray Hallock.
+    Copyright (c) 2011-2012 Jeffrey Ray Hallock.
 
     This program is free software; you can redistribute it and/or
     modify it under the same terms as Perl itself.
