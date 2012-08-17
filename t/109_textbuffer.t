@@ -2,14 +2,24 @@
 use strict;
 use warnings;
 
-use Test::More tests => 3;
+use Test::More tests => 4;
 
 use Gtk2 '-init';
 use_ok 'Gapp::TextBuffer';
 
+use Scalar::Util qw(refaddr);
+
 #use Gapp;
+{
+    my $w = Gapp::TextBuffer->new;
+    isa_ok $w, q[Gapp::TextBuffer];
+    isa_ok $w->gtk_widget, q[Gtk2::TextBuffer];
+}
 
-my $w = Gapp::TextBuffer->new;
-isa_ok $w, q[Gapp::TextBuffer];
-isa_ok $w->gtk_widget, q[Gtk2::TextBuffer];
 
+{ # with TextTagTable
+    my $t = Gapp::TextTagTable->new;
+    
+    my $w = Gapp::TextBuffer->new( tag_table => $t );
+    is refaddr $w->gtk_widget->get_tag_table, refaddr $t->gtk_widget, q[tag_table assigned to buffer];
+}

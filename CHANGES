@@ -1,5 +1,21 @@
 Changes for Gapp
 
+
+0.40
+- added Notebook widget
+- added NotebookPage trait
+- added TextTag, TextTable objects
+- updated documentation
+- fixed bug for assistant without buttons
+- added TextBuffer object
+
+
+0.39
+- added add_handles function to Gapp::Util
+
+0.38.1
+- added TextTagTable
+
 0.38
 - added TextBuffer, trait for TextBuffer
 

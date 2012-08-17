@@ -4,10 +4,11 @@ use warnings;
 
 package MyApplicationObject;
 
-use Gtk2 '-init';
 
 use Gapp;
 use Gapp::Moose;
+
+use Gapp::Actions::Basic qw( Quit );
 use Gapp::Actions -declare => [qw( New Edit Delete )];
 
 
@@ -43,9 +44,12 @@ my $w = Gapp::Window->new(
                 Gapp::ToolButton->new( action => Delete ),
             ]
         )
+    ],
+    signal_connect => [
+        [ delete_event => Quit ],
     ]
 );
 
 $w->show_all;
 
-Gtk2->main;
+Gapp->main;

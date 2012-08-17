@@ -128,7 +128,7 @@ class_type GappLayout,
 coerce GappLayout,
     from Str,
     via { $_->Layout };
-
+    
 # GappTableMap
 class_type GappTableMap,
     { class => 'Gapp::TableMap' };

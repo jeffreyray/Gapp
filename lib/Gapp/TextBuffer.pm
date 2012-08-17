@@ -5,8 +5,15 @@ use MooseX::SemiAffordanceAccessor;
 
 extends 'Gapp::Widget';
 
+use Gapp::TextTagTable;
+
 has '+class' => (
     default => 'Gtk2::TextBuffer',
+);
+
+has 'tag_table' => (
+    is => 'rw',
+    isa => 'Maybe[Gapp::TextTagTable]',
 );
 
 
@@ -17,6 +24,11 @@ sub BUILDARGS {
     for ( qw[has_selection text] ) {
         $args{properties}{$_} = delete $args{$_} if exists $args{$_}; 
     }
+    
+    if ( exists $args{tag_table} && defined $args{tag_table} ) {
+        $args{args} = [ $args{tag_table}->gtk_widget ];
+    }
+    
     __PACKAGE__->SUPER::BUILDARGS( %args );
 }
 
@@ -51,6 +63,24 @@ Gapp::TextBuffer - TextBuffer widget
 =item has_selection
 
 =item text
+
+=back
+
+=head1 PROVIDED ATTRIBUTES
+
+=over 4
+
+=item B<tag_table>
+
+=over 4
+
+=item isa: Gapp::TextTagTable|Undef
+
+=item default: undef
+
+=back
+
+Assigned to the TextBuffer upon construction.
 
 =back
 

@@ -4,7 +4,9 @@ use warnings;
 
 use Test::More qw( no_plan );
 
-use Gapp;
+
+use Gtk2 '-init';
+use Gapp::FileChooserDialog;
 
 my $w = Gapp::FileChooserDialog->new(
     title => 'Gapp',

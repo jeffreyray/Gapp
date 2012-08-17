@@ -34,6 +34,7 @@ use Gapp::Moose::Meta::Attribute::Trait::GappSpinButton;
 use Gapp::Moose::Meta::Attribute::Trait::GappStatusIcon;
 use Gapp::Moose::Meta::Attribute::Trait::GappTable;
 use Gapp::Moose::Meta::Attribute::Trait::GappTextBuffer;
+use Gapp::Moose::Meta::Attribute::Trait::GappTextTagTable;
 use Gapp::Moose::Meta::Attribute::Trait::GappTextView;
 use Gapp::Moose::Meta::Attribute::Trait::GappTimeEntry;
 use Gapp::Moose::Meta::Attribute::Trait::GappToolbar;
@@ -75,9 +76,6 @@ sub widget {
 1;
 
 
-
-
-
 __END__
 
 =head1 NAME
@@ -93,17 +91,19 @@ Gapp::Moose - Gapp widgets for your Moose classes
   widget 'label' => (
     is => 'ro',
     traits => [qw( GappLabel )],
-    construct => {
+    construct => sub {
         text => 'Hello World!'
-    }
+    },
+    lazy => 1,
   )
 
   widget 'window' => (
     is => 'ro',
     traits => [qw( GappWindow GappDefault )],
     construct => sub {
+        my $self = shift;
         title => 'Gapp Application',
-        content => [ $_[0]->label ],
+        content => [ $self->label ],
         signal_connect => [
             [ 'delete-event' => sub { Gtk2->main_quit } ]
         ],
@@ -135,13 +135,21 @@ Alternatively, you could apply the GappWidget trait yourself
     traits => [qw( GappWidget )],
  );
 
+=head3 C<construct>
+
+The C<GappWidget> trait adds the C<construct> property added to the attribute. This property
+accepts a C<CodeRef> or a C<1>. The C<CodeRef> must return a list of parameters that will
+be passed to the L<Gapp::Widget> during construction. C<$self> is passed in as the first
+parameter to the C<CodeRef>. If C<construct> is set to one, the widget will be
+constructed in its default state. 
+
 =head1 AUTHORS
 
 Jeffrey Ray Hallock, <jeffrey dot hallock at gmail dot com>
 
 =head1 COPYRIGHT & LICENSE
 
-Copyright 2011 Jeffrey Ray Hallock, All Rights Reserved.
+Copyright 2011-2012 Jeffrey Ray Hallock, All Rights Reserved.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

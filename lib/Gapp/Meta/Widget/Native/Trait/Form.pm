@@ -89,11 +89,7 @@ sub do_after_cancel {
 }
 
 
-# update the values in the form
-sub update {
-    my ( $self ) = ( @_ );
-    $self->update_fields;
-}
+
 
 sub find_fields {
      my ( $self ) = ( @ _ );
@@ -118,6 +114,19 @@ sub _initialize_stash {
     $stash->set_modified( 0 );
 }
 
+# update the values in the form
+sub update {
+    my ( $self ) = ( @_ );
+    $self->update_fields;
+}
+
+#sub update_context {
+#    my ( $self ) = @_;
+#    return if ! $self->context;
+#    $self->update_stash;
+#    $self->context->update_from_stash( $self->stash );
+#}
+
 sub update_stash {
     my ( $self ) = @_;
     
@@ -137,6 +146,8 @@ sub update_fields {
         $w->set_is_updating( 0 );
     }
 }
+
+
 
 sub update_from_context {
     my ( $self ) = @_;

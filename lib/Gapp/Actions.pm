@@ -77,14 +77,20 @@ Gapp::Actions - Create Actions for Gapp Applications
     use Gapp::Actions -declare =>[qw( PrintStuff )];
 
     action PrintStuff => (
-        name => 'PrintStuff',
+
         label => 'Print',
+
         tooltip => 'Print',
+
         icon => 'gtk-print',
+
         code => sub {
-            my ( $action, $args ) = @_;
-            print $args[0], "\n";
+            my ( $action, $widget, $gtk_widget, $args, $gtk_args ) = @_;
+
+            my ( $stuff ) = @$args;
+
         }
+
     );
 
     ... later ...
@@ -93,14 +99,14 @@ Gapp::Actions - Create Actions for Gapp Applications
 
     use My::Actions qw( PrintStuff );
 
-    # call directly
-    do_PrintStuff( 'Stuff!' );
-
     # assign to button
     Gapp::Button->new( action => [PrintStuff, 'stuff'] );
 
     # use as callback
     Gapp::Button->new->signal_connect( clicked => PrintStuff, 'stuff' );
+    
+    # call directly
+    do_PrintStuff( undef, undef, ['stuff'], undef );
   
 =head1 DESCRIPTION
 

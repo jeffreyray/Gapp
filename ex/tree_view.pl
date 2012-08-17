@@ -2,7 +2,6 @@
 use strict;
 use warnings;
 
-use Gtk2 '-init';
 use lib qw( lib examples/lib );
 
 use Gapp;
@@ -65,4 +64,4 @@ sub _do_toggled {
 $w->show_all;
 
 
-Gtk2->main;
+Gapp->main;

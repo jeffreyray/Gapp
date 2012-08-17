@@ -139,8 +139,11 @@ on buttons. You can call them directly or connect them to signals.
   $w = Gapp::Window->new;
   $w->signal_connect( 'delete-event' => Quit );
 
-  # display in menu
+  # display as menu item
   Gapp::MenuItem->new( action => Quit );
+
+  # display as button
+  Gapp::Button->new( action => Quit );
 
 You should see L<Gapp::Actions> for information on creatng and using actions.
 
@@ -153,17 +156,84 @@ Apply traits and roles to your widgets to change their behavior!
 =head1 FORMS
 
 Advanced form handling allows you to easily get form data from widgets and
-vice versa. You don't manually need to update each field in the form.
+vice versa. You don't manually need to update each field in the form. To create
+a form, add the Form trait to any widget.
 
   $form = Gapp::VBox->new(
     traits => [qw( Form )],
-    content => [ Gapp::Entry->new( field => 'user_name' ) ],
+    content => [ Gapp::Entry->new( field => 'user.name' ) ],
+  );
+  
+=head2 The Stash
+
+Now you can pull values from the form using the stash. 
+
+  $form->stash->fetch('user.name');
+
+You can also set values in the form using the stash.
+  
+  $form->stash->store('user.name', 'anonymous' );
+
+You have to call update on the form before changes to the stash will be displayed.
+
+  $form->update;
+
+=head2 Contexts
+
+Using a context you can sync data between objects and you form.
+
+  $user = Foo::User;
+
+  $cx = Gapp::Form::Context->new;
+
+  $cx->add_node( 'user' => $user,
+
+    writer_prefix => 'set_',
+
+    reader_prefix => '',
+
+  );
+
+  $form->set_context( $cx );
+
+  # update the form from the context
+  $form->update_from_context;
+
+  # update the stash and context
+  $form->apply
+
+=head1 MOOSE
+
+L<Gapp::Moose> provides sugar for creating classes that have widgets as attributes.
+
+  package Foo::Bar;
+
+  use Gapp::Moose;
+
+  widget 'window' => (
+
+    is => 'ro',
+
+    traits => [qw( GappWindow GappDefault )],
+
+    construct => sub {
+
+        title => 'Gapp Application',
+
+        signal_connect => [
+
+            [ 'delete-event' => sub { Gapp->main_quit } ]
+
+        ],
+
+    },
+
   );
 
 =head1 EXTENDING
 
 Gapp extensions provide added functionality. The GappX:: namespace is the
-official place to find Gapp extensions. These extensi.ons can be found on the
+official place to find Gapp extensions. These extensions can be found on the
 CPAN.
 
 
@@ -173,7 +243,7 @@ Jeffrey Ray Hallock E<lt>jeffrey.hallock at gmail dot comE<gt>
 
 =head1 COPYRIGHT
 
-    Copyright (c) 2011 Jeffrey Ray Hallock.
+    Copyright (c) 2011-2012 Jeffrey Ray Hallock.
     This program is free software; you can redistribute it and/or
     modify it under the same terms as Perl itself.
 

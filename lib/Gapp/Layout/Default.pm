@@ -8,6 +8,8 @@ use Gapp::Actions::Util qw( actioncb parse_action);
 use Gapp::Types qw( GappAction GappActionOrArrayRef );
 use MooseX::Types::Moose qw( ArrayRef CodeRef Str );
 
+use Carp qw( confess );
+
 # Assistant
 
 build 'Gapp::Assistant', sub {
@@ -194,10 +196,15 @@ build 'Gapp::FileChooserDialog', sub {
     $w->gtk_widget->set_icon( $w->gtk_widget->render_icon( $w->icon, 'dnd' ) ) if $w->icon;
     $w->gtk_widget->set_position( $w->position ) if $w->position;
     $w->gtk_widget->set_transient_for( $w->transient_for->gtk_widget ) if $w->transient_for;
-    my $i = 0; for my $b ( @{ $w->buttons } ) {
-        $gtk_w->add_button( $b, $i );
-        $i++;
+    
+    if ( $w->buttons ) {
+	my $i = 0; for my $b ( @{ $w->buttons } ) {
+	    $gtk_w->add_button( $b, $i );
+	    $i++;
+	}
     }
+    
+
     
     map { $w->gtk_widget->add_filter( $_->gtk_widget ) } $w->filters;
 };
@@ -329,6 +336,34 @@ build 'Gapp::MenuToolButton', sub {
 };
 
 
+# Notice
+build 'Gapp::Notebook', sub {
+    my ( $l, $w ) = @_;
+
+    my $gtkw = $w->gtk_widget;
+    
+};
+
+
+add 'Gapp::Widget', to 'Gapp::Notebook', sub {
+    my ( $l, $w, $c) = @_;
+   
+    my $gtkw = $w->gtk_widget;
+    
+    # check that widget is a NotebookPage
+    if ( ! $w->does('Gapp::Meta::Widget::Native::Trait::NotebookPage') ) {
+	die qq[ Could not add $w to $c, $w must have the NotebookPage trait applied.];
+    }
+    
+    my $gtknb = $c->gtk_widget;
+    
+    $gtknb->append_page( $gtkw );
+    
+    $c->{pages}{$w->page_name} = $w;
+};
+
+
+
 
 # Notice
 build 'Gapp::Notice', sub {
@@ -390,6 +425,14 @@ add 'Gapp::Widget', to 'Gapp::ScrolledWindow', sub {
     }
     
 };
+
+
+# TextBuffer
+build 'Gapp::TextView', sub {
+    my ( $l, $w ) = @_;
+    $w->gtk_widget->set_buffer( $w->buffer->gtk_widget ) if $w->buffer;
+};
+
 
 
 # TextView

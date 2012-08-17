@@ -1,6 +1,6 @@
 package Gapp;
 
-our $VERSION = 0.38;
+our $VERSION = 0.40;
 
 use Gtk2 '-init';
 
@@ -45,8 +45,10 @@ use Gapp::SimpleList;
 use Gapp::StatusIcon;
 use Gapp::SSNEntry;
 use Gapp::Table;
-use Gapp::TextView;
 use Gapp::TextBuffer;
+use Gapp::TextTag;
+use Gapp::TextTagTable;
+use Gapp::TextView;
 use Gapp::TimeEntry;
 use Gapp::ToggleButton;
 use Gapp::Toolbar;
@@ -149,8 +151,8 @@ Thanks to everyone at Gtk2-Perl and Moose and all those who came before me for
 making this module possible.
 
 Special thanks to Jörn Reder, author of L<Gtk2::Ex::FormFactory>, which inspired
-me to write Gapp. L<Gapp::TableMap> uses modified code directly from
-L<Gtk2::Ex::FormFactory::Table> (see L<Gapp::TableMap> for more details.)
+me to write Gapp. L<Gapp::TableMap> uses code modified from L<Gtk2::Ex::FormFactory::Table>
+(see L<Gapp::TableMap> for more details.)
 
 Special thanks to the authors and contributors of L<MooseX::Types>, which formed
 the basis for L<Gapp::Actions> (see L<Gapp::Actions> for more details.)
