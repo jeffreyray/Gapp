@@ -3,7 +3,7 @@ package Gapp::TextTagTable;
 use Moose;
 use MooseX::SemiAffordanceAccessor;
 
-extends 'Gapp::Widget';
+extends 'Gapp::Object';
 
 has '+gclass' => (
     default => 'Gtk2::TextTagTable',
@@ -19,7 +19,7 @@ __END__
 
 =head1 NAME
 
-Gapp::TextTagTable - TextTagTable widget
+Gapp::Object - TextTagTable widget
 
 =head1 OBJECT HIERARCHY
 

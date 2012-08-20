@@ -23,13 +23,13 @@ Gapp::MenuShell - MenuShell Widget
 
 =over 4
 
-=item L<Gapp::Widget>
+=item L<Gapp::Object>
 
-=item +-- L<Gapp::Container>
+=item +-- L<Gapp::Widget>
 
-=item ....+-- L<Gapp::MenuShell>
+=item ....+-- L<Gapp::Container>
 
-=item ........+-- L<Gapp::Menu>
+=item ........+-- L<Gapp::MenuShell>
 
 =back
 

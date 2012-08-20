@@ -60,11 +60,13 @@ Gapp::Paned - Box widget
 
 =over 4
 
-=item L<Gapp::Widget>
+=item l<Gapp::Object>
 
-=item +-- L<Gapp::Container>
+=item +--L<Gapp::Widget>
 
-=item ....+-- L<Gapp::Paned>
+=item ....+-- L<Gapp::Container>
+
+=item ........+-- L<Gapp::Paned>
 
 =back
 
@@ -79,6 +81,68 @@ Gapp::Paned - Box widget
 =item position
 
 =item position_set
+
+=back
+
+=head1 PROVIDED ATTRIBUTES
+
+=over 4
+
+=item resize1
+
+=over 4
+
+=item is rw
+
+=item isa Bool
+
+=item default 0
+
+=back
+
+Determines if the widget in the left/top pane will expand when the pane is resized.
+
+=item resize2
+
+=over 4
+
+=item is rw
+
+=item isa Bool
+
+=item default 1
+
+=back
+
+Determines if the widget in the right/bottom pane will expand when the pane is resized.
+
+=item shrink1
+
+=over 4
+
+=item is rw
+
+=item isa Bool
+
+=item default 1
+
+=back
+
+Determines if the widget in the left/top cpane an be resized smaller than it's requested dimensions.
+
+=item shrink2
+
+=over 4
+
+=item is rw
+
+=item isa Bool
+
+=item default 1
+
+=back
+
+Determines if the widget in the right/bottom pane can be resized smaller than it's requested dimensions.
 
 =back
 

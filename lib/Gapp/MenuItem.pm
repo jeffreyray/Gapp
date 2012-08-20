@@ -2,11 +2,11 @@ package Gapp::MenuItem;
 
 use Moose;
 use MooseX::SemiAffordanceAccessor;
+
 extends 'Gapp::Bin';
-
-
-use Gapp::Types qw(GappActionOrArrayRef);
-use MooseX::Types::Moose qw(Undef);
+with 'Gapp::Meta::Widget::Native::Role::HasAction';
+with 'Gapp::Meta::Widget::Native::Role::HasLabel';
+with 'Gapp::Meta::Widget::Native::Role::HasMenu';
 
 has '+gclass' => (
     default => 'Gtk2::MenuItem',
@@ -18,21 +18,6 @@ has '+constructor' => (
 
 has '+args' => (
     default => sub { [ '' ] },
-);
-
-has 'label' => (
-    is => 'rw',
-    isa => 'Str',
-);
-
-has 'menu' => (
-    is => 'rw',
-    isa => 'Maybe[Gapp::Widget]',
-);
-
-has 'action' => (
-    is => 'rw',
-    isa => GappActionOrArrayRef|Undef,
 );
 
 
@@ -51,39 +36,27 @@ Gapp::MenuItem - MenuItem Widget
 
 =over 4
 
-=item L<Gapp::Widget>
+=item L<Gapp::Object>
 
-=item L<Gapp::Container>
+=item +-- L<Gapp::Widget>
 
-=item ....+-- L<Gapp::Bin>
+=item ....+-- L<Gapp::Container>
 
-=item ........+-- L<Gapp::MenuItem>
+=item ........+-- L<Gapp::Bin>
 
-=back
-
-=head1 PROVIDED ATTRIBUTES
-
-=over 4
-
-=item B<action>
-
-=over 4
-
-=item isa GappActionOrArrayRef|Undef
+=item ............+-- L<Gapp::MenuItem>
 
 =back
 
-=back
+=head2 Roles
 
 =over 4
 
-=item B<label>
+=item L<Gapp::Meta::Widget::Native::Role::HasAction>
 
-=over 4
+=item L<Gapp::Meta::Widget::Native::Role::HasLabel>
 
-=item isa Str
-
-=back
+=item L<Gapp::Meta::Widget::Native::Role::HasMenu>
 
 =back
 

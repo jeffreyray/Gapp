@@ -17,9 +17,9 @@ sub BUILDARGS {
     my $class = shift;
     my %args = @_ == 1 && is_HashRef( $_[0] ) ? %{$_[0]} : @_;
     
-    if ( exists $args{value} ) {
-        $args{properties}{value} = $args{value};
-        delete $args{value};
+    
+    for my $att ( qw(value) ) {
+        $args{properties}{$att} = delete $args{$att} if exists $args{$att};
     }
 
     __PACKAGE__->SUPER::BUILDARGS( %args );
@@ -63,13 +63,11 @@ Gapp::TimeEntry - TimeEntry Widget
 
 =item +-- L<Gapp::Entry>
 
-=item ----+-- L<Gapp::TimeEntry>
+=item ....+-- L<Gapp::TimeEntry>
 
 =back
 
-=head1 DELEGATES TO GTK
-
-=head2 Attributes
+=head1 DELEGATED PROPERTIES
 
 =over 4
 

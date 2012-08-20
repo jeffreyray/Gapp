@@ -13,13 +13,8 @@ sub BUILDARGS {
     my $class = shift;
     my %args = @_ == 1 && is_HashRef( $_[0] ) ? %{$_[0]} : @_;
     
-    if ( exists $args{fraction} ) {
-        $args{properties}{fraction} = $args{fraction};
-        delete $args{fraction};
-    }
-    if ( exists $args{text} ) {
-        $args{properties}{text} = $args{text};
-        delete $args{text};
+    for my $att ( qw(fraction text) ) {
+        $args{properties}{$att} = delete $args{$att} if exists $args{$att};
     }
    
     __PACKAGE__->SUPER::BUILDARGS( %args );
@@ -27,22 +22,37 @@ sub BUILDARGS {
 
 1;
 
-
-
-
-
 __END__
 
 =pod
 
 =head1 NAME
 
-Gapp::ProgressBar - Box widget
+Gapp::ProgressBar - ProgressBar widget
 
 =head1 OBJECT HIERARCHY
 
-    Gapp::Widget
-    +--Gapp::ProgressBar
+=over 4
+
+=item l<Gapp::Object>
+
+=item +--L<Gapp::Widget>
+
+=item ....+-- L<Gapp::Container>
+
+=item ........+-- L<Gapp::Paned>
+
+=back
+
+=head1 DELEGATED PROPERTIES
+
+=over 4
+
+=item fraction
+
+=item text
+
+=back
 
 =head1 AUTHORS
 

@@ -70,9 +70,11 @@ Gapp::TextView - TextView Widget
 
 =over 4
 
-=item L<Gapp::Widget>
+=item L<Gapp::Object>
 
-=item +-- L<Gapp::TextView>
+=item +-- L<Gapp::Widget>
+
+=item ....+-- L<Gapp::TextView>
 
 =back
 

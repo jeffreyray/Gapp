@@ -3,7 +3,7 @@ package Gapp::TextBuffer;
 use Moose;
 use MooseX::SemiAffordanceAccessor;
 
-extends 'Gapp::Widget';
+extends 'Gapp::Object';
 
 use Gapp::TextTagTable;
 
@@ -52,7 +52,9 @@ Gapp::TextBuffer - TextBuffer widget
 
 =item L<Gapp::Widget>
 
-=item +-- L<Gapp::TextBuffer>
+=item ....+-- L<Gapp::Widget>
+
+=item ........+-- L<Gapp::TextBuffer>
 
 =back
 

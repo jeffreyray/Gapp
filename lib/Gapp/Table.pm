@@ -109,7 +109,7 @@ See L<Gapp::TableMap> for more information on drawing tables.
 
 =item isa: L<Gapp::TableMap>
 
-=item coerceions: Str
+=item coercions: Str
 
 =back
 

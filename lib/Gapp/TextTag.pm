@@ -3,7 +3,7 @@ package Gapp::TextTag;
 use Moose;
 use MooseX::SemiAffordanceAccessor;
 
-extends 'Gapp::Widget';
+extends 'Gapp::Object';
 
 has '+gclass' => (
     default => 'Gtk2::TextTag',
@@ -25,7 +25,7 @@ Gapp::TextTag - TextTag widget
 
 =over 4
 
-=item L<Gapp::Widget>
+=item L<Gapp::Object>
 
 =item +-- L<Gapp::TextTag>
 

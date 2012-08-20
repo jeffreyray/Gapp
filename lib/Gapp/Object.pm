@@ -345,7 +345,7 @@ a popup window instead of a standard toplevel window.
 
  Gapp::Window->new( args => [ 'popup' ] );
 
-=item B<class>
+=item B<gclass>
 
 =over 4
 
@@ -355,7 +355,7 @@ a popup window instead of a standard toplevel window.
 
 =back
 
-This is the class of the Gtk+ widget to be created. Most Gapp widgets provide
+This is the class of the CGObject> to be created. Most Gapp widgets provide
 this in their class definition, but you can override it by passing in your own
 value.
 
@@ -371,7 +371,7 @@ value.
 
 =back
 
-This constructor is called on the C<class> to instantiate a Gtk+ widget. Change
+This constructor is called on the C<gclass> to instantiate a Gtk+ widget. Change
 the constructor if you want to use the helpers provided by Gtk+ like
 C<new_with_label> or C<new_with_mnemonic>.
 
@@ -402,7 +402,7 @@ or could be remedied by more robustness, please file a bug or submit a patch.
 
 =back
 
-If the widget should expand inside it's container. (Tables widgets ignore this
+If the widget should expand inside it's container. (Table widgets ignore this
 value because widget expansion is determind by the L<Gapp::TableMap>)
 
 =item B<fill>
@@ -415,7 +415,7 @@ value because widget expansion is determind by the L<Gapp::TableMap>)
 
 =back
 
-If the widget should fill it's container. (Tables widgets ignore this value
+If the widget should fill it's container. (Table widgets ignore this value
 because widget layout is determind by the L<Gapp::TableMap>)
 
 =back
@@ -430,8 +430,8 @@ because widget layout is determind by the L<Gapp::TableMap>)
 
 =back
 
-The actual Gtk+ widget. The widget will be constructed the first time it is
-requested. After the Gtk+ widget has been constructed, changes you make to the
+The actual C<GObject> instance. The C<GObject> will be constructed the first time it
+is requested. After the object has been constructed, changes you make to the
 Gapp layer will not be reflected in the Gtk+ widget.
 
 =item B<layout>
@@ -490,10 +490,19 @@ set_property
 
 =back
 
-The the properties supplied will be passed on to the Gtk+ widget during
-construction. See the documentation for the corresponding Gtk+ widget for
-valid properies.
+=item B<traits>
 
+=over 4
+
+=item isa: ArrayRef
+
+=item default: []
+
+=back
+
+The traits to apply to the widget.
+
+=back
 
 =head1 AUTHORS
 

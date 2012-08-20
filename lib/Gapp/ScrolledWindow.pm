@@ -47,6 +47,40 @@ Gapp::Bin - Bin widget
 
 =back
 
+=head1 PROVIDED ATTRIBUTES
+
+=over 4
+
+=item B<policy>
+
+=over 4
+
+=item is rw
+
+=item isa ArrayRef[$hscrollpolicy, $vscrollpolicy]|Undef
+
+=back
+
+Set the policy of the scrolled window. Possible values for C<hscrollpolicy> and C<vscrollpolicy> are
+C<automatic>, C<always>, and C<never>.
+
+=item B<use_viewport>
+
+=over 4
+
+=item is rw
+
+=item isa Bool
+
+=item default 0
+
+=back
+
+Whether the scrolled window should use a viewport when packing widgets. Use this when packing widgets
+that do not support scrolling.
+
+=back
+
 =head1 AUTHORS
 
 Jeffrey Ray Hallock E<lt>jeffrey.hallock at gmail dot comE<gt>

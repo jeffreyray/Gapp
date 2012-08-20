@@ -15,9 +15,8 @@ sub BUILDARGS {
     my $class = shift;
     my %args = @_ == 1 && is_HashRef( $_[0] ) ? %{$_[0]} : @_;
     
-    if ( exists $args{value} ) {
-        $args{properties}{value} = $args{value};
-        delete $args{value};
+    for my $att ( qw(value) ) {
+        $args{properties}{$att} = delete $args{$att} if exists $args{$att};
     }
 
     __PACKAGE__->SUPER::BUILDARGS( %args );
@@ -43,7 +42,7 @@ __END__
 
 =head1 NAME
 
-Gapp::SSNEntry - DateEntry Widget
+Gapp::SSNEntry - SSNEntry Widget
 
 =head1 OBJECT HIERARCHY
 

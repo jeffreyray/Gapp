@@ -1,17 +1,29 @@
 
 TODO:
 
-- Make AssistantPages a trait instead of a subclass
+- Finish cleaning up documentation
+
+- Should I add a Gapp::GtkObject as well???
+
+- Add gtk_external, gtk_widget, gtk_internal
+
 - FormElement and FormField should be Roles, not traits
-- Finish notebook
-- Revamp test suite
-- Fix examples
+
+- Make AssistantPages a trait instead of a subclass
 
 - Clean up native traits
 
-- Should Gapp::Object actuall be Gapp::GObject???
-- Should I add a Gapp::GtkObject as well???
+- Finish notebook
+
+- Clean up documentation again
+
+- Revamp test suite
+
+- Fix examples
 
 - revamp documentation
 
+- extract Gapp::Notice, Gapp::NoticeBox
+
 - release 1.0
+

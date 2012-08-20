@@ -3,20 +3,16 @@ package Gapp::MenuToolButton;
 use Moose;
 use MooseX::SemiAffordanceAccessor;
 extends 'Gapp::ToolButton';
+with 'Gapp::Meta::Widget::Native::Role::HasMenu';
 
 has '+gclass' => (
     default => 'Gtk2::MenuToolButton',
 );
 
-has 'menu' => (
-    is => 'rw',
-    isa => 'Gapp::Menu',
-);
-
-after '_construct_gobject' => sub {
-    my ( $self ) = @_;
-    $self->gobject->set_menu( $self->menu->gobject ) if $self->menu;
-};
+#after '_construct_gobject' => sub {
+#    my ( $self ) = @_;
+#    $self->gobject->set_menu( $self->menu->gobject ) if $self->menu;
+#};
 
 1;
 
@@ -34,27 +30,15 @@ Gapp::MenuToolButton - MenuToolButton Widget
 
 =over 4
 
-=item L<Gapp::Widget>
+=item L<Gapp::Object>
+
+=item +-- L<Gapp::Widget>
 
 =item ....+-- L<Gapp::ToolItem>
 
 =item ........+-- L<Gapp::ToolButton>
 
 =item ............+-- L<Gapp::MenuToolButton>
-
-=back
-
-=head1 PROVIDED ATTRIBUTES
-
-=over 4
-
-=item B<menu>
-
-=over 4
-
-=item isa GappMenu
-
-=back
 
 =back
 

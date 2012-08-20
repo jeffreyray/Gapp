@@ -33,11 +33,13 @@ Gapp::SeparatorMenuItem - SeparatorMenuItem Widget
 
 =over 4
 
-=item L<Gapp::Widget>
+=item L<Gapp::Object>
 
-=item +-- L<Gapp::MenuItem>
+=item +-- L<Gapp::Widget>
 
-=item ....+-- L<Gapp::SeparatorMenuItem>
+=item ....+-- L<Gapp::MenuItem>
+
+=item ........+-- L<Gapp::SeparatorMenuItem>
 
 =back
 

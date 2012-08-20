@@ -4,7 +4,7 @@ use Moose;
 use MooseX::SemiAffordanceAccessor;
 use MooseX::Types::Moose qw( HashRef );
 
-extends 'Gapp::Widget';
+extends 'Gapp::Object';
 
 
 has '+gclass' => (
@@ -44,15 +44,15 @@ __END__
 
 =head1 NAME
 
-Gapp::Label - Label Widget
+Gapp::ListStore - ListStore Widget
 
 =head1 OBJECT HIERARCHY
 
 =over 4
 
-=item L<Gapp::Widget>
+=item L<Gapp::Object>
 
-=item +-- L<Gapp::Label>
+=item +-- L<Gapp::ListStore>
 
 =back
 
@@ -64,7 +64,7 @@ Gapp::Label - Label Widget
 
 =over 4
 
-=item isa ArrayRef
+=item isa ArrayRef[GType]
 
 =back
 
@@ -72,7 +72,7 @@ Gapp::Label - Label Widget
 
 =over 4
 
-=item isa ArrayRef
+=item isa ArrayRef[Any]
 
 =back
 

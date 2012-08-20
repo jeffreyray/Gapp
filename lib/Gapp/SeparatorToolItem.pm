@@ -25,11 +25,13 @@ Gapp::SeparatorToolItem - SeparatorToolItem Widget
 
 =over 4
 
-=item L<Gapp::Widget>
+=item L<Gapp::Object>
 
-=item ....+-- L<Gapp::ToolItem>
+=item +-- L<Gapp::Widget>
 
-=item ........+-- L<Gapp::SeparatorToolItem>
+=item ........+-- L<Gapp::ToolItem>
+
+=item ............+-- L<Gapp::SeparatorToolItem>
 
 =back
 

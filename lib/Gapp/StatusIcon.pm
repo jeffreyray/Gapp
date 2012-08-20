@@ -3,20 +3,12 @@ package Gapp::StatusIcon;
 use Moose;
 use MooseX::SemiAffordanceAccessor;
 
-use Gapp::Types qw( GappActionOrArrayRef );
-use MooseX::Types::Moose qw( Undef );
 
 extends 'Gapp::Widget';
 
 has '+gclass' => (
     default => 'Gtk2::StatusIcon',
 );
-
-#has 'action' => (
-#    is => 'rw',
-#    isa => GappActionOrArrayRef|Undef,
-#);
-
 
 sub BUILDARGS {
     my $class = shift;
@@ -43,12 +35,17 @@ __END__
 
 =head1 NAME
 
-Gapp::StatusIcon - Box widget
+Gapp::StatusIcon - StatusIcon Widget
 
 =head1 OBJECT HIERARCHY
 
-    Gapp::Widget
-    +--Gapp::StatusIcon
+=item L<Gapp::Object>
+
+=item +-- L<Gapp::Widget>
+
+=item ....+-- L<Gapp::StatusIcon>
+
+=head1 DELEGATED
 
 =head1 AUTHORS
 

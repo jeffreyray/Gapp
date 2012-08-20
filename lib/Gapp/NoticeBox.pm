@@ -96,7 +96,7 @@ Gapp::Notification - Display a message in the system tray
 
 =item ....+-- L<Gapp::Window>
 
-=item ........+-- L<Gapp::Notification>
+=item ........+-- L<Gapp::NoticeBox>
 
 =back
 

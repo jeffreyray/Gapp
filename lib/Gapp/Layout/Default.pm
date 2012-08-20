@@ -310,6 +310,8 @@ build 'Gapp::MenuToolButton', sub {
     my ( $l, $w ) = @_;
     my $gtkw = $w->gobject;
     
+    $w->gobject->set_menu( $w->menu->gobject ) if $w->menu;
+    
     $gtkw->set_stock_id( $w->stock_id ) if $w->stock_id;
     $gtkw->set_label( $w->label ) if defined $w->label;
     $gtkw->set_tooltip_text( $w->tooltip ) if defined $w->tooltip;
@@ -332,7 +334,7 @@ build 'Gapp::MenuToolButton', sub {
     }
     
     $w->menu->gobject->show_all;
-    $w->gobject->set_menu( $w->menu->gobject ) if $w->menu;
+
 };
 
 

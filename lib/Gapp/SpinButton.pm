@@ -34,14 +34,10 @@ sub BUILDARGS {
     my $class = shift;
     my %args = @_ == 1 && is_HashRef( $_[0] ) ? %{$_[0]} : @_;
     
-    if ( exists $args{digits} ) {
-        $args{properties}{digits} = $args{digits};
-        delete $args{digits};
+    for my $att ( qw(digits climb_rate) ) {
+        $args{properties}{$att} = delete $args{$att} if exists $args{$att};
     }
-    if ( exists $args{climb_rate} ) {
-        $args{properties}{climb_rate} = $args{climb_rate};
-        delete $args{climb_rate};
-    }
+    
     __PACKAGE__->SUPER::BUILDARGS( %args );
 }
 
@@ -93,11 +89,63 @@ Gapp::SpinButton - RadioButton Widget
 
 =over 4
 
-=item L<Gapp::Widget>
+=item L<Gapp::Object>
 
-=item +-- L<Gapp::Button>
+=item +-- L<Gapp::Widget>
 
-=item ....+-- L<Gapp::RadioButton>
+=item ....+-- L<Gapp::Entry>
+
+=item ........+-- L<Gapp::SpinButton>
+
+=back
+
+=head1 PROVIDED ATTRIBUTES
+
+=over 4
+
+=item B<range>
+
+=over 4
+
+=item is rw
+
+=item isa ArrayRef
+
+=item default [0,999]
+
+=back
+
+The minimum and maximum possible values.
+
+=over 4
+
+=item B<step>
+
+=over 4
+
+=item is rw
+
+=item isa Num
+
+=item default 1
+
+=back
+
+The amount the value will change when the user presses the up or down arrows.
+
+=over 4
+
+=item B<page>
+
+=over 4
+
+=item is rw
+
+=item isa Maybe[Num]
+
+=back
+
+The amount the value will change when the user presses the page-up or page-down keys.
 
 =back
 

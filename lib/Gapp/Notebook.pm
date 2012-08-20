@@ -6,8 +6,6 @@ use Gapp::Meta::Widget::Native::Trait::NotebookPage;
 
 extends 'Gapp::Container';
 
-
-
 has '+gclass' => (
     default => 'Gtk2::Notebook',
 );
@@ -38,11 +36,13 @@ Gapp::Notebook - Box widget
 
 =over 4
 
-=item L<Gapp::Widget>
+=item L<Gapp::Object>
 
-=item +-- L<Gapp::Container>
+=item +-- L<Gapp::Widget>
 
-=item ....+-- L<Gapp::Notebook>
+=item ....+-- L<Gapp::Container>
+
+=item ........+-- L<Gapp::Notebook>
 
 =back
 
@@ -51,7 +51,6 @@ Gapp::Notebook - Box widget
 =over 4
 
 =item scrollable
-
 
 =back
 

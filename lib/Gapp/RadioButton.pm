@@ -81,7 +81,11 @@ Gapp::RadioButton - RadioButton Widget
 
 =item +-- L<Gapp::Button>
 
-=item ....+-- L<Gapp::RadioButton>
+=item ....+-- L<Gapp::ToggleButton>
+
+=item ........+-- L<Gapp::CheckButton>
+
+=item ............+-- L<Gapp::RadioButton>
 
 =back
 

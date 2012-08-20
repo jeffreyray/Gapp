@@ -85,38 +85,55 @@ Gapp::Moose - Gapp widgets for your Moose classes
 =head1 SYNOPSIS
 
   package Foo::Bar;
- 
+
   use Gapp::Moose;
 
   widget 'label' => (
-    is => 'ro',
-    traits => [qw( GappLabel )],
-    construct => sub {
-        text => 'Hello World!'
-    },
-    lazy => 1,
-  )
 
-  widget 'window' => (
     is => 'ro',
-    traits => [qw( GappWindow GappDefault )],
+
+    traits => [qw( GappLabel )],
+
     construct => sub {
-        my $self = shift;
-        title => 'Gapp Application',
-        content => [ $self->label ],
-        signal_connect => [
-            [ 'delete-event' => sub { Gtk2->main_quit } ]
-        ],
+
+        text => 'Hello World!'
+
     },
+
+    lazy => 1,
+
   );
 
+  widget 'window' => (
 
+    is => 'ro',
+
+    traits => [qw( GappWindow GappDefault )],
+
+    construct => sub {
+
+        my $self = shift;
+
+        title => 'Gapp Application',
+
+        content => [ $self->label ],
+
+        signal_connect => [
+
+            [ 'delete-event' => sub { Gtk2->main_quit } ]
+
+        ],
+
+    },
+
+  );
 
  package main;
 
  Foo::Bar->new->show_all;
 
  Gapp->main;
+
 =head1 DESCRIPTION
 
 L<Gapp::Moose> provides sugar for adding L<Gapp> widgets to your L<Moose>
@@ -132,7 +149,9 @@ C<GappWidget> trait applied.
 Alternatively, you could apply the GappWidget trait yourself
 
  has 'widget' => (
+
     traits => [qw( GappWidget )],
+
  );
 
 =head3 C<construct>

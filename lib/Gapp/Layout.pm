@@ -196,10 +196,35 @@ Packers are used to position widgets in containers.
 
     };
     
-The above example is pretty specific, but you can define something much more
-general. Take the example below:
+The example above defines the packing rules for a very specific case - how a L<Gapp::Button>
+is packed into a L<Gapp::HbuttonBox>, but you can define something much more general.
+The example below demonstrates a more general use packing rule, determining how an L<Gapp::Widget>
+should be displayed in a L<Gapp::VBox>. 
 
     # widgets always fill/expand vboxes
+
+    add 'Gapp::Widget', to 'Gapp::VBox', sub {
+
+        my ( $layout, $widget, $container ) = @_;
+
+        $container->gobject->pack_end(
+
+            $widget->gobject,
+
+            $widget->expand,
+
+            $widget->fill,
+
+            $widget->padding
+
+        );
+
+    };
+
+This will make any L<Gapp::Widget> in a L<Gapp::VBox> expand and fill. You could
+then override this, for a specific widget:
+
+    # widgets always fill/expand vboxs
 
     add 'Gapp::Widget', to 'Gapp::VBox', sub {
 
@@ -219,29 +244,6 @@ general. Take the example below:
 
     };
 
-This will make any L<Gapp::Widget> in a L<Gapp::VBox> expand and fill. You could
-then override this, for a specific widget:
-
-    # widgets always fill/expand vboxs
-
-    add 'Gapp::Button', to 'Gapp::VBox', sub {
-
-        my ( $layout, $widget, $container ) = @_;
-
-        $container->gobject->pack_end(
-
-            $widget->gobject,
-
-            $widget->expand,
-
-            $widget->fill,
-
-            $widget->padding
-
-        );
-
-    };
-
 =head1 EXPORTED FUNCTIONS
 
 =over 4
@@ -254,9 +256,13 @@ Set the packer for this widget\container combination.
 
 Set the builder for this widget.
 
-=item B<extends $class>
+=item B<extends $layout_class>
 
 Use this if you want to subclass another layout.
+
+=item B<style $widget_class, \&style_func >
+
+Set the styler for this widget.
 
 =back
 
