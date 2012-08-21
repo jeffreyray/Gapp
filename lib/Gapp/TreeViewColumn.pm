@@ -1,7 +1,7 @@
 package Gapp::TreeViewColumn;
 
 use Moose;
-extends 'Gapp::Widget';
+extends 'Gapp::Object';
 
 use Gapp::CellRenderer;
 use Gapp::Util;
@@ -74,13 +74,11 @@ sub BUILDARGS {
     my $class = shift;
     my %args = @_ == 1 && is_HashRef( $_[0] ) ? %{$_[0]} : @_;
     
-    if ( exists $args{title} ) {
-        $args{properties}{title} = $args{title};
-        delete $args{title};
-    }
-    $args{properties}{min_width} = delete $args{min_width} if exists $args{min_width};
-    $args{properties}{resizable} = delete $args{resizable} if exists $args{resizable};
     
+    for my $att ( qw(alignment clickable expand fixed_width min_width reordable resizable sizing),
+                  qw(sort_column_id sort_indicator sort_order spacing title visible width') ) {
+        $args{properties}{$att} = delete $args{$att} if exists $args{$att};
+    }
     
     __PACKAGE__->SUPER::BUILDARGS( %args );
 }
@@ -119,7 +117,7 @@ Gapp::TreeViewColumn - TreeViewColumn Widget
 
 =over 4
 
-=item L<Gapp::Widget>
+=item L<Gapp::Object>
 
 =item +-- L<Gapp::TreeViewColumn>
 
@@ -139,6 +137,10 @@ Gapp::TreeViewColumn - TreeViewColumn Widget
 
 =back
 
+The column in the model that to pull data from. This is what will be displayed within the
+renderer. You can use the C<data_func> attribute to manipulate the data before it is rendered
+in the cell.
+
 =item B<data_func>
 
 =over 4
@@ -146,6 +148,10 @@ Gapp::TreeViewColumn - TreeViewColumn Widget
 =item isa: Str|CodeRef|Undef
 
 =back
+
+Use this to manipulate the data from C<data_column> before rendering it in the cell. The return value
+is what will be passed to the renderer. The <$_> variable will be set to the data from C<data_column>
+within the callback.
 
 =item B<name>
 
@@ -157,6 +163,8 @@ Gapp::TreeViewColumn - TreeViewColumn Widget
 
 =back
 
+By naming your column you can use C<$treeview->find_column( $name )> to retrieve them later.
+
 =item B<renderer>
 
 =over 4
@@ -167,23 +175,37 @@ Gapp::TreeViewColumn - TreeViewColumn Widget
 
 =back
 
-=item B<values>
+=head1 DELEGATED PROPERIES
 
 =over 4
 
-=item isa: ArrayRef
+=item B<alignment>
 
-=back
+=item B<clickable>
 
-=back
+=item B<expand>
 
-=head1 DELEGATES TO GTK
+=item B<fixed_width>
 
-=head2 Attributes
+=item B<min_width>
 
-=over 4
+=item B<reorderable>
+
+=item B<resizable>
+
+=item B<sizing>
+
+=item B<sort_column_id>
+
+=item B<sort_indicator>
+
+=item B<sort_order>
+
+=item B<spacing>
 
 =item B<title>
+
+=item B<visible_width>
 
 =back 
 

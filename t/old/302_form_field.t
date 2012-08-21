@@ -10,5 +10,5 @@ use Gapp;
 
 my $e = Gapp::Entry->new( );
 
-ok $e->does( 'Gapp::Meta::Widget::Native::Trait::FormField' ), 'entry does FormField';
+ok $e->does( 'Gapp::Meta::Widget::Native::Role::FormField' ), 'entry does FormField';
 ok $e->can( 'field' ), 'has field attribute';

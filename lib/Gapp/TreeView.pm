@@ -85,11 +85,13 @@ Gapp::TreeView - TreeView Widget
 
 =over 4
 
-=item L<Gapp::Widget>
+=item L<Gapp::Object>
 
-=item +-- L<Gapp::Container>
+=item +-- L<Gapp::Widget>
 
-=item ....+-- L<Gapp::TreeView>
+=item ....+-- L<Gapp::Container>
+
+=item ........+-- L<Gapp::TreeView>
 
 =back
 
@@ -109,7 +111,27 @@ Gapp::TreeView - TreeView Widget
 
 =over 4
 
-=item isa ArrayRef
+=item isa ArrayRef[L<Gapp::TreeViewColumn>]
+
+=item default []
+
+=back
+
+An array of L<Gapp::TreeViewColumn> objects to be displayed in the view.
+
+=back
+
+=head1 PROVIDED METHODS
+
+=over 4
+
+=item B<find_column $name>
+
+Searches for and returns a column with the specified name.
+
+=over 4
+
+=item returns L<Gapp::TreeViewColumn>|Undef
 
 =back
 

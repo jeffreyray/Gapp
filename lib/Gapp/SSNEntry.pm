@@ -4,7 +4,7 @@ use Moose;
 use MooseX::SemiAffordanceAccessor;
 
 extends 'Gapp::Entry';
-with 'Gapp::Meta::Widget::Native::Trait::FormField';
+with 'Gapp::Meta::Widget::Native::Role::FormField';
 
 has '+gclass' => (
     default => 'Gapp::Gtk2::SSNEntry',

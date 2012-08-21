@@ -3,16 +3,11 @@ package Gapp::ToolItem;
 use Moose;
 use MooseX::SemiAffordanceAccessor;
 extends 'Gapp::Widget';
+with 'Gapp::Meta::Widget::Native::Role::HasAction';
 
 has '+gclass' => (
     default => 'Gtk2::ToolItem',
 );
-
-has 'action' => (
-    is => 'rw',
-    #isa => 'Maybe[Gapp::Action]',
-);
-
 
 1;
 
@@ -30,23 +25,19 @@ Gapp::ToolItem - ToolItem Widget
 
 =over 4
 
-=item L<Gapp::Widget>
+=item L<Gapp::Object>
+
+=item +-- L<Gapp::Widget>
 
 =item ....+-- L<Gapp::ToolItem>
 
 =back
 
-=head1 PROVIDED ATTRIBUTES
+=head2 Roles
 
 =over 4
 
-=item B<action>
-
-=over 4
-
-=item isa GappAction|Undef
-
-=back
+=item L<Gapp::Meta::Widget::Native::Role::HasAction>
 
 =back
 

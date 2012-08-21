@@ -1,11 +1,11 @@
-package Gapp::Meta::Widget::Native::Role::HasIcon;
+package Gapp::Meta::Widget::Native::Role::HasImage;
 
 use Moose::Role;
 use MooseX::SemiAffordanceAccessor;
 
-has 'icon' => (
+has 'image' => (
     is => 'rw',
-    isa => 'Maybe[Str]',
+    isa => 'Maybe[Gapp::Image]',
 );
 
 1;
@@ -19,27 +19,24 @@ __END__
 
 =head1 NAME
 
-Gapp::Meta::Widget::Native::Role::HasIcon - icon attribute for widgets
+Gapp::Meta::Widget::Native::Role::HasImage - image attribute for widgets
 
-=head1 SYNOPSIS
-
-    Gapp::Button->new( icon => 'gtk-quit', label => 'Exit' );
     
 =head1 PROVIDED ATTRIBUTES
 
 =over 4
 
-=item B<icon>
+=item B<image>
 
 =over 4
 
 =item is rw
 
-=item isa Str|Undef
+=item isa L<Gapp::Image>|Undef
 
 =back
 
-The stock-id of the image to apply to the widget.
+The image to apply to the widget.
 
 =back
 

@@ -5,7 +5,7 @@ use MooseX::SemiAffordanceAccessor;
 
 
 extends 'Gapp::Widget';
-with 'Gapp::Meta::Widget::Native::Trait::FormField';
+with 'Gapp::Meta::Widget::Native::Role::FormField';
 
 use Gapp::TextBuffer;
 
@@ -82,7 +82,7 @@ Gapp::TextView - TextView Widget
 
 =over 4
 
-=item L<Gapp::Meta::Widget::Native::Trait::FormField>
+=item L<Gapp::Meta::Widget::Native::Role::FormField>
 
 =back
 

@@ -1,4 +1,4 @@
-package Gapp::Meta::Widget::Native::Trait::FormElement;
+package Gapp::Meta::Widget::Native::Role::FormElement;
 
 use Moose::Role;
 use MooseX::SemiAffordanceAccessor;
@@ -19,9 +19,5 @@ sub _build_form {
         $node = $node->parent;
     }
 }
-
-package Gapp::Meta::Widget::Custom::Trait::FormElement;
-sub register_implementation { 'Gapp::Meta::Widget::Native::Trait::FormElement' };
-
 
 1;

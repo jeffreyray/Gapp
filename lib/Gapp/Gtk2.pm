@@ -5,7 +5,6 @@ use Gapp::Gtk2::DateEntry;
 use Gapp::Gtk2::TimeEntry;
 use Gapp::Gtk2::List;
 use Gapp::Gtk2::List::Simple;
-use Gapp::Gtk2::OComboBox;
 use Gapp::Gtk2::SSNEntry;
 
 1;

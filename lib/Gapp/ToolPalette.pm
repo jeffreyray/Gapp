@@ -29,17 +29,19 @@ __END__
 
 =head1 NAME
 
-Gapp::ToolPalette - Box widget
+Gapp::ToolPalette - ToolPalette widget
 
 =head1 OBJECT HIERARCHY
 
 =over 4
 
-=item L<Gapp::Widget>
+=item L<Gapp::Object>
 
-=item +-- L<Gapp::Container>
+=item +-- L<Gapp::Widget>
 
-=item ....+-- L<Gapp::ToolPalette>
+=item ....+-- L<Gapp::Container>
+
+=item ........+-- L<Gapp::ToolPalette>
 
 =back
 

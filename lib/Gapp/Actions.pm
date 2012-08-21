@@ -74,6 +74,7 @@ Gapp::Actions - Create Actions for Gapp Applications
 =head1 SYNOPSIS
 
     package My::Actions;
+
     use Gapp::Actions -declare =>[qw( PrintStuff )];
 
     action PrintStuff => (
@@ -85,6 +86,7 @@ Gapp::Actions - Create Actions for Gapp Applications
         icon => 'gtk-print',
 
         code => sub {
+
             my ( $action, $widget, $gobject, $args, $gtk_args ) = @_;
 
             my ( $stuff ) = @$args;

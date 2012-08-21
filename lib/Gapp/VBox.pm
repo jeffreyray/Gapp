@@ -24,13 +24,15 @@ Gapp::VBox - VBox Widget
 
 =over 4
 
-=item L<Gapp::Widget>
+=item L<Gapp::Object>
 
-=item +-- L<Gapp::Container>
+=item +-- L<Gapp::Widget>
 
-=item ....+-- L<Gapp::Box>
+=item ....+-- L<Gapp::Container>
 
-=item ........+-- L<Gapp::VBox>
+=item ........+-- L<Gapp::Box>
+
+=item ............+-- L<Gapp::VBox>
 
 =back
 

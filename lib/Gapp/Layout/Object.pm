@@ -40,6 +40,19 @@ has '_stylers' => (
     }
 );
 
+has '_painters' => (
+    is => 'ro',
+    isa => HashRef,
+    default => sub { { } },
+    init_arg => undef,
+    traits => [qw( Hash )],
+    handles => {
+        add_painter => 'set',
+        get_painter => 'get',
+        has_painter => 'exists',
+    }
+);
+
 has '_packers' => (
     is       => 'ro',
     isa      => 'HashRef[HashRef]',
@@ -117,6 +130,15 @@ sub find_styler {
     return $self->parent ? $self->parent->find_styler( $w ) : undef;
 }
 
+sub find_painter {
+    my ( $self, $w ) = @_;
+    $w = $w->meta->name if ref $w;
+    
+    $w = ($w->meta->superclasses)[0]->meta->name if $w->meta->name =~ /__ANON__/;
+    return $self->get_painter( $w->meta->name ) if $self->get_painter( $w->meta->name );
+    return $self->parent ? $self->parent->find_painter( $w ) : undef;
+}
+
 sub get_packer {
     my ( $self, $widget, $container ) = @_;
     $self->_packers->{$widget}{$container};
@@ -158,6 +180,14 @@ sub pack_widget {
     
     # pack the widget
     $packer->( $self, $widget, $container );   
+}
+
+sub paint_widget {
+    my ( $self, $widget ) = @_;
+    my $painter = $self->find_painter( $widget );
+    return if ! defined $painter;
+    
+    $painter->( $self, $widget );
 }
 
 sub style_widget {

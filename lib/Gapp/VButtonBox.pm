@@ -24,15 +24,17 @@ Gapp::VButtonBox - ButtonBox widget
 
 =over 4
 
-=item L<Gapp::Widget>
+=item L<Gapp::Object>
 
-=item +-- L<Gapp::Container>
+=item +-- L<Gapp::Widget>
 
-=item ....+-- L<Gapp::Box>
+=item ....+-- L<Gapp::Container>
 
-=item ........+-- L<Gapp::ButtonBox>
+=item ........+-- L<Gapp::Box>
 
-=item ............+-- L<Gapp::VButtonBox>
+=item ............+-- L<Gapp::ButtonBox>
+
+=item ................+-- L<Gapp::VButtonBox>
 
 =back
 

@@ -29,16 +29,11 @@ has 'modified' => (
     default => 0,
 );
 
-# if the stash has been updated to reflect the current state of the model
-has 'updated' => (
-    is => 'rw',
-    isa => 'Int',
-    default => 0,
-);
+
 
 # if the context has updated the stash
-after 'store'  => sub { $_[0]->set_modified(1) unless $_[0]->updated == 2 };
-after 'delete' => sub { $_[0]->set_modified(1) unless $_[0]->updated == 2 };
+after 'store'  => sub { $_[0]->set_modified(1) };
+after 'delete' => sub { $_[0]->set_modified(1) };
 
 
 sub update_from_context {
@@ -54,10 +49,99 @@ sub update_from_context {
     }
     
     $self->set_modified( 0 );
-    $self->set_updated( 1 );
 }
 
 
 
 
 1;
+
+
+__END__
+
+=pod
+
+=head1 NAME
+
+Gapp::Form::Stash - Form stash object
+
+=head1 SYNOPSIS
+
+  $s = Gapp::Form::Stash->new;
+
+  $s->store( 'object.attr', $value );
+
+  $s->retrieve( 'object.attr' );
+
+
+=head1 DESCRIPTION
+
+The stash is registry that used to retrieve and update form data.
+
+=head1 OBJECT HIERARCHY
+
+=over 4
+
+=item L<Gapp::Form::Stash>
+
+=back
+
+=head1 PROVIDED ATTRIBUTES
+
+=over 4
+
+=item B<modified>
+
+=over 4
+
+=item is rw
+
+=item isa Bool
+
+=item default 0
+
+=back
+
+True if the data in the stash has been modified by the form.
+
+=back
+
+=head1 PROVIDED METHODS
+
+=over 4
+
+=item B<contains $key>
+
+Returns C<true> if a C<$key> exists in the registry, C<false> otherwise.
+
+=item B<delete $key>
+
+Removes a key from the stash.
+
+=item B<elements>
+
+Returns a list of keys in the registry.
+
+=item B<fetch $key>
+
+Retrieve the value of key from the registry.
+
+=item B<store $key, $value>
+
+Stores a value to a key in the registry.
+
+=head1 AUTHORS
+
+Jeffrey Ray Hallock E<lt>jeffrey.hallock at gmail dot comE<gt>
+
+=head1 COPYRIGHT & LICENSE
+
+    Copyright (c) 2011-2012 Jeffrey Ray Hallock.
+
+    This program is free software; you can redistribute it and/or
+    modify it under the same terms as Perl itself.
+
+=cut
+
+
+

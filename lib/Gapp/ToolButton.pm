@@ -5,20 +5,14 @@ use MooseX::Types::Moose qw( ArrayRef );
 use MooseX::SemiAffordanceAccessor;
 
 extends 'Gapp::ToolItem';
+with 'Gapp::Meta::Widget::Native::Role::HasIcon';
+with 'Gapp::Meta::Widget::Native::Role::HasLabel';
+with 'Gapp::Meta::Widget::Native::Role::HasStockId';
+
 
 
 has '+gclass' => (
     default => 'Gtk2::ToolButton',
-);
-
-has 'stock_id' => (
-    is => 'rw',
-    isa => 'Str',
-);
-
-has 'icon' => (
-    is => 'rw',
-    isa => 'Str',
 );
 
 has 'icon_size' => (
@@ -27,10 +21,6 @@ has 'icon_size' => (
     default => 'dnd',
 );
 
-has 'label' => (
-    is => 'rw',
-    isa => 'Maybe[Str]',
-);
 
 
 before '_build_gobject' => sub {
@@ -61,38 +51,6 @@ before '_build_gobject' => sub {
 };
 
 
-
-
-
-
-
-
-#sub BUILDARGS {
-#    my $class = shift;
-#    my %args = @_ == 1 && is_HashRef( $_[0] ) ? %{$_[0]} : @_;
-#    
-#    #$args{label} = $args{action}->label if $args{action} && ! exists $args{label};
-#    #$args{icon} = $args{action}->icon if $args{action} && ! exists $args{icon};
-#    
-#    if ( exists $args{stock_id} ) {
-#        $args{constructor} = 'new_from_stock';
-#        $args{args} = [ $args{stock_id} ];
-#    }
-#    else {
-#        if ( ! $args{icon} ) {
-#            warn 'must set icon or stock_id';
-#        }
-#        else {
-#            $args{args} = [
-#                Gtk2::Image->new_from_stock( $args{icon} , 'dnd' ),
-#                $args{label},
-#            ];
-#        }
-#    }
-#    
-#    __PACKAGE__->SUPER::BUILDARGS( %args );
-#}
-
 1;
 
 
@@ -109,7 +67,9 @@ Gapp::ToolButton - ToolButton Widget
 
 =over 4
 
-=item L<Gapp::Widget>
+=item L<Gapp::Object>
+
+=item +-- L<Gapp::Widget>
 
 =item ....+-- L<Gapp::ToolItem>
 
@@ -117,33 +77,35 @@ Gapp::ToolButton - ToolButton Widget
 
 =back
 
+=head2 Roles
+
+=over 4
+
+=item L<Gapp::Meta::Widget::Native::Role::HasIcon>
+
+=item L<Gapp::Meta::Widget::Native::Role::HasLabel>
+
+=item L<Gapp::Meta::Widget::Native::Role::HasStockId>
+
+=back
+
 =head1 PROVIDED ATTRIBUTES
 
 =over 4
 
-=item B<icon>
+=item B<icon_size>
 
 =over 4
 
-=item isa Str
-
-=back
-
-=item B<label>
-
-=over 4
+=item is rw
 
 =item isa Str
 
-=back
-
-=item B<stock_id>
-
-=over 4
-
-=item isa Str
+=item default dnd
 
 =back
+
+The size of the icons in the toolbar. 
 
 =back
 

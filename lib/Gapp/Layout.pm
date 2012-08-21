@@ -5,8 +5,8 @@ use warnings;
 use Gapp::Layout::Object;
 
 use Sub::Exporter -setup => {
-    exports => [qw/Layout build add to extends style/],
-    groups  => { default => [qw/Layout build add to extends style/] },
+    exports => [qw/Layout build add to extends paint style/],
+    groups  => { default => [qw/Layout build add to extends paint style/] },
 };
 
 {
@@ -36,6 +36,10 @@ sub extends {
     caller()->Layout->set_parent( $base->Layout );
 }
 
+sub paint {
+    my ( $type, $definition ) = @_;
+    caller()->Layout->add_painter( $type => $definition );
+}
 
 sub style {
     my ( $type, $definition ) = @_;

@@ -5,14 +5,10 @@ use MooseX::SemiAffordanceAccessor;
 use MooseX::Types::Moose qw( HashRef );
 
 extends 'Gapp::Container';
+with 'Gapp::Meta::Widget::Native::Role::HasIcon';
 
 has '+gclass' => (
     default => 'Gtk2::Window',
-);
-
-has 'icon' => (
-    is => 'rw',
-    isa => 'Str|Undef',
 );
 
 has 'transient_for' => (
@@ -20,26 +16,13 @@ has 'transient_for' => (
     isa => 'Maybe[Gapp::Window]',
 );
 
-has 'modal' => (
-    is => 'rw',
-    isa => 'Maybe[Int]',
-);
-
-
-has 'position' => (
-    is => 'rw',
-    isa => 'Maybe[Str]',
-);
 
 
 sub BUILDARGS {
     my $class = shift;
     my %args = @_ == 1 && is_HashRef( $_[0] ) ? %{$_[0]} : @_;
     
-    if ( exists $args{title} ) {
-        $args{properties}{title} = $args{title};
-        delete $args{title};
-    }
+    
     if ( exists $args{default_size} ) {
         $args{properties}{'default-width'} = $args{default_size}[0];
         $args{properties}{'default-height'} = $args{default_size}[1];
@@ -48,6 +31,15 @@ sub BUILDARGS {
     if ( exists $args{type} ) {
         $args{args} = [ delete $args{type} ];
     }
+    if ( exists $args{position} ) {
+        $args{properties}{window_position} = delete $args{position};
+    }
+    for my $att ( qw(default_height default_width modal opacity resizable window_position title  ) ) {
+        $args{properties}{$att} = delete $args{$att} if exists $args{$att};
+    }
+    
+
+
     
     __PACKAGE__->SUPER::BUILDARGS( %args );
 }
@@ -68,26 +60,64 @@ Gapp::Window - Window Widget
 
 =over 4
 
-=item L<Gapp::Widget>
+=item L<Gapp::Object>
 
-=item +-- L<Gapp::Container>
+=item +-- L<Gapp::Widget>
 
-=item ....+-- L<Gapp::Window>
+=item ....+-- L<Gapp::Container>
+
+=item ........+-- L<Gapp::Window>
 
 =back
 
-=head1 DELEGATES TO GTK
+=head2 Roles
 
-=head2 Attributes
+=over 4
+
+=item L<Gapp::Meta::Widget::Native::Trait::Role::HasIcon>
+
+=back
+
+=head1 PROVIDED ATTRIBUTES
+
+=over 4
+
+=item B<transient_for>
+
+=over 4
+
+=item is rw
+
+=item isa L<Gapp::Window>|Undef
+
+=back
+
+=back
+
+=head1 DELEGATED PROPERTIES
 
 =over 4
 
 =item B<title>
 
+=item B<default_height>
+
+=item B<default_width>
+
 =item B<default_size => [$width, $height]>
 
-Takes an ArrayRef and delegates the contents to the C<default-width> and
-C<default-height> properties.
+Takes an ArrayRef and delegates the contents to the C<default_width> and
+C<default_height> properties.
+
+=item B<modal>
+
+=item B<opacity>
+
+=item B<resizable>
+
+=item B<title>
+
+=item B<window_position>
 
 =back 
 

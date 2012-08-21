@@ -2,7 +2,7 @@ package Gapp::UIManager;
 
 use Moose;
 use MooseX::SemiAffordanceAccessor;
-extends 'Gapp::Widget';
+extends 'Gapp::Object';
 
 use Gapp::ActionGroup;
 
@@ -49,13 +49,13 @@ __END__
 
 =head1 NAME
 
-Gapp::UIManager - UIManager Widget
+Gapp::UIManager - UIManager object
 
 =head1 OBJECT HIERARCHY
 
 =over 4
 
-=item L<Gapp::Widget>
+=item L<Gapp::Object>
 
 =item +-- L<Gapp::UIManager>
 

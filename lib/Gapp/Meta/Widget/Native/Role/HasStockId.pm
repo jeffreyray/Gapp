@@ -1,15 +1,14 @@
-package Gapp::Meta::Widget::Native::Role::HasIcon;
+package Gapp::Meta::Widget::Native::Role::HasStockId;
 
 use Moose::Role;
 use MooseX::SemiAffordanceAccessor;
 
-has 'icon' => (
+has 'stock_id' => (
     is => 'rw',
     isa => 'Maybe[Str]',
 );
 
 1;
-
 
 
 
@@ -19,17 +18,17 @@ __END__
 
 =head1 NAME
 
-Gapp::Meta::Widget::Native::Role::HasIcon - icon attribute for widgets
+Gapp::Meta::Widget::Native::Role::HasStockId - stock_id attribute for widgets
 
 =head1 SYNOPSIS
 
-    Gapp::Button->new( icon => 'gtk-quit', label => 'Exit' );
+    Gapp::Button->new( stock_id => 'gtk-ok' );
     
 =head1 PROVIDED ATTRIBUTES
 
 =over 4
 
-=item B<icon>
+=item B<stock_id>
 
 =over 4
 
@@ -39,7 +38,7 @@ Gapp::Meta::Widget::Native::Role::HasIcon - icon attribute for widgets
 
 =back
 
-The stock-id of the image to apply to the widget.
+The stock-id to apply to the widget. 
 
 =back
 

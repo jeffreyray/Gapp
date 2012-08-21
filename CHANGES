@@ -1,6 +1,22 @@
 Changes for Gapp
 
+
+0.42
+- renamed gtk_widget attribute to gobject in package Gapp::Object
+- added gwrapper attribute
+- updated documentation
+- FormField/FormElement are now roles instead of traits
+- factored out common widget attributes to roles
+- renamed "add_node" to "add" in package Gapp::Form::Context
+- removed OComboBox from Gapp::Gtk2 namespace
+- added "paint" keyword to Gapp::Layout
+- begin revamping of test suite
+
+0.41.1
+- documentation
+
 0.41
+- refactoring/documentation
 
 0.40
 - added Notebook widget

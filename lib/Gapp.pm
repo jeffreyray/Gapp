@@ -1,6 +1,6 @@
 package Gapp;
 
-our $VERSION = 0.40;
+our $VERSION = '0.41';
 
 use Gtk2 '-init';
 
@@ -68,11 +68,10 @@ use Gapp::Window;
 use Gapp::Layout::Default;
 our $Layout = Gapp::Layout::Default->Layout;
 
-use Gapp::Meta::Widget::Native::Role::HasAction;
+use Gapp::Meta::Widget::Native::Role::FormField;
 
 use Gapp::Meta::Widget::Native::Trait::ErrorDialog;
 use Gapp::Meta::Widget::Native::Trait::Form;
-use Gapp::Meta::Widget::Native::Trait::FormField;
 use Gapp::Meta::Widget::Native::Trait::FromUIManager;
 use Gapp::Meta::Widget::Native::Trait::MessageDialog;
 use Gapp::Meta::Widget::Native::Trait::OkCancelDialog; # deprecated

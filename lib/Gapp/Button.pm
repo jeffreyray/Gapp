@@ -5,6 +5,10 @@ use MooseX::SemiAffordanceAccessor;
 
 extends 'Gapp::Widget';
 with 'Gapp::Meta::Widget::Native::Role::HasAction';
+with 'Gapp::Meta::Widget::Native::Role::HasLabel';
+with 'Gapp::Meta::Widget::Native::Role::HasIcon';
+with 'Gapp::Meta::Widget::Native::Role::HasStockId';
+with 'Gapp::Meta::Widget::Native::Trait::FormElement';
 
 has '+gclass' => (
     default => 'Gtk2::Button',
@@ -71,6 +75,12 @@ Gapp::Button - Button Widget
 =over 4
 
 =item L<Gapp::Meta::Widget::Native::Role::HasAction>
+
+=item L<Gapp::Meta::Widget::Native::Role::HasLabel>
+
+=item L<Gapp::Meta::Widget::Native::Role::HasIcon>
+
+=item L<Gapp::Meta::Widget::Native::Role::HasStockId>
 
 =head1 PROVIDED ATTRIBUTES
 

@@ -1,23 +1,23 @@
 
 TODO:
 
-- Finish cleaning up documentation
+- Revamp test suite
 
-- Should I add a Gapp::GtkObject as well???
+- Add MenuToolButton, ToggleToolButton, RadioToolButton
 
-- Add gtk_external, gtk_widget, gtk_internal
+- Add RadioMenuItem, CheckMenuItem, SeparatorMenuItem, TearoffMenuItem
 
-- FormElement and FormField should be Roles, not traits
+- finish converting Layout::Default to use painters on objects with actions
 
 - Make AssistantPages a trait instead of a subclass
 
-- Clean up native traits
-
 - Finish notebook
+
+- Fix Model namespaces
 
 - Clean up documentation again
 
-- Revamp test suite
+- add ok_action, cancel_action, apply_action to Form Trait
 
 - Fix examples
 

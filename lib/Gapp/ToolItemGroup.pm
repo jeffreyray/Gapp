@@ -4,15 +4,10 @@ use Moose;
 use MooseX::SemiAffordanceAccessor;
 
 extends 'Gapp::Container';
+with 'Gapp::Meta::Widget::Native::Role::HasLabel';
 
 has '+gclass' => (
     default => 'Gtk2::ToolItemGroup',
-);
-
-has 'label' => (
-    is => 'rw',
-    isa => 'Str',
-    default => '',
 );
 
 sub BUILDARGS {
@@ -21,7 +16,7 @@ sub BUILDARGS {
     
     $args{args} = [exists $args{label} ? $args{label} : ''];
     
-    for my $att ( qw(collapsed ellipsize header-relief label-widget) ) {
+    for my $att ( qw(collapsed ellipsize header_relief label_widget) ) {
         $args{properties}{$att} = delete $args{$att} if exists $args{$att};
     }
     
@@ -37,17 +32,27 @@ __END__
 
 =head1 NAME
 
-Gapp::ToolPalette - Box widget
+Gapp::ToolItemGroup - ToolItemGroup widget
 
 =head1 OBJECT HIERARCHY
 
 =over 4
 
-=item L<Gapp::Widget>
+=item L<Gapp::Object>
 
-=item +-- L<Gapp::Container>
+=item +-- L<Gapp::Widget>
 
-=item ....+-- L<Gapp::ToolItemGroup>
+=item ....+-- L<Gapp::Container>
+
+=item ........+-- L<Gapp::ToolItemGroup>
+
+=back
+
+=head2 Roles
+
+=over 4
+
+=item L<Gapp::Meta::Widget::Native::Role::HasLabel>
 
 =back
 
@@ -59,11 +64,11 @@ Gapp::ToolPalette - Box widget
 
 =item ellipsize
 
-=item header-relief
+=item header_relief
 
 =item label
 
-=item label-widget
+=item label_widget
 
 =back
 

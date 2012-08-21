@@ -2,11 +2,11 @@
 use strict;
 use warnings;
 
-use Test::More qw( no_plan );
+use Test::More tests => 3;
 
 use Gtk2 '-init';
 use_ok 'Gapp::Label';
 
 my $w = Gapp::Label->new( text => 'Label' );
-ok $w, 'created gapp widget';
-ok $w->gobject, 'created gtk widget';
+isa_ok $w, 'Gapp::Label';
+isa_ok $w->gobject, 'Gtk2::Label';

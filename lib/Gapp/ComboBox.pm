@@ -7,7 +7,7 @@ use Gapp::CellRenderer;
 use Gapp::Types qw( GappCellRenderer );
 
 extends 'Gapp::Widget';
-with 'Gapp::Meta::Widget::Native::Trait::FormField';
+with 'Gapp::Meta::Widget::Native::Role::FormField';
 
 use Gapp::SimpleList;
 
@@ -130,7 +130,7 @@ Gapp::ComboBox - ComboBox Widget
 
 =over 4
 
-=item L<Gapp::Meta::Widget::Native::Trait::FormField>
+=item L<Gapp::Meta::Widget::Native::Role::FormField>
 
 =back
 

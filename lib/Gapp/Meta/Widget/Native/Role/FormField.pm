@@ -1,8 +1,8 @@
-package Gapp::Meta::Widget::Native::Trait::FormField;
+package Gapp::Meta::Widget::Native::Role::FormField;
 
 use Moose::Role;
 use MooseX::SemiAffordanceAccessor;
-with 'Gapp::Meta::Widget::Native::Trait::FormElement';
+with 'Gapp::Meta::Widget::Native::Role::FormElement';
 
 # the field name to use when storing the value
 has 'field' => (
@@ -78,7 +78,7 @@ sub disable {
 
 
 package Gapp::Meta::Widget::Custom::Trait::FormField;
-sub register_implementation { 'Gapp::Meta::Widget::Native::Trait::FormField' };
+sub register_implementation { 'Gapp::Meta::Widget::Native::Role::FormField' };
 
 
 1;

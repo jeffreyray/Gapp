@@ -82,7 +82,7 @@ sub find_layout {
         $self->_set_used_layout( $self->layout );
     }
     else {
-        if ( $self->parent ) {
+        if ( $self->can('parent') && $self->parent ) {
             $self->_set_used_layout( $self->parent->find_layout );
         }
         else {
@@ -107,13 +107,7 @@ sub _on_set_layout {
     
 }
 
-# the parent is set when the widget is added
-# to a container widget
-has 'parent' => (
-    is => 'rw',
-    isa => 'Maybe[Gapp::Widget]',
-    weak_ref => 1,
-);
+
 
 # properties to apply to the widget
 has 'properties' => (
@@ -168,7 +162,7 @@ sub interpolate_class {
             next if ref($trait); # options to a trait we discarded
             
             # resolve short trait names
-            $trait = Gapp::Util::resolve_widget_trait_alias( Widget => $trait )
+            $trait = Gapp::Util::resolve_gapp_trait_alias( Widget => $trait )
                   || $trait;
             
             next if $class->does( $trait );
@@ -240,6 +234,13 @@ sub _apply_stylers {
     $self->find_layout->style_widget( $self );
 }
 
+# call builder method from layout
+sub _apply_painters {
+    my ( $self ) = @_;
+    no warnings;
+    $self->find_layout->paint_widget( $self ) if $self->can('action') && $self->action;
+}
+
 # apply any properties to the gobject
 sub _apply_properties {
     my ( $self ) = @_;
@@ -281,6 +282,7 @@ sub _build_gobject {
     my $w = $self->_construct_gobject( @_ );
     $self->_apply_properties;
     $self->_apply_builders;
+    $self->_apply_painters;
     $self->_apply_signals;
     $self->_apply_customize;
     

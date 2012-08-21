@@ -5,32 +5,8 @@ use MooseX::SemiAffordanceAccessor;
 use MooseX::StrictConstructor;
 
 use Carp;
+extends 'Gapp::Action';
 
-use MooseX::Types::Moose qw( CodeRef HashRef Object Str Undef  );
-
-has 'name'  => (
-    is => 'rw',
-    isa => Str,
-    default => '',
-);
-
-has [qw( label tooltip )] => (
-    is => 'ro',
-    isa => Str,
-    default => '',
-);
-
-has 'code' => (
-    is => 'ro',
-    isa => CodeRef,
-    default => sub { sub { } },
-);
-
-has 'icon' => (
-    is => 'ro',
-    isa => Str|Undef,
-    default => undef,
-);
 
 sub perform {
     my ( $self, @args ) = @_;
@@ -56,3 +32,34 @@ no Moose;
 __PACKAGE__->meta->make_immutable;
 
 1;
+
+__END__
+
+=pod
+
+=head1 NAME
+
+Gapp::Action::Undefined - An undefined action
+
+=head1 OBJECT HIERARCHY
+
+=over 4
+
+=item L<Gapp::Action>
+
+=item +-- L<Gapp::Action::Undefined>
+
+=back
+
+=head1 AUTHORS
+
+Jeffrey Ray Hallock E<lt>jeffrey.hallock at gmail dot comE<gt>
+
+=head1 COPYRIGHT & LICENSE
+
+    Copyright (c) 2011-2012 Jeffrey Ray Hallock.
+
+    This program is free software; you can redistribute it and/or
+    modify it under the same terms as Perl itself.
+
+=cut

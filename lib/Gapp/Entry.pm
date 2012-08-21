@@ -4,7 +4,7 @@ use Moose;
 use MooseX::SemiAffordanceAccessor;
 
 extends 'Gapp::Widget';
-with 'Gapp::Meta::Widget::Native::Trait::FormField';
+with 'Gapp::Meta::Widget::Native::Role::FormField';
 
 has '+gclass' => (
     default => 'Gtk2::Entry',
@@ -76,7 +76,7 @@ Gapp::Entry - Entry Widget
 
 =over 4
 
-=item L<Gapp::Meta::Widget::Native::Trait::FormField>
+=item L<Gapp::Meta::Widget::Native::Role::FormField>
 
 =back
 

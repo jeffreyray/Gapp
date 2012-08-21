@@ -1,16 +1,14 @@
-package Gapp::Meta::Widget::Native::Role::HasIcon;
+package Gapp::Meta::Widget::Native::Role::HasIconSize;
 
 use Moose::Role;
 use MooseX::SemiAffordanceAccessor;
 
-has 'icon' => (
+has 'icon_size' => (
     is => 'rw',
     isa => 'Maybe[Str]',
 );
 
 1;
-
-
 
 
 __END__
@@ -19,17 +17,13 @@ __END__
 
 =head1 NAME
 
-Gapp::Meta::Widget::Native::Role::HasIcon - icon attribute for widgets
-
-=head1 SYNOPSIS
-
-    Gapp::Button->new( icon => 'gtk-quit', label => 'Exit' );
-    
+Gapp::Meta::Widget::Native::Role::HasIconSize - icon_size attribute for widgets
+   
 =head1 PROVIDED ATTRIBUTES
 
 =over 4
 
-=item B<icon>
+=item B<icon_size>
 
 =over 4
 
@@ -39,7 +33,7 @@ Gapp::Meta::Widget::Native::Role::HasIcon - icon attribute for widgets
 
 =back
 
-The stock-id of the image to apply to the widget.
+The size of the icons displayed on the widget.
 
 =back
 

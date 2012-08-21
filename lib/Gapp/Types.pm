@@ -82,7 +82,7 @@ type Form,
 # FormField
 subtype FormField,
     as GappWidget,
-    where { $_->does('Gapp::Meta::Widget::Native::Trait::FormField') };
+    where { $_->does('Gapp::Meta::Widget::Native::Role::FormField') };
 
 # FormContext
 class_type FormContext,

@@ -15,19 +15,21 @@ __END__
 
 =head1 NAME
 
-Gapp::HPaned - VPaned Widget
+Gapp::VPaned - VPaned Widget
 
 =head1 OBJECT HIERARCHY
 
 =over 4
 
-=item L<Gapp::Widget>
+=item L<Gapp::Object>
 
-=item +-- L<Gapp::Container>
+=item +-- L<Gapp::Widget>
 
-=item ....+-- L<Gapp::Paned>
+=item ....+-- L<Gapp::Container>
 
-=item ........+-- L<Gapp::VPaned>
+=item ........+-- L<Gapp::Paned>
+
+=item ............+-- L<Gapp::VPaned>
 
 =back
 

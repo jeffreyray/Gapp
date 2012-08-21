@@ -19,11 +19,20 @@ has 'fill' => (
     default => 1 ,
 );
 
-# tooltip to display
-has 'tooltip' => (
+# the grwapper wraps encapsulates a widget
+has 'gwrapper' => (
     is => 'rw',
-    isa => 'Maybe[Str]',
+    isa => 'Maybe[Gtk2::Object]',
+    reader => 'get_gwrapper',
+    writer => 'set_gwrapper',
+    default => undef,
 );
+
+sub gwrapper {
+    my ( $self ) = @_;
+    $self->get_gwrapper || $self->gobject;
+};
+
 
 # padding around widget in container
 has 'padding' => (
@@ -31,6 +40,21 @@ has 'padding' => (
     isa => 'Int',
     default => 0,
 );
+
+# the parent is set when the widget is added
+# to a container widget
+has 'parent' => (
+    is => 'rw',
+    isa => 'Maybe[Gapp::Widget]',
+    weak_ref => 1,
+);
+
+# tooltip to display
+has 'tooltip' => (
+    is => 'rw',
+    isa => 'Maybe[Str]',
+);
+
 
 
 sub BUILDARGS {
@@ -59,7 +83,9 @@ Gapp::Widget - The base class for all Gapp widgets
 
 =over 4
 
-=item L<Gapp::Widget>
+=item L<Gapp::Object>
+
+=item +-- L<Gapp::Widget>
 
 =back
 
@@ -70,69 +96,6 @@ All Gapp widgets inherit from L<Gapp::Widget>.
 =head1 PROVIDED ATTRIBUTES
 
 =over 4
-
-=item B<args>
-
-=over 4
-
-=item isa: ArrayRef|Undef
-
-=item default: undef
-
-=back
-
-If C<args> is set, the contents of the ArrayRef will be passed into the
-constructor when the Gtk+ widget is instantiated. The example below will create
-a popup window instead of a standard toplevel window.
-
- Gapp::Window->new( args => [ 'popup' ] );
-
-=item B<class>
-
-=over 4
-
-=item isa: ClassName
-
-=item required: lazy
-
-=back
-
-This is the class of the Gtk+ widget to be created. Most Gapp widgets provide
-this in their class definition, but you can override it by passing in your own
-value.
-
- Gapp::Window->new( gclass => 'Gtk2::Ex::CustomWindow' );
-
-=item B<constructor>
-
-=over 4
-
-=item isa: Str|CodeRef
-
-=item default: new
-
-=back
-
-This constructor is called on the C<class> to instantiate a Gtk+ widget. Change
-the constructor if you want to use the helpers provided by Gtk+ like
-C<new_with_label> or C<new_with_mnemonic>.
-
-=item B<customize>
-
-=over 4
-
-=item isa: CodeRef|Undef
-
-=item default: undef
-
-=back
-
-Setting the C<customize> attribute allows you to tweak the Gtk+ widget after it
-has been instantiated. Use this sparingly, you should define the appearnce of
-your widgets using L<Gapp::Layout>.
-
-If you find you need to use C<customize> because parts of Gapp are incomplete,
-or could be remedied by more robustness, please file a bug or submit a patch.
 
 =item B<expand>
 
@@ -162,31 +125,24 @@ because widget layout is determind by the L<Gapp::TableMap>)
 
 =back
 
-=item B<gobject>
+=item B<gwrapper>
 
 =over 4
 
-=item isa: Object
+=item is rw
 
-=item default: 0
+=item isa Gtk2::Widget
 
-=back
+=item writer set_gwrapper
 
-The actual Gtk+ widget. The widget will be constructed the first time it is
-requested. After the Gtk+ widget has been constructed, changes you make to the
-Gapp layer will not be reflected in the Gtk+ widget.
-
-=item B<layout>
-
-=over 4
-
-=item isa: L<Gapp::Layout::Object>
-
-=item default: L<Gapp::Layout::Default>
+=item reader get_gwrapper
 
 =back
 
-The layout used to determine widget positioning.
+The C<gwrapper> is a widget that encapsulates the C<gobject>. This is useful when
+creating composite widgets. To retrieve the value of the C<gwrapper> attribute use
+the C<get_gwrapper> method. Calling the C<grwapper> will return the C<gwrapper>
+if one has been set, otherwise it will return the C<gobject>. 
 
 =item B<padding>
 
@@ -204,38 +160,23 @@ Padding around the widget.
 
 =over 4
 
-=item isa: L<Gapp::Widget>|Undef
+=item isa L<Gapp::Widget>|Undef
 
-=item default: undef
+=item default undef
 
 =back
 
 The parent widget.
 
-=item B<properties>
+=item B<tooltip>
 
 =over 4
 
-=item isa: HashRef
-
-=item handles:
-
-=over 4
-
-=item get:
-
-get_property
-
-=item set:
-
-set_property
+=item isa Str|Undef
 
 =back
 
-The the properties supplied will be passed on to the Gtk+ widget during
-construction. See the documentation for the corresponding Gtk+ widget for
-valid properies.
-
+The tooltip to display over the widget.
 
 =head1 AUTHORS
 

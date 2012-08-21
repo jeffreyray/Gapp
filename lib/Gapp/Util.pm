@@ -7,8 +7,8 @@ use Sub::Exporter;
 
 
 Sub::Exporter::setup_exporter({
-    exports => [qw( resolve_widget_trait_alias replace_entities add_handles)],
-    groups  => { all => [qw( resolve_widget_trait_alias replace_entities add_handles )] }
+    exports => [qw( resolve_gapp_trait_alias replace_entities add_handles)],
+    groups  => { all => [qw( resolve_gapp_trait_alias replace_entities add_handles )] }
 });
 
 # resolve custom widget trait names
@@ -24,7 +24,7 @@ sub _build_alias_package_name {
 {
     my %cache;
 
-    sub resolve_widget_class_alias {
+    sub resolve_gapp_class_alias {
         my ( $type, $widget_class_name, %options ) = @_;
 
         my $cache_key = $type . q{ } . ( $options{trait} ? '-Trait' : '' );
@@ -48,8 +48,8 @@ sub _build_alias_package_name {
 }
 
 
-sub resolve_widget_trait_alias {
-    return resolve_widget_class_alias( @_, trait => 1 );
+sub resolve_gapp_trait_alias {
+    return resolve_gapp_class_alias( @_, trait => 1 );
 }
 
 # convert entities for passing to markup properties
@@ -122,7 +122,7 @@ Gapp::Util - Utility functions for Gapp
 
 Provides utility functions for the Gapp framework
 
-=head1 PROVIDED FUNCTIONS
+=head1 EXPORTED FUNCTIONS
 
 =over 4
 
@@ -130,9 +130,9 @@ Provides utility functions for the Gapp framework
 
 Use when altering the handles property of an attribue during the
 
-=item B<quit>
+=item B<resolve_gapp_trait_alias $trait_class, $trait_name>
 
-Delegates to C<Gtk2::main_quit>.
+Returns the full package name of a given trait.
 
 =back
 

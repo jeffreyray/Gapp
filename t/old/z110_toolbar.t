@@ -8,7 +8,5 @@ use Gtk2 '-init';
 use_ok 'Gapp::Toolbar';
 
 my $w = Gapp::Toolbar->new;
-
-
-ok $w, 'created gapp widget';
-ok $w->gobject, 'created gtk widget';
+isa_ok $w, 'Gapp::Toolbar';
+isa_ok $w->gobject, 'Gtk2::Toolbar';

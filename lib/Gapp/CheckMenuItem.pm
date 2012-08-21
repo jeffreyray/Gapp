@@ -1,13 +1,14 @@
-package Gapp::ToggleButton;
+package Gapp::CheckMenuItem;
 
 use Moose;
+use MooseX::StrictConstructor;
 use MooseX::SemiAffordanceAccessor;
 
-extends 'Gapp::Button';
+extends 'Gapp::MenuItem';
 with 'Gapp::Meta::Widget::Native::Role::FormField';
 
 has '+gclass' => (
-    default => 'Gtk2::ToggleButton',
+    default => 'Gtk2::ImageMenuItem',
 );
 
 has 'value' => (
@@ -15,6 +16,8 @@ has 'value' => (
     isa => 'Str',
     default => '1',
 );
+
+
 
 
 sub BUILDARGS {
@@ -39,7 +42,6 @@ sub get_field_value {
     }
 }
 
-
 sub set_field_value {
     my ( $self, $value ) = @_;
     if ( defined $value && $value eq $self->value ) {
@@ -60,8 +62,13 @@ sub stash_to_widget {
     $self->set_field_value( $stash->fetch( $self->field ) );
 }
 
-1;
 
+
+
+
+
+
+1;
 
 
 __END__
@@ -70,7 +77,7 @@ __END__
 
 =head1 NAME
 
-Gapp::ToggleButton - ToggleButton Widget
+Gapp::ImageMenuItem - ImageMenuItem Widget
 
 =head1 OBJECT HIERARCHY
 
@@ -78,35 +85,21 @@ Gapp::ToggleButton - ToggleButton Widget
 
 =item L<Gapp::Widget>
 
-=item +-- L<Gapp::Button>
+=item +-- L<Gapp::MenuItem>
 
-=item ....+-- L<Gapp::ToggleButton>
-
-=back
-
-=head1 PROVIDED ATTRIBUTES
-
-=over 4
-
-=item B<value>
-
-=over 4
-
-=item isa Str
+=item ....+-- L<Gapp::ImageMenuItem>
 
 =back
 
-=back
-
-=head1 DELEGATES TO GTK
-
-=head2 Attributes
+=head2 Roles
 
 =over 4
 
-=item B<active>
+=item L<Gapp::Meta::Widget::Native::Role::HasIcon>
 
-=back 
+=item L<Gapp::Meta::Widget::Native::Role::HasImage>
+
+=back
 
 =head1 AUTHORS
 
@@ -120,5 +113,3 @@ Jeffrey Ray Hallock E<lt>jeffrey.hallock at gmail dot comE<gt>
     modify it under the same terms as Perl itself.
 
 =cut
-
-

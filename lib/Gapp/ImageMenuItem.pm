@@ -6,6 +6,7 @@ use MooseX::SemiAffordanceAccessor;
 
 extends 'Gapp::MenuItem';
 with 'Gapp::Meta::Widget::Native::Role::HasIcon';
+with 'Gapp::Meta::Widget::Native::Role::HasImage';
 
 has '+gclass' => (
     default => 'Gtk2::ImageMenuItem',
@@ -39,6 +40,8 @@ Gapp::ImageMenuItem - ImageMenuItem Widget
 =over 4
 
 =item L<Gapp::Meta::Widget::Native::Role::HasIcon>
+
+=item L<Gapp::Meta::Widget::Native::Role::HasImage>
 
 =back
 
