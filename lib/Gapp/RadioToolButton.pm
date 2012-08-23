@@ -1,14 +1,11 @@
-package Gapp::RadioMenuItem;
+package Gapp::RadioToolButton;
 
 use Moose;
-use MooseX::StrictConstructor;
 use MooseX::SemiAffordanceAccessor;
-
-extends 'Gapp::CheckMenuItem';
-with 'Gapp::Meta::Widget::Native::Role::FormField';
+extends 'Gapp::ToggleToolButton';
 
 has '+gclass' => (
-    default => 'Gtk2::RadioMenuItem',
+    default => 'Gtk2::RadioToolButton',
 );
 
 has 'value' => (
@@ -74,12 +71,8 @@ sub stash_to_widget {
 
 
 
-
-
-
-
-
 1;
+
 
 
 __END__
@@ -88,27 +81,23 @@ __END__
 
 =head1 NAME
 
-Gapp::ImageMenuItem - ImageMenuItem Widget
+Gapp::ToggleToolButton - ToggleToolButton Widget
 
 =head1 OBJECT HIERARCHY
 
 =over 4
 
-=item L<Gapp::Widget>
+=item L<Gapp::Object>
 
-=item +-- L<Gapp::MenuItem>
+=item +-- L<Gapp::Widget>
 
-=item ....+-- L<Gapp::ImageMenuItem>
+=item ....+-- L<Gapp::ToolItem>
 
-=back
+=item ........+-- L<Gapp::ToolButton>
 
-=head2 Roles
+=item ............+-- L<Gapp::ToggleToolButton>
 
-=over 4
-
-=item L<Gapp::Meta::Widget::Native::Role::HasIcon>
-
-=item L<Gapp::Meta::Widget::Native::Role::HasImage>
+=item ................+-- Gapp::RadioToolButton
 
 =back
 
@@ -124,3 +113,4 @@ Jeffrey Ray Hallock E<lt>jeffrey.hallock at gmail dot comE<gt>
     modify it under the same terms as Perl itself.
 
 =cut
+

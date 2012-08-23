@@ -1,6 +1,17 @@
 Changes for Gapp
 
 
+0.43
+- add MenuToolButton, ToggleToolButton, RadioToolButton
+- add RagioMenuItem, CheckMenuItem, SeparatorMenuItem, TearoffMenuItem
+- Added AssistantPage trait
+- Removed AssistantPage widget
+- added GappXXXXX traits
+- removed Notice/Noticebox (see GappX::NoticeBox)
+- partial revamp of test suite
+
+
+
 0.42
 - renamed gtk_widget attribute to gobject in package Gapp::Object
 - added gwrapper attribute

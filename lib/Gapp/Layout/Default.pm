@@ -30,25 +30,30 @@ build 'Gapp::Assistant', sub {
 
 # Assistnat Page
 
-build 'Gapp::AssistantPage', sub {
-    my ( $l, $w ) = @_;
-};
+add 'Gapp::Widget', to 'Gapp::Assistant', sub {
+    my ( $l, $w, $c) = @_;
+    
+    if ( ! $w->does('Gapp:Meta::Widget::Native::Trait::AssistantPage') ) {
+	use Carp;
+	carp qq[$w does not have the AssistantPage trait applied. Any widget added to ]. 
+	qq[an assistant must have the AssistntPage trait.];
+    }
 
-add 'Gapp::AssistantPage', to 'Gapp::Assistant', sub {
-   my ( $l, $w, $c) = @_;
-   
     my $gtk_w = $w->gwrapper;
     
     my $assistant = $c->gobject;
    
-    my $page_num = $assistant->append_page( $gtk_w );
-    $w->set_num( $page_num );
-    $assistant->set_page_title     ($gtk_w, $w->title );
-    $assistant->set_page_side_image($gtk_w, $assistant->render_icon( $w->icon , 'dnd' ) ) if $w->icon;
-    $assistant->set_page_type      ($gtk_w, $w->type );
-    $assistant->set_page_complete  ($gtk_w, 1);
-    $assistant->{pages}{$w->name} = $gtk_w;  
+    my $page_num = $assistant->append_page( $w->grwrapper );
+    $w->set_page_num( $page_num );
+    
+    $assistant->set_page_title     ($w->gwrapper , $w->page_title );
+    $assistant->set_page_side_image($w->gwrapper , $assistant->render_icon( $w->page_icon , 'dnd' ) ) if $w->page_icon;
+    $assistant->set_page_type      ($w->gwrapper , $w->page_type );
+    $assistant->set_page_complete  ($w->gwrapper , 1);
+    $assistant->{pages}{$w->page_name} = $w if $w->page_name;
 };
+
+# Button
 
 build 'Gapp::Button', sub {
     my ( $l, $w ) = @_;
@@ -179,7 +184,6 @@ build 'Gapp::FileChooserDialog', sub {
     my ( $l, $w ) = @_;
     my $gtk_w = $w->gobject;
     $w->gobject->set_icon( $w->gobject->render_icon( $w->icon, 'dnd' ) ) if $w->icon;
-    $w->gobject->set_position( $w->position ) if $w->position;
     $w->gobject->set_transient_for( $w->transient_for->gobject ) if $w->transient_for;
     
     if ( $w->buttons ) {
@@ -312,6 +316,15 @@ add 'Gapp::MenuItem', to 'Gapp::MenuShell', sub {
 
 # ToolButton
 
+style 'Gapp::MenuToolButton', sub {
+    my ( $l, $w ) = @_;
+    $w->set_args( [
+	Gtk2::Image->new_from_stock( 'gtk-dialog-error' , $w->icon_size || 'dnd' ),
+	defined $w->label ? $w->label : ''
+    ] );
+};
+
+
 build 'Gapp::MenuToolButton', sub {
     my ( $l, $w ) = @_;
     my $gtkw = $w->gobject;
@@ -322,10 +335,10 @@ build 'Gapp::MenuToolButton', sub {
     $gtkw->set_label( $w->label ) if defined $w->label;
     $gtkw->set_tooltip_text( $w->tooltip ) if defined $w->tooltip;
     
-    $w->menu->grapper->show_all;
+    $w->menu->gwrapper->show_all if $w->menu;
 };
 
-paint 'Gapp::MenuToolButton',, sub {
+paint 'Gapp::MenuToolButton', sub {
     my ( $l, $w ) = @_;
     return if ! $w->action;
     
@@ -464,6 +477,14 @@ add 'Gapp::ToolItem', to 'Gapp::Toolbar', sub {
 
 
 # ToolButton
+
+style 'Gapp::ToolButton', sub {
+    my ( $l, $w ) = @_;
+    $w->set_args( [
+	Gtk2::Image->new_from_stock( 'gtk-dialog-error' , $w->icon_size || 'dnd' ),
+	defined $w->label ? $w->label : ''
+    ] );
+};
 
 build 'Gapp::ToolButton', sub {
     my ( $l, $w ) = @_;

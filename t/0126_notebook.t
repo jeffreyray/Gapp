@@ -43,25 +43,3 @@ use_ok 'Gapp::Notebook';
 }
 
 
-
-
-
-
-
-
-
-#{ # construct with groups
-#    my $group = Gapp::ToolItemGroup->new(
-#        content => [
-#            Gapp::ToolButton->new( label => 'Tool Action' ),
-#        ]
-#    );
-#    
-#    my $palette = Gapp::ToolPalette->new(
-#        content => [
-#            $group
-#        ]
-#    );
-#    
-#    ok $palette, "Created palette with group";
-#}

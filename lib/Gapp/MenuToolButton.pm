@@ -42,6 +42,14 @@ Gapp::MenuToolButton - MenuToolButton Widget
 
 =back
 
+=head2 Roles
+
+=over 4
+
+=item L<Gapp::Meta::Widget::Native::Role::HasMenu>
+
+=back
+
 =head1 AUTHORS
 
 Jeffrey Ray Hallock E<lt>jeffrey.hallock at gmail dot comE<gt>

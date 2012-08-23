@@ -6,7 +6,7 @@ use MooseX::Types::Moose qw( HashRef );
 
 use MooseX::Types::Moose qw( Undef );
 use Gapp::Types qw( GappActionOrArrayRef );
-
+use Gapp::Meta::Widget::Native::Trait::AssistantPage;
 extends 'Gapp::Window';
 
 has '+gclass' => (
@@ -40,7 +40,7 @@ sub find_page {
     }
     
     for my $page ( $self->children ) {
-        return $page if $page->name eq $page_name;
+        return $page if $page->page_name eq $page_name;
     }
 }
 
@@ -56,7 +56,7 @@ sub set_current_page {
     }
     
     for my $page ( $self->children ) {
-        if ( $page->name eq $page_name ) {
+        if ( $page->page_name eq $page_name ) {
             $self->gobject->set_current_page( $page->num );
         }
     }

@@ -2,14 +2,13 @@
 use strict;
 use warnings;
 
-use Test::More qw( no_plan );
+use Test::More tests => 11;
 
 use Gtk2 '-init';
 use_ok 'Gapp::ComboBox';
 
-use Gapp;
 
-{   # Basic combox box with stings
+{   # Basic combox box with strings
     my $w = Gapp::ComboBox->new(
         values => [ 'foo', 'bar', 'baz', ]
     );
@@ -45,24 +44,6 @@ use Gapp;
     $iter = $model->iter_next( $iter );
     ok $model->get( $iter ), 'got baz';
     
-    Gapp::Window->new( content => [ $w ] )->show_all;
 }
 
-{   # Basic combox box with sub as values
-    my $w = Gapp::ComboBox->new(
-        values => sub { 'foo', 'bar', 'baz' }
-    );
-    ok $w, 'created gapp widget';
-    ok $w->gobject, 'created gtk widget';
-    
-    my $model = $w->gobject->get_model;
-    my $iter = $model->get_iter_first;
-    ok $model->get( $iter ), 'got foo';
-    
-    $iter = $model->iter_next( $iter );
-    ok $model->get( $iter ), 'got bar';
-    
-    $iter = $model->iter_next( $iter );
-    ok $model->get( $iter ), 'got baz';
-    
-}
+

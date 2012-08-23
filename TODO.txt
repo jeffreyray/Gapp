@@ -3,13 +3,7 @@ TODO:
 
 - Revamp test suite
 
-- Add MenuToolButton, ToggleToolButton, RadioToolButton
-
-- Add RadioMenuItem, CheckMenuItem, SeparatorMenuItem, TearoffMenuItem
-
 - finish converting Layout::Default to use painters on objects with actions
-
-- Make AssistantPages a trait instead of a subclass
 
 - Finish notebook
 

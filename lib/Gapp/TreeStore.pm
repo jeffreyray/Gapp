@@ -1,4 +1,4 @@
-package Gapp::ListStore;
+package Gapp::TreeStore;
 
 use Moose;
 use MooseX::SemiAffordanceAccessor;
@@ -8,7 +8,7 @@ extends 'Gapp::Object';
 
 
 has '+gclass' => (
-    default => 'Gtk2::ListStore',
+    default => 'Gtk2::TreeStore',
 );
 
 has 'columns' => (
@@ -44,7 +44,7 @@ __END__
 
 =head1 NAME
 
-Gapp::ListStore - ListStore object
+Gapp::TreeStore - TreeStore object
 
 =head1 OBJECT HIERARCHY
 
@@ -52,7 +52,7 @@ Gapp::ListStore - ListStore object
 
 =item L<Gapp::Object>
 
-=item +-- L<Gapp::ListStore>
+=item +-- L<Gapp::TreeStore>
 
 =back
 

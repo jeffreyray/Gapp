@@ -1,38 +1,36 @@
-package Gapp::AssistantPage;
+package Gapp::Meta::Widget::Native::Trait::AssistantPage;
 
-use Moose;
-use MooseX::LazyRequire;
+use Moose::Role;
 use MooseX::SemiAffordanceAccessor;
-use MooseX::Types::Moose qw( HashRef );
+use MooseX::LazyRequire;
 
-extends 'Gapp::VBox';
 
-has 'name' => (
+has 'page_name' => (
     is => 'rw',
     isa => 'Str',
     default => '',
 );
 
-has 'title' => (
+has 'page_title' => (
     is => 'rw',
     isa => 'Str',
     default => '',
 );
 
-has 'type' => (
+has 'page_type' => (
     is => 'rw',
     isa => 'Str',
     default => '',
     lazy_required => 1,
 );
 
-has 'icon' => (
+has 'page_icon' => (
     is => 'rw',
     isa => 'Str',
     default => '',
 );
 
-has 'num' => (
+has 'page_num' => (
     is => 'rw',
     isa => 'Int|Undef',
 );
@@ -62,6 +60,9 @@ sub validate {
 }
 
 
+
+package Gapp::Meta::Widget::Custom::Trait::AssistantPage;
+sub register_implementation { 'Gapp::Meta::Widget::Native::Trait::AssistantPage' };
 
 
 1;

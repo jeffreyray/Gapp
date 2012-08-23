@@ -1,14 +1,13 @@
-package Gapp::CheckMenuItem;
+package Gapp::ToggleToolButton;
 
 use Moose;
-use MooseX::StrictConstructor;
 use MooseX::SemiAffordanceAccessor;
+extends 'Gapp::ToolButton';
 
-extends 'Gapp::MenuItem';
 with 'Gapp::Meta::Widget::Native::Role::FormField';
 
 has '+gclass' => (
-    default => 'Gtk2::CheckMenuItem',
+    default => 'Gtk2::ToggleToolButton',
 );
 
 has 'value' => (
@@ -16,8 +15,6 @@ has 'value' => (
     isa => 'Str',
     default => '1',
 );
-
-
 
 
 sub BUILDARGS {
@@ -65,10 +62,8 @@ sub stash_to_widget {
 
 
 
-
-
-
 1;
+
 
 
 __END__
@@ -77,17 +72,21 @@ __END__
 
 =head1 NAME
 
-Gapp::ImageMenuItem - ImageMenuItem Widget
+Gapp::ToggleToolButton - ToggleToolButton Widget
 
 =head1 OBJECT HIERARCHY
 
 =over 4
 
-=item L<Gapp::Widget>
+=item L<Gapp::Object>
 
-=item +-- L<Gapp::MenuItem>
+=item +-- L<Gapp::Widget>
 
-=item ....+-- L<Gapp::CheckMenuItem>
+=item ....+-- L<Gapp::ToolItem>
+
+=item ........+-- L<Gapp::ToolButton>
+
+=item ............+-- L<Gapp::ToggleToolButton>
 
 =back
 
@@ -111,3 +110,4 @@ Jeffrey Ray Hallock E<lt>jeffrey.hallock at gmail dot comE<gt>
     modify it under the same terms as Perl itself.
 
 =cut
+
