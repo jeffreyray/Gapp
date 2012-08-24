@@ -1,6 +1,6 @@
 package Gapp;
 
-our $VERSION = '0.43';
+our $VERSION = '0.44';
 
 use Gtk2 '-init';
 
@@ -33,15 +33,13 @@ use Gapp::Menu;
 use Gapp::MenuBar;
 use Gapp::MenuItem;
 use Gapp::MenuToolButton;
-use Gapp::Notice;
-use Gapp::NoticeBox;
 use Gapp::ProgressBar;
 use Gapp::RadioButton;
 use Gapp::ScrolledWindow;
 use Gapp::SeparatorMenuItem;
 use Gapp::SeparatorToolItem;
 use Gapp::SpinButton;
-use Gapp::SimpleList;
+use Gapp::Model::SimpleList;
 use Gapp::StatusIcon;
 use Gapp::SSNEntry;
 use Gapp::Table;
@@ -71,12 +69,9 @@ our $Layout = Gapp::Layout::Default->Layout;
 use Gapp::Meta::Widget::Native::Role::FormField;
 
 use Gapp::Meta::Widget::Native::Trait::AssistantPage;
-use Gapp::Meta::Widget::Native::Trait::ErrorDialog;
 use Gapp::Meta::Widget::Native::Trait::Form;
 use Gapp::Meta::Widget::Native::Trait::FromUIManager;
-use Gapp::Meta::Widget::Native::Trait::MessageDialog;
 use Gapp::Meta::Widget::Native::Trait::NotebookPage;
-use Gapp::Meta::Widget::Native::Trait::OkCancelDialog; # deprecated
 use Gapp::Meta::Widget::Native::Trait::TreeViewListFormField;
 use Gapp::Meta::Widget::Native::Trait::TreeViewToggleListFormField;
 

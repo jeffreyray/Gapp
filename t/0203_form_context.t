@@ -12,7 +12,7 @@ has 'first_name' => (
     writer => 'set_first_name',
 );
 
-use Test::More qw( no_plan );
+use Test::More tests => 9;
 
 use Gtk2 '-init';
 

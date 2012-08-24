@@ -30,7 +30,6 @@ use Gapp::Moose::Meta::Attribute::Trait::GappDialog;
 use Gapp::Moose::Meta::Attribute::Trait::GappMenu;
 use Gapp::Moose::Meta::Attribute::Trait::GappMenuBar;
 use Gapp::Moose::Meta::Attribute::Trait::GappMenuToolButton;
-use Gapp::Moose::Meta::Attribute::Trait::GappNoticeBox;
 use Gapp::Moose::Meta::Attribute::Trait::GappRadioMenuItem;
 use Gapp::Moose::Meta::Attribute::Trait::GappRadioToolButton;
 use Gapp::Moose::Meta::Attribute::Trait::GappScrolledWindow;

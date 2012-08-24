@@ -2,12 +2,12 @@
 use strict;
 use warnings;
 
-use Test::More qw( no_plan );
+use Test::More tests => 3;
 
 use Gapp '-init';
 use_ok 'Gapp::DateEntry';
 
 my $w = Gapp::DateEntry->new( value => '2011-04-12' );
-ok $w, 'created gapp widget';
-ok $w->gobject, 'created gtk widget';
+isa_ok $w, 'Gapp::DateEntry';
+isa_ok $w->gobject, 'Gapp::Gtk2::DateEntry';
 

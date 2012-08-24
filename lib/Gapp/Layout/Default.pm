@@ -80,6 +80,7 @@ paint 'Gapp::Button', sub {
     
     my ( $action, @args ) = parse_action ( $w->action );
     
+   
     if ( is_CodeRef $action ) {
 	$w->signal_connect( 'clicked', $action, \@args );
     }
@@ -98,12 +99,12 @@ build 'Gapp::ComboBox', sub {
     my ( $l, $w ) = @_;
     my $gtkw = $w->gobject;
     
-    my $model = $w->model->isa('Gapp::Widget') ? $w->model->gobject : $w->model;
+    my $model = $w->model->isa('Gapp::Object') ? $w->model->gobject : $w->model;
     
     # populate the module with values
     if ( $w->values ) {
         
-        my $model = $w->model->isa('Gapp::Widget') ? $w->model->gobject : $w->model;
+        my $model = $w->model->isa('Gapp::Object') ? $w->model->gobject : $w->model;
         
         my @values = is_CodeRef($w->values) ? &{$w->values}($w) : @{$w->values};
         $model->append( $_ ) for ( @values );
@@ -216,9 +217,18 @@ build 'Gapp::Label', sub {
     my ( $l, $w ) = @_;
 
     my $gtkw = $w->gobject;
-    #$gtkw->set_text( $w->text ) if defined $w->text;
-    #$gtkw->set_markup( $w->markup ) if defined $w->markup;
+    $gtkw->set_text( $w->text ) if defined $w->text;
+    $gtkw->set_markup( $w->markup ) if defined $w->markup;
 };
+
+# List
+
+build 'Gapp::Model::List', sub {
+    my ( $l, $w ) = @_;
+    map { $w->gobject->append_record( @$_ ) } @{ $w->content };
+};
+
+
 
 # Image
 
@@ -385,35 +395,10 @@ add 'Gapp::Widget', to 'Gapp::Notebook', sub {
 
 
 
-# Notice
-build 'Gapp::Notice', sub {
-    my ( $l, $w ) = @_;
 
-    my $gtkw = $w->gobject;
-    
-};
-
-
-
-# NoticeBox
-style 'Gapp::NoticeBox', sub {
-    my ( $l, $w ) = @_;
-    
-    $w->properties->{decorated} ||= 0;
-    $w->properties->{opacity}   ||= 0;
-    $w->properties->{gravity}   ||= 'south-east';
-    $w->properties->{'skip-taskbar-hint'} = 1;
-};
-
-build 'Gapp::NoticeBox', sub {
-    my ( $l, $w ) = @_;
-
-    my $gtkw = $w->gobject;
-    $gtkw->set_keep_above( 1 );
-};
 
 # SimpleList
-build 'Gapp::SimpleList', sub {
+build 'Gapp::Model::SimpleList', sub {
     my ( $l, $w ) = @_;
     map { $w->gobject->append( $_ ) } @{ $w->content };
 };

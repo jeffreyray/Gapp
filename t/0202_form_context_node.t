@@ -9,7 +9,7 @@ has 'first_name' => (
     is => 'rw',
 );
 
-use Test::More qw( no_plan );
+use Test::More tests => 2;
 
 use Gtk2 '-init';
 

@@ -2,11 +2,11 @@
 use strict;
 use warnings;
 
-use Test::More qw( no_plan );
+use Test::More tests => 3;
 
 use Gtk2 '-init';
 use_ok 'Gapp::UIManager';
 
 my $w = Gapp::UIManager->new;
-ok $w, 'created gapp widget';
-ok $w->gobject, 'created gtk widget';
+isa_ok $w, 'Gapp::UIManager';
+isa_ok $w->gobject, 'Gtk2::UIManager';

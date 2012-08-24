@@ -1,15 +1,19 @@
-package Gapp::SimpleList;
+package Gapp::Model::List;
 
 use Moose;
 use MooseX::SemiAffordanceAccessor;
 use MooseX::Types::Moose qw( HashRef );
 
 use Gapp::Gtk2;
-extends 'Gapp::Widget';
+extends 'Gapp::Object';
 
 
 has '+gclass' => (
-    default => 'Gapp::Gtk2::List::Simple',
+    default => 'Gapp::Gtk2::Model::List',
+);
+
+has '+gobject' => (
+    handles => [qw( clear append )],
 );
 
 
@@ -19,9 +23,7 @@ has 'content' => (
     default => sub { [ ] },
 );
 
-has '+gobject' => (
-    handles => [qw( show show_all hide clear append )],
-);
+
 
 
 
@@ -33,15 +35,15 @@ __END__
 
 =head1 NAME
 
-Gapp::SimpleList - A Simple List
+Gapp::Model::SimpleList - A Simple List
 
 =head1 OBJECT HIERARCHY
 
 =over 4
 
-=item L<Gapp::Widget>
+=item L<Gapp::Object>
 
-=item +-- L<Gapp::SimpleList>
+=item +-- Gapp::Model::SimpleList
 
 =back
 

@@ -9,7 +9,7 @@ use Gapp::Types qw( GappCellRenderer );
 extends 'Gapp::Widget';
 with 'Gapp::Meta::Widget::Native::Role::FormField';
 
-use Gapp::SimpleList;
+use Gapp::Model::SimpleList;
 
 has '+gclass' => (
     default => 'Gtk2::ComboBox',
@@ -29,7 +29,7 @@ has 'data_func' => (
 has 'model' => (
     is => 'rw',
     isa => 'Maybe[Object]',
-    default => sub { Gapp::SimpleList->new },
+    default => sub { Gapp::Model::SimpleList->new },
 );
 
 has 'renderer' => (

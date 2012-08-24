@@ -204,11 +204,13 @@ sub find_toplevel {
 # otherwise stores signal info to connect once g-object is constructed
 sub signal_connect {
     my ( $self, $name, $code, @args ) = @_;
-    push @{ $self->connected_signals }, [ $name, $code, @args ];
     
     # attach the signal if the gtk widget has been constructed
     if ( $self->has_gobject ) {
         $self->_apply_signal( [ $name, $code, @args ] );
+    }
+    else {
+        push @{ $self->connected_signals }, [ $name, $code, @args ];
     }
 }
 

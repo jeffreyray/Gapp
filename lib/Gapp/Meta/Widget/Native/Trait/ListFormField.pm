@@ -1,4 +1,4 @@
-package Gapp::Meta::Widget::Native::Trait::TreeViewListFormField;
+package Gapp::Meta::Widget::Native::Trait::ListFormField;
 
 use Moose::Role;
 use MooseX::SemiAffordanceAccessor;

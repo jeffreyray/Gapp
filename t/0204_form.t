@@ -9,7 +9,7 @@ has 'first_name' => (
     is => 'rw',
 );
 
-use Test::More qw( no_plan );
+use Test::More tests => 3;
 
 use Gtk2 '-init';
 
@@ -25,14 +25,7 @@ $cx->add_node( 'employee', $e, );
 my $form = Gapp::VBox->new (
     traits => [qw( Form )],
     context => $cx,
-    #context => {
-    #    nodes => {
-    #        employee => [ $e,
-    #            get_prefix =>
-    #        ],
-    #        facility => { content => $f },
-    #    }
-    #},
+
     content => [
         Gapp::VBox->new(
             content => [
@@ -47,10 +40,3 @@ my $form = Gapp::VBox->new (
 ok $form, 'created form object';
 ok $form->find_fields, 'found form fields';
 $form->update;
-
-#Gapp::Window->new(
-#    content => [ $form ]
-#)->show_all;
-#
-#Gtk2->main;
-

@@ -21,7 +21,7 @@ has '+gclass' => (
 );
 
 has '+gobject' => (
-    handles => ['run'],
+    handles => [qw( run destroy )],
 );
 
 after '_build_gobject' => sub {

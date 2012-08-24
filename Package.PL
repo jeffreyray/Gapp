@@ -10,6 +10,7 @@ my $pack = Module::Package->new(
         'MooseX::StrictConstructor' => 0,
 	'MooseX::Types' => 0,
         'Gtk2' => 0,
+        'Gapp::Gtk2' => 0,
         'DateTime' => 0,
         'Scalar::Util' => 0,
     },

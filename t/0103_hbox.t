@@ -6,7 +6,6 @@ use Test::More tests => 3;
 
 use Gtk2 '-init';
 
-use Gapp;
 use_ok 'Gapp::HBox';
 
 my $w = Gapp::HBox->new;
