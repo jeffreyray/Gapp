@@ -91,7 +91,7 @@ sub modify {
     # $self->_value_changed( $path, $value ) if ! $self->in_update( $path );
 }
 
-sub update_from_stash {
+sub update {
     my ( $self, $stash ) = @_;
     
     for my $path ( $stash->elements ) {
@@ -103,6 +103,12 @@ sub update_from_stash {
         $self->modify( $path, $value );
         # $self->set_in_update( $path, 0 );
     }
+}
+
+sub update_from_stash {
+    my $self = shift;
+    warn '$cx->update_from_stash( $stash ) deprecated, use $cx->update( $stash )';
+    $self->update( @_ );
 }
 
 

@@ -14,6 +14,9 @@ action Apply => (
     icon => 'gtk-apply',
     code => sub {
         my ( $action, $widget, $userargs, $gtkw, $gtkargs ) = @_;
+        
+        print @_, "\n";
+        
         my $form = $widget->form;
         $form->apply;
     }

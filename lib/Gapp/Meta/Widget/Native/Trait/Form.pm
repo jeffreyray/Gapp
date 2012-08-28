@@ -7,87 +7,125 @@ use Gapp::Form::Stash;
 use Gapp::Types qw( FormContext FormField FormStash );
 with 'Gapp::Meta::Widget::Native::Role::FormElement';
 
+use Gapp::Types qw(GappCallback);
+use MooseX::Types::Moose qw(Undef);
 
+use Gapp::Actions::Util qw( parse_action );
+
+# defines how to transfer values from form to object
 has 'context' => (
     is => 'rw',
     isa => FormContext,
 );
 
+# a registry of fields and values
 has 'stash' => (
     is => 'rw',
     isa => FormStash,
     lazy_build => 1,
 );
 
+# whether or not to sync the *context* - the stash is always synced
 has 'sync' => (
     is => 'rw',
     isa => 'Bool',
     default => 1,
 );
 
+
+has [qw( apply_action cancel_action ok_action ) ] => (
+    is => 'rw',
+    isa => GappCallback|Undef,
+);
+
 sub _build_stash {
     my $self = shift;
+    
     my $stash = Gapp::Form::Stash->new;
     
+    # traverse the form and get field names to populate the stash with
+    # these field names must be in the stash in order to retrieve the 
+    # starting values from the context
     for my $w ( $self->find_fields ) {
         next if ! $w->field;
         $stash->store( $w->field, undef ) if ! $stash->contains( $w->field );
     }
     
+    # update the values in the stash via the context
     $stash->update_from_context( $self->context ) if $self->context;
     
     $stash->set_modified( 0 );
     return $stash;
 }
 
+# update the user variables
+sub apply {
+    my ( $self ) = @_;
+    $self->sync_stash;
+    $self->context->update( $self->stash ) if $self->context;
+    $self->do_apply_action;
+}
+
+sub cancel {
+    my ( $self ) = @_;
+    return if $self->do_cancel_action;
+    $self->close;
+}
 
 sub close {
     my ( $self ) = @_;
     $self->gobject->destroy;
 }
 
-#sub do_before_close {
-#    
-#}
-#
-#sub do_after_close {
-#    
-#}
-
-# update the user variables
-sub apply {
-    my ( $self ) = @_;
-    $self->update_stash;
-    $self->context->update_from_stash( $self->stash ) if $self->context;
-}
-
 sub ok {
     my ( $self ) = @_;
     $self->apply;
+    $self->do_ok_action;
     $self->close;
 }
 
-#sub do_before_ok {
-#    
-#}
-#
-#sub do_after_ok {
-#    
-#}
-
-sub cancel {
+sub do_apply_action {
     my ( $self ) = @_;
-    $self->close;
+    
+    my ( $action, @args ) = parse_action ( $self->cancel_action );
+    
+    if ( is_CodeRef $action ) {
+        $action->( $self, \@args );
+    }
+    else {
+        $action->perform( $self, \@args );
+    }
 }
 
-#sub do_before_cancel {
-#    
-#}
-#
-#sub do_after_cancel {
-#    
-#}
-#
+sub do_cancel_action {
+    my ( $self ) = @_;
+    return if ! $self->cancel_action;
+    
+    my ( $action, @args ) = parse_action ( $self->cancel_action );
+    
+    if ( is_CodeRef $action ) {
+        $action->( $self, \@args );
+    }
+    else {
+        $action->perform( $self, \@args );
+    }
+}
+
+
+sub do_ok_action {
+    my ( $self ) = @_;
+    
+    my ( $action, @args ) = parse_action ( $self->ok_action );
+    
+    if ( is_CodeRef $action ) {
+        $action->( $self, \@args );
+    }
+    else {
+        $action->perform( $self, \@args );
+    }
+}
+
+
 
 
 
@@ -118,6 +156,10 @@ sub _initialize_stash {
 sub update {
     my ( $self ) = ( @_ );
     
+    # update the stash if we have a context
+    $self->stash->update( $self->context ) if $self->context;
+    
+    # update the values in the form
     for my $w ( $self->find_fields ) {
         $w->set_is_updating( 1 );
         $w->stash_to_widget( $self->stash ) if $w->field;
@@ -125,16 +167,16 @@ sub update {
     }
 }
 
-sub update_from_context {
-    my ( $self ) = @_;
-    return if ! $self->context;
-    
-    $self->stash->update_from_context( $self->context );
-    $self->update;
-    $self->stash->set_modified( 0 );
-}
+
+
 
 sub update_stash {
+    my ( $self ) = shift;
+    warn '$form->update_stash deprecated, use $form->sync_stash';
+    $self->sync_stash( @_ );
+}
+
+sub sync_stash {
     my ( $self ) = @_;
     
     my $stash = $self->stash;

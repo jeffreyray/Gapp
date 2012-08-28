@@ -36,7 +36,7 @@ after 'store'  => sub { $_[0]->set_modified(1) };
 after 'delete' => sub { $_[0]->set_modified(1) };
 
 
-sub update_from_context {
+sub update {
     my ( $self, $cx ) = @_;
     
     for my $field ( $self->elements ) {
@@ -49,6 +49,12 @@ sub update_from_context {
     }
     
     $self->set_modified( 0 );
+}
+
+sub update_from_context {
+    my $self = shift;
+    warn '$stash->update_from_context( $cx ) deprecated, use $stah->update( $cx ) instead';
+    $self->update( @_ );
 }
 
 

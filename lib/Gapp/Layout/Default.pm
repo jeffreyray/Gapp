@@ -277,7 +277,7 @@ paint 'Gapp::ImageMenuItem', sub {
     else {
 	my $gtkw = $w->gobject;
 	$gtkw->set_label( $action->label ) if ! defined $w->label && defined $action->label;
-	$gtkw->set_image( $action->create_gtk_image( 'button' ) ) if ! defined $w->icon && ! defined $w->image && defined $action->icon;
+	$gtkw->set_image( $action->create_gtk_image( 'menu' ) ) if ! defined $w->icon && ! defined $w->image && defined $action->icon;
 	$gtkw->set_tooltip_text( $action->tooltip ) if ! defined $w->tooltip && defined $action->tooltip;
 	$gtkw->signal_connect( activate => actioncb( $action, $w, \@args ) );
     }
@@ -299,7 +299,7 @@ build 'Gapp::MenuItem', sub {
     }
 };
 
-paint 'Gapp::ImageMenuItem', sub {
+paint 'Gapp::MenuItem', sub {
     my ( $l, $w ) = @_;
     return if ! $w->action;
     

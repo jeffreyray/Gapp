@@ -41,7 +41,11 @@ my $w = Gapp::Window->new(
             
             Gapp::HButtonBox->new( content => [
                 my $button1 = Gapp::Button->new(
-                    action => Cancel,
+                    action => Cancel->clone(
+                        code => sub {
+                            print @_, "\n";
+                        }
+                    ),
                 ),
                 my $button2 = Gapp::Button->new(
                     action => Apply,
@@ -50,7 +54,10 @@ my $w = Gapp::Window->new(
                     action => Ok,
                 ),
             ]),
-        ]
+        ],
+        apply_action => sub {
+            
+        }
     )
 );
 
