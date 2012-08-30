@@ -6,6 +6,12 @@ use MooseX::SemiAffordanceAccessor;
 has 'menu' => (
     is => 'rw',
     isa => 'Maybe[Gapp::Menu]',
+    trigger => sub {
+        my ( $self, $value ) = @_;
+        return if ! defined $value;
+        
+        $value->set_parent( $self );
+    }
 );
 
 

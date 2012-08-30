@@ -1,0 +1,39 @@
+Gapp version 0.45
+===========================
+
+See the individual module documentation for more information
+
+INSTALLATION
+
+To install this module type the following:
+
+   perl Makefile.PL
+   make
+   make test
+   make install
+
+DEPENDENCIES
+
+This module requires these other modules and libraries:
+
+   Moose
+   MooseX::Clone
+   MooseX::LazyRequire
+   MooseX::SemiAffordanceAccessor
+   MooseX::StrictConstructor
+   MooseX::Types
+   Gtk2
+   DateTime
+   Scalar::Util
+
+
+COPYRIGHT AND LICENCE
+
+Copyright (c) 2010-2012 Jeffrey Ray Hallock.
+
+This is free software, licensed under:
+
+   The Artistic License 2.0 (GPL Compatible)
+
+
+

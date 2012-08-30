@@ -7,6 +7,8 @@ has 'form' => (
     is => 'ro',
     lazy_build => 1,
     weak_ref => 1,
+    predicate => 'has_form',
+    clearer => 'clear_form',
 );
 
 sub _build_form {

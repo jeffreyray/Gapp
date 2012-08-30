@@ -21,7 +21,7 @@ has 'icon' => (
     predicate => 'has_icon',
 );
 
-has [qw( label name)] => (
+has [qw( label name mnemonic accelerator )] => (
     is => 'rw',
     isa => 'Str',
     default => '',

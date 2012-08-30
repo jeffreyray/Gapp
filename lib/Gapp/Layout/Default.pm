@@ -53,7 +53,23 @@ add 'Gapp::Widget', to 'Gapp::Assistant', sub {
     $assistant->{pages}{$w->page_name} = $w if $w->page_name;
 };
 
+
+
 # Button
+
+#style 'Gapp::Button', sub {
+#    my ( $l, $w ) = @_;
+#    
+#    my ( $action, @args ) = parse_action ( $w->action );
+#    
+#    if ( is_GappAction ( $action ) && $action->mnemonic ) {
+#	if ( ! $w->label && ! $w->mnemonic ) {
+#	    $w->set_mnemonic( $action->mnemonic );
+#	    $w->set_constructor( 'new_with_mnemonic' );
+#	    $w->set_args( [ $action->mnemonic ] );
+#	}
+#    }
+#};
 
 build 'Gapp::Button', sub {
     my ( $l, $w ) = @_;
@@ -68,7 +84,7 @@ build 'Gapp::Button', sub {
 	$image = $w->image->gobject;
     }
     
-    $gtkw->set_label( $w->label ) if defined $w->label;
+    $gtkw->set_label( $w->label ) if defined $w->label && ! defined $w->mnemonic;
     $gtkw->set_image( $image ) if defined $image;
     $gtkw->set_tooltip_text( $w->tooltip ) if defined $w->tooltip;
 };
@@ -86,7 +102,7 @@ paint 'Gapp::Button', sub {
     }
     else {
 	my $gtkw = $w->gobject;
-	$gtkw->set_label( $action->label ) if ! defined $w->label && defined $action->label;
+	$gtkw->set_label( $action->label ) if ! defined $w->mnemonic && ! defined $w->label && defined $action->label;
 	$gtkw->set_image( $action->create_gtk_image( 'button' ) ) if ! defined $w->icon && ! defined $w->image && defined $action->icon;
 	$gtkw->set_tooltip_text( $action->tooltip ) if ! defined $w->tooltip && defined $action->tooltip;
 	$gtkw->signal_connect( clicked => actioncb( $action, $w, \@args ) );
@@ -179,6 +195,12 @@ build 'Gapp::Dialog', sub {
     }
 };
 
+
+style 'Gapp::Entry', sub {
+    my ( $l, $w ) = @_;
+    $w->properties->{activates_default} ||= 1;
+};
+
 # FileChooserDialog
 
 build 'Gapp::FileChooserDialog', sub {
@@ -243,6 +265,26 @@ build 'Gapp::Image', sub {
 
 # ImageMenuItem
 
+#style 'Gapp::ImageMenuItem', sub {
+#    my ( $l, $w ) = @_;
+#    
+#    my ( $action, @args ) = parse_action ( $w->action );
+#    
+#    
+#    
+#    if ( is_GappAction ( $action ) && $action->mnemonic ) {
+#	
+#	if ( ! $w->label && ! $w->mnemonic ) {
+#	    
+#	    $w->set_mnemonic( $action->mnemonic );
+#	    $w->set_constructor( 'new_with_mnemonic' );
+#	    $w->set_args( [ $action->mnemonic ] );
+#	    
+#	    $w->_construct_gobject;
+#	}
+#    }
+#};
+
 build 'Gapp::ImageMenuItem', sub {
     my ( $l, $w ) = @_;
     my $gtkw = $w->gobject;
@@ -256,7 +298,7 @@ build 'Gapp::ImageMenuItem', sub {
 	$image = $w->image->gobject;
     }
     
-    $gtkw->set_label( $w->label ) if defined $w->label;
+    $gtkw->set_label( $w->label ) if defined $w->label && ! defined $w->mnemonic;
     $gtkw->set_image( $image ) if defined $image;
     $gtkw->set_tooltip_text( $w->tooltip ) if defined $w->tooltip;
     
@@ -269,6 +311,8 @@ paint 'Gapp::ImageMenuItem', sub {
     my ( $l, $w ) = @_;
     return if ! $w->action;
     
+    #print $w, $w->mnemonic, "\n";
+    
     my ( $action, @args ) = parse_action ( $w->action );
     
     if ( is_CodeRef $action ) {
@@ -276,8 +320,8 @@ paint 'Gapp::ImageMenuItem', sub {
     }
     else {
 	my $gtkw = $w->gobject;
-	$gtkw->set_label( $action->label ) if ! defined $w->label && defined $action->label;
-	$gtkw->set_image( $action->create_gtk_image( 'button' ) ) if ! defined $w->icon && ! defined $w->image && defined $action->icon;
+	$gtkw->set_label( $action->label ) if ! defined $w->label  && ! defined $w->mnemonic && defined $action->label;
+	$gtkw->set_image( $action->create_gtk_image( 'menu' ) ) if ! defined $w->icon && ! defined $w->image && defined $action->icon;
 	$gtkw->set_tooltip_text( $action->tooltip ) if ! defined $w->tooltip && defined $action->tooltip;
 	$gtkw->signal_connect( activate => actioncb( $action, $w, \@args ) );
     }
@@ -287,11 +331,25 @@ paint 'Gapp::ImageMenuItem', sub {
 
 
 # MenuItem
+#style 'Gapp::MenuItem', sub {
+#    my ( $l, $w ) = @_;
+#    
+#    my ( $action, @args ) = parse_action ( $w->action );
+#    
+#    if ( is_GappAction ( $action ) && $action->mnemonic ) {
+#	if ( ! $w->label && ! $w->mnemonic ) {
+#	    $w->set_constructor( 'new_with_mnemonic' );
+#	    $w->set_args( [ $action->mnemonic ] );
+#	}
+#    }
+#};
+
+
 build 'Gapp::MenuItem', sub {
     my ( $l, $w ) = @_;
     my $gtkw = $w->gobject;
         
-    $gtkw->set_label( $w->label ) if defined $w->label;
+    $gtkw->set_label( $w->label ) if defined $w->label && ! defined $w->mnemonic;
     $gtkw->set_tooltip_text( $w->tooltip ) if defined $w->tooltip;
     
     if ( $w->menu ) {
@@ -299,7 +357,7 @@ build 'Gapp::MenuItem', sub {
     }
 };
 
-paint 'Gapp::ImageMenuItem', sub {
+paint 'Gapp::MenuItem', sub {
     my ( $l, $w ) = @_;
     return if ! $w->action;
     
@@ -310,7 +368,7 @@ paint 'Gapp::ImageMenuItem', sub {
     }
     else {
 	my $gtkw = $w->gobject;
-	$gtkw->set_label( $action->label ) if ! defined $w->label && defined $action->label;
+	$gtkw->set_label( $action->label ) if ! defined $w->label && ! defined $w->mnemonic && defined $action->label;
 	$gtkw->set_tooltip_text( $action->tooltip ) if ! defined $w->tooltip && defined $action->tooltip;
 	$gtkw->signal_connect( activate => actioncb( $action, $w, \@args ) );
     }
@@ -405,6 +463,13 @@ build 'Gapp::Model::SimpleList', sub {
 
 
 # SpinButton
+
+style 'Gapp::SpinButton', sub {
+    my ( $l, $w ) = @_;
+    $w->properties->{activates_default} ||= 1;
+};
+
+
 build 'Gapp::SpinButton', sub {
     my ( $l, $w ) = @_;
     $w->gobject->set_increments( $w->step, $w->page ) if $w->page;

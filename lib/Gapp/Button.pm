@@ -7,32 +7,22 @@ extends 'Gapp::Widget';
 with 'Gapp::Meta::Widget::Native::Role::HasAction';
 with 'Gapp::Meta::Widget::Native::Role::HasLabel';
 with 'Gapp::Meta::Widget::Native::Role::HasIcon';
+with 'Gapp::Meta::Widget::Native::Role::HasImage';
+with 'Gapp::Meta::Widget::Native::Role::HasMnemonic';
 with 'Gapp::Meta::Widget::Native::Role::HasStockId';
-with 'Gapp::Meta::Widget::Native::Trait::FormElement';
+with 'Gapp::Meta::Widget::Native::Role::FormElement';
+with 'Gapp::Meta::Widget::Native::Role::CanDefault';
 
 has '+gclass' => (
     default => 'Gtk2::Button',
 );
 
-has 'label' => (
-    is => 'rw',
-    isa => 'Maybe[Str]',
-);
+#has 'default' => (
+#    is => 'rw',
+#    isa => 'Bool',
+#    
+#);
 
-has 'icon' => (
-    is => 'rw',
-    isa => 'Maybe[Str]',
-);
-
-has 'image' => (
-    is => 'rw',
-    isa => 'Maybe[Gapp::Image]',
-);
-
-has 'stock_id' => (
-    is => 'rw',
-    isa => 'Maybe[Str]',
-);
 
 sub BUILDARGS {
     my $class = shift;

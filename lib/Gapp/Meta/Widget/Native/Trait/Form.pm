@@ -22,7 +22,7 @@ has 'stash' => (
 has 'sync' => (
     is => 'rw',
     isa => 'Bool',
-    default => 1,
+    default => 0,
 );
 
 sub _build_stash {

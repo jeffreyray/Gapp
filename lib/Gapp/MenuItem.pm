@@ -7,6 +7,7 @@ extends 'Gapp::Bin';
 with 'Gapp::Meta::Widget::Native::Role::HasAction';
 with 'Gapp::Meta::Widget::Native::Role::HasLabel';
 with 'Gapp::Meta::Widget::Native::Role::HasMenu';
+with 'Gapp::Meta::Widget::Native::Role::HasMnemonic';
 
 has '+gclass' => (
     default => 'Gtk2::MenuItem',
@@ -19,6 +20,19 @@ has '+constructor' => (
 has '+args' => (
     default => sub { [ '' ] },
 );
+
+
+sub BUILDARGS {
+    my $class = shift;
+    my %args = @_ == 1 && is_HashRef( $_[0] ) ? %{$_[0]} : @_;
+    
+    for my $att ( qw(accel_path) ) {
+        $args{properties}{$att} = delete $args{$att} if exists $args{$att};
+    }
+    
+    __PACKAGE__->SUPER::BUILDARGS( %args );
+}
+
 
 
 1;

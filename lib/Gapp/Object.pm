@@ -74,6 +74,14 @@ has '_used_layout' => (
 );
 
 
+
+has '_gapp_signals' => (
+    is => 'rw',
+    isa => 'HashRef',
+    default => sub { { } },
+);
+
+
 sub find_layout {
     my ( $self, $default ) = @_;
     return $self->_used_layout if $self->_used_layout;
@@ -205,6 +213,8 @@ sub find_toplevel {
 sub signal_connect {
     my ( $self, $name, $code, @args ) = @_;
     
+
+    
     # attach the signal if the gtk widget has been constructed
     if ( $self->has_gobject ) {
         $self->_apply_signal( [ $name, $code, @args ] );
@@ -262,6 +272,8 @@ sub _apply_signal {
     my ( $self, $signal ) = @_;
     my ( $name, $action, @args ) = @$signal;
     
+    return if $name =~ /^gapp/;
+    
     if ( is_GappAction( $action ) ) {
         $self->gobject->signal_connect( $name => sub {
             my ( $gtkw, @gtkargs ) = @_;
@@ -281,13 +293,14 @@ sub _build_gobject {
     my ( $self ) = @_;
 
     $self->_apply_stylers;
+    
     my $w = $self->_construct_gobject( @_ );
     $self->_apply_properties;
     $self->_apply_builders;
     $self->_apply_painters;
     $self->_apply_signals;
     $self->_apply_customize;
-    
+
     return $w;
 }
 

@@ -24,6 +24,12 @@ has 'columns' => (
     default => sub { [ ] },
 );
 
+has 'data_column' => (
+    is => 'rw',
+    isa => 'Int',
+    default => 0,
+);
+
 sub BUILDARGS {
     my $class = shift;
     my %args = @_ == 1 && is_HashRef( $_[0] ) ? %{$_[0]} : @_;
@@ -69,6 +75,15 @@ sub find_column {
     }
 }
 
+sub get_selected {
+    my ( $self ) = @_;
+    
+    my $iter = $self->gobject->get_selection->get_selected;
+    return if ! $iter;
+    my $model = $self->gobject->get_model;
+    $model->get( $iter, $self->data_column );
+}
+
 1;
 
 
@@ -99,21 +114,44 @@ Gapp::TreeView - TreeView Widget
 
 =over 4
 
-=item B<model>
-
-=over 4
-
-=item isa L<Gapp::Model>|Undef
-
-=back
-
 =item B<columns>
 
 =over 4
 
+=item is rw
+
 =item isa ArrayRef[L<Gapp::TreeViewColumn>]
 
 =item default []
+
+=back
+
+The columns to add to the treeview.
+
+=item B<data_column>
+
+=over 4
+
+=item is rw
+
+=item isa Int
+
+=item default 0
+
+=back
+
+The default column in the model to retrieve data from. The contents of this
+column in the model will be returned when calling C<get_selected>.
+
+=item B<model>
+
+=over 4
+
+=item isa L<Gapp::Model>|GtkModel|Undef
+
+=back
+
+The model to use. May be a L<Gapp::Model> or Gtk2:: object.
 
 =back
 
@@ -132,6 +170,17 @@ Searches for and returns a column with the specified name.
 =over 4
 
 =item returns L<Gapp::TreeViewColumn>|Undef
+
+=back
+
+=item B<get_selected>
+
+Returns a list of items selected in the view. For each of the rows selected,
+the contents from C<data_column> in the model will be returned.
+
+=over 4
+
+=item returns Array|Undef
 
 =back
 

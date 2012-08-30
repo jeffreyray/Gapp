@@ -1,5 +1,32 @@
 Changes for Gapp
 
+0.45 Aug 29 2012
+- created tag-editor example
+- added mnemonic/accelerator attributes to Action objects
+- added support for default widget in window
+- added get_selected method to Gapp::TreeView
+- added data_column
+- added "name" attribute Gapp::Widget
+- added "find" method to Gapp::Container
+- add "toplvel" method to Gapp::Widget
+- BUGFIX: when subclassing a container widget, and overriding the 'default'
+property of the the content, parent values were not being set on the children
+- BUGFIX: when creating a Gapp::Widget without keeping a reference to it, the
+Gapp::Object would be garbage collected before the Gtk2::Widget was destroyed. Fixed
+by creating a circular reference between the Gapp object and the Gtk widget. When
+the Gtk object emits the "destroy" signal, the circular reference is broken, and
+all involved objects are garbage collected.
+
+
+
+0.44
+- factored out Notice/NoticeBox to GappX::NoticeBox
+- refactored Gapp::SimpleList to Gapp::Model::SimpleList
+- factored out dialog traits to GappX::Dialogs
+- factored out Gtk2 widgets to Gapp::Gtk2
+- fixed bug with painters applying action callback to widget twice
+- factoed out SSNEntry to GappX::SSNEntry
+
 
 0.43
 - add MenuToolButton, ToggleToolButton, RadioToolButton

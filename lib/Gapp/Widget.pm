@@ -5,6 +5,14 @@ use MooseX::SemiAffordanceAccessor;
 use MooseX::StrictConstructor;
 extends 'Gapp::Object';
 
+
+
+has 'name' => (
+    is => 'rw',
+    isa => 'Str',
+    default => '',
+);
+
 # if the widget should expand its container
 has 'expand' => (
     is => 'rw',
@@ -49,11 +57,25 @@ has 'parent' => (
     weak_ref => 1,
 );
 
+#has 'toplevel' => (
+#    is => 'rw',
+#    isa => 'Maybe[Gapp::Widget]',
+#    weak_ref => 1,
+#);
+
 # tooltip to display
 has 'tooltip' => (
     is => 'rw',
     isa => 'Maybe[Str]',
 );
+
+sub toplevel {
+    my ( $self ) = @_;
+    return $self if ! $self->parent;
+    
+    $self->parent ? $self->parent->toplevel : $self;
+}
+
 
 
 
@@ -68,6 +90,26 @@ sub BUILDARGS {
     
     $self->SUPER::BUILDARGS( %opts );
 }
+
+
+# this stores a reference to the Gapp::Object within the Gtk2::Widget
+# this is done so that if the only-references to the Gapp::Object
+# go away before the Gtk2::Widget - the Gapp::Object is still
+# available to reference in callbacks - when the Gtk2::Widget is
+# destroyed, then the circular reference will be deleted as well
+
+after '_build_gobject' => sub {
+    my ( $self ) = @_;
+    
+    if ( $self->gobject->isa('Gtk2::Widget') ) {
+        $self->gobject->{_gapp} = $self;
+        $_[0]->{_gapp} = undef;
+    }
+};
+
+
+
+    
 
 1;
 
@@ -177,6 +219,23 @@ The parent widget.
 =back
 
 The tooltip to display over the widget.
+
+=head1 PROVIDED METHODS
+
+=over 4
+
+=item B<toplevel>
+
+Searches through the widget heirachy to find the furthest widget up the chain
+with no parent widget. Returns the calling widget if it has no parent.
+
+=over 4
+
+=item returns L<Gapp::Widget>
+
+=back
+
+=back
 
 =head1 AUTHORS
 

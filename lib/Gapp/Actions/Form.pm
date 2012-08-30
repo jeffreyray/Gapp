@@ -10,11 +10,13 @@ Apply
 action Apply => (
     name => 'Apply',
     label => 'Apply',
+    mnemonic => '_Apply',
     tooltip => 'Apply',
     icon => 'gtk-apply',
     code => sub {
         my ( $action, $widget, $userargs, $gtkw, $gtkargs ) = @_;
         my $form = $widget->form;
+        
         $form->apply;
     }
 );
@@ -22,6 +24,7 @@ action Apply => (
 action Cancel => (
     name => 'Cancel',
     label => 'Cancel',
+    mnemonic => '_Cancel',
     tooltip => 'Cancel',
     icon => 'gtk-cancel',
     code => sub {
@@ -34,6 +37,7 @@ action Cancel => (
 action Ok => (
     name => 'Ok',
     label => 'Ok',
+    mnemonic => '_Ok',
     tooltip => 'Ok',
     icon => 'gtk-ok',
     code => sub {

@@ -16,6 +16,10 @@ has 'transient_for' => (
     isa => 'Maybe[Gapp::Window]',
 );
 
+#has 'default_widget' => (
+#    is => 'rw',
+#    isa => 'Maybe[Gapp::Widget]',
+#);
 
 
 sub BUILDARGS {
@@ -38,11 +42,19 @@ sub BUILDARGS {
         $args{properties}{$att} = delete $args{$att} if exists $args{$att};
     }
     
-
-
-    
     __PACKAGE__->SUPER::BUILDARGS( %args );
 }
+
+#
+#after _build_gobject => sub {
+#    my ( $self ) = @_;
+#    if ( $self->default_widget ) {
+#        $self->default_widget->gobject->set_can_default( 1 );
+#        $self->default_widget->gobject->grab_default;
+#    }
+#};
+
+
 
 1;
 

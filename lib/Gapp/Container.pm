@@ -35,7 +35,11 @@ sub BUILD {
 
 after '_build_gobject' => sub {
     my $self = shift;
-    $self->find_layout->pack_widget( $_, $self) for @{$self->content};
+    
+    for ( @{$self->content} ) {
+        $_->set_parent( $self );
+        $self->find_layout->pack_widget( $_, $self);
+    }
 };
 
 sub add {
@@ -43,6 +47,18 @@ sub add {
     $_->set_parent( $self ) for @args;
     $self->_add_content( @args );
 }
+
+sub find {
+    my ( $self, $name ) = @_;
+    
+    my @array = $self->children;
+    
+    while ( my $c = shift @array ) {
+        return $c if $c->name eq $name;
+        push @array, $c->children if $c->can('children');
+    }
+}
+
 
 
 # return a list of all descendants
