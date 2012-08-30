@@ -28,6 +28,15 @@ all involved objects are garbage collected.
 - factoed out SSNEntry to GappX::SSNEntry
 
 
+0.44
+- factored out Notice/NoticeBox to GappX::NoticeBox
+- refactored Gapp::SimpleList to Gapp::Model::SimpleList
+- factored out dialog traits to GappX::Dialogs
+- factored out Gtk2 widgets to Gapp::Gtk2
+- fixed bug with painters applying action callback to widget twice
+- factoed out SSNEntry to GappX::SSNEntry
+
+
 0.43
 - add MenuToolButton, ToggleToolButton, RadioToolButton
 - add RagioMenuItem, CheckMenuItem, SeparatorMenuItem, TearoffMenuItem

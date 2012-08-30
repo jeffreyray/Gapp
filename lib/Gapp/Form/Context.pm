@@ -256,7 +256,7 @@ Sets a value in the context. C<$path> is a string in the format of "nodename.att
 
 Add L<Gapp::Form::Context::Node> to the context with the given C<$name>.
 
-=item B<update_from_stash $stash>
+=item B<update $stash>
 
 Updates the values in the context based on values in the C<$stash>. C<$stash> is a
 L<Gapp::Form::Stash> object.

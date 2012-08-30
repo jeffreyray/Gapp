@@ -3,6 +3,7 @@ package Gapp::Meta::Widget::Native::Role::FormElement;
 use Moose::Role;
 use MooseX::SemiAffordanceAccessor;
 
+
 has 'form' => (
     is => 'ro',
     lazy_build => 1,
@@ -11,8 +12,10 @@ has 'form' => (
     clearer => 'clear_form',
 );
 
-sub _build_form {
+sub form {
     my ( $self ) = @_;
+    
+    print "\t-$self\n";
     
     my $node = $self;   
     while ( $node ) {

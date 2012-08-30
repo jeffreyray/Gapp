@@ -3,6 +3,7 @@ use strict;
 use warnings;
 
 
+
 package Foo::Layout;
 
 use Gapp::Layout;
@@ -24,6 +25,7 @@ style 'Gapp::Table' => sub {
     $w->properties->{column_spacing} ||= 6;
     $w->properties->{row_spacing} ||= 6;
 };
+
 
 package Track;
 
@@ -177,7 +179,6 @@ my ( $form, $browser, $context, $model );
 
 use Gapp::FormButtons;
 
-
 $context = Gapp::Form::Context->new;
 $context->add( 'track', sub { $ACTIVE_TRACK } );
 
@@ -236,8 +237,6 @@ sub build_form {
             ['gapp-form-apply' => sub {
                 my ( $w, $args, $gtkw, $gtk_args ) = @_;
                 $model->append_record
-                
-
             }],
         ]
     );

@@ -14,7 +14,7 @@ has 'apply_button' => (
     is => 'rw',
     isa => 'Maybe[Gapp::Button]',
     default => sub {
-        Gapp::Button->new( action => [Apply] ),
+       Gapp::Button->new( action => [Apply] ),
     },
     lazy => 1,
 );
@@ -38,19 +38,13 @@ has 'ok_button' => (
 );
 
 has '+content' => (
-    default => sub {
         [ $_[0]->cancel_button, $_[0]->apply_button, $_[0]->ok_button ],
     },
     lazy => 1,
 );
 
-#after _build_gobject => sub {
-#    my ( $self ) = @_;
-#    if ( $self->form && $self->form->isa('Gapp::Window') ) {
-#        $self->ok_button->gobject->set_can_default( 1 );
-#        $self->form->gobject->set_default( $self->ok_button->gobject );
-#    }
-#};
+
+
 
 1;
 
@@ -78,6 +72,16 @@ Gapp::FormButtons - FormButtons widget
 =item ............+-- L<Gapp::ButtonBox>
 
 =item ................+-- L<Gapp::HButtonBox>
+
+=item .................... +-- Gapp::FormButtons
+
+=back
+
+=head2 Roles
+
+=over 4
+
+=item L<Gapp::Meta::Widget::Native::Role::FormElement>
 
 =back
 
