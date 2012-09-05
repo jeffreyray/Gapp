@@ -6,7 +6,7 @@ use warnings;
 use Gapp::Util qw( replace_entities );
 use Gapp::Actions::Util qw( actioncb parse_action);
 use Gapp::Types qw( GappAction GappActionOrArrayRef );
-use MooseX::Types::Moose qw( ArrayRef CodeRef Str );
+use MooseX::Types::Moose qw( ArrayRef CodeRef Object Str );
 
 use Carp qw( confess );
 
@@ -80,8 +80,9 @@ build 'Gapp::Button', sub {
 	$image = $w->image->gobject;
     }
     elsif ( $w->icon ) {
-	$image = Gtk2::Image->new_from_stock( $w->icon, 'button' );
+	$image = Gtk2::Image->new_from_stock( $w->icon, $w->icon_size || 'button' );
     }
+    
 
     
     $gtkw->set_label( $w->label ) if defined $w->label && ! defined $w->mnemonic;
@@ -180,19 +181,22 @@ build 'Gapp::Dialog', sub {
     $w->gobject->set_icon( $w->gobject->render_icon( $w->icon, 'dnd' ) ) if $w->icon;
     $w->gobject->set_transient_for( $w->transient_for->gobject ) if $w->transient_for;
     
-    my $i = 0;
     if ( $w->action_widgets ) {
-	for my $b ( @{ $w->action_widgets } ) {
-	    $gtk_w->add_action_widget( $b->gobject, $i );
-	    $i++;
+	
+	while ( @{$w->action_widgets} ) {
+	    my $b = shift @{$w->action_widgets};
+	    my $r = shift @{$w->action_widgets};
+	    $gtk_w->add_action_widget( $b->gobject, $r );
 	}
     }
     if ( $w->buttons ) {
-	for my $b ( @{ $w->buttons } ) {
-	    $gtk_w->add_button( $b, $i );
-	    $i++;
+	while ( @{$w->buttons} ) {
+	    my $b = shift @{$w->buttons};
+	    my $r = shift @{$w->buttons};
+	    $gtk_w->add_button( $b->gobject, $r );
 	}
     }
+
 };
 
 
@@ -209,13 +213,21 @@ build 'Gapp::FileChooserDialog', sub {
     $w->gobject->set_icon( $w->gobject->render_icon( $w->icon, 'dnd' ) ) if $w->icon;
     $w->gobject->set_transient_for( $w->transient_for->gobject ) if $w->transient_for;
     
-    if ( $w->buttons ) {
-	my $i = 0; for my $b ( @{ $w->buttons } ) {
-	    $gtk_w->add_button( $b, $i );
-	    $i++;
+    if ( $w->action_widgets ) {
+	
+	while ( @{$w->action_widgets} ) {
+	    my $b = shift @{$w->action_widgets};
+	    my $r = shift @{$w->action_widgets};
+	    $gtk_w->add_action_widget( is_Object($b) ? $b->gobject : $b, $r );
 	}
     }
-    
+    if ( $w->buttons ) {
+	while ( @{$w->buttons} ) {
+	    my $b = shift @{$w->buttons};
+	    my $r = shift @{$w->buttons};
+	    $gtk_w->add_button( is_Object($b) ? $b->gobject : $b, $r );
+	}
+    }
 
     
     map { $w->gobject->add_filter( $_->gobject ) } $w->filters;

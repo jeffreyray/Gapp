@@ -7,6 +7,7 @@ extends 'Gapp::Widget';
 with 'Gapp::Meta::Widget::Native::Role::HasAction';
 with 'Gapp::Meta::Widget::Native::Role::HasLabel';
 with 'Gapp::Meta::Widget::Native::Role::HasIcon';
+with 'Gapp::Meta::Widget::Native::Role::HasIconSize';
 with 'Gapp::Meta::Widget::Native::Role::HasImage';
 with 'Gapp::Meta::Widget::Native::Role::HasMnemonic';
 with 'Gapp::Meta::Widget::Native::Role::HasStockId';
@@ -17,12 +18,10 @@ has '+gclass' => (
     default => 'Gtk2::Button',
 );
 
-#has 'default' => (
-#    is => 'rw',
-#    isa => 'Bool',
-#    
-#);
-
+has 'response' => (
+    is => 'rw',
+    isa => 'Str',
+);
 
 sub BUILDARGS {
     my $class = shift;
