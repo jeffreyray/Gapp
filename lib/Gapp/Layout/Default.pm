@@ -76,13 +76,13 @@ build 'Gapp::Button', sub {
     my $gtkw = $w->gobject;
     
     my ( $image );
-    
-    if ( $w->icon ) {
-	$image = Gtk2::Image->new_from_stock( $w->icon, 'button' );
-    }
     if ( $w->image ) {
 	$image = $w->image->gobject;
     }
+    elsif ( $w->icon ) {
+	$image = Gtk2::Image->new_from_stock( $w->icon, 'button' );
+    }
+
     
     $gtkw->set_label( $w->label ) if defined $w->label && ! defined $w->mnemonic;
     $gtkw->set_image( $image ) if defined $image;
@@ -98,7 +98,7 @@ paint 'Gapp::Button', sub {
     
    
     if ( is_CodeRef $action ) {
-	$w->signal_connect( 'clicked', $action, \@args );
+	$w->signal_connect( 'clicked', $action, @args );
     }
     else {
 	my $gtkw = $w->gobject;
@@ -285,6 +285,8 @@ build 'Gapp::Image', sub {
 #    }
 #};
 
+
+
 build 'Gapp::ImageMenuItem', sub {
     my ( $l, $w ) = @_;
     my $gtkw = $w->gobject;
@@ -320,8 +322,9 @@ paint 'Gapp::ImageMenuItem', sub {
     }
     else {
 	my $gtkw = $w->gobject;
+	
 	$gtkw->set_label( $action->label ) if ! defined $w->label  && ! defined $w->mnemonic && defined $action->label;
-	$gtkw->set_image( $action->create_gtk_image( 'menu' ) ) if ! defined $w->icon && ! defined $w->image && defined $action->icon;
+	$gtkw->set_image( $action->create_gtk_image( 'menu' ) ) if ! $w->icon && ! defined $w->image && defined $action->icon;
 	$gtkw->set_tooltip_text( $action->tooltip ) if ! defined $w->tooltip && defined $action->tooltip;
 	$gtkw->signal_connect( activate => actioncb( $action, $w, \@args ) );
     }
@@ -386,10 +389,12 @@ add 'Gapp::MenuItem', to 'Gapp::MenuShell', sub {
 
 style 'Gapp::MenuToolButton', sub {
     my ( $l, $w ) = @_;
-    $w->set_args( [
-	Gtk2::Image->new_from_stock( 'gtk-dialog-error' , $w->icon_size || 'dnd' ),
-	defined $w->label ? $w->label : ''
-    ] );
+    
+    my $image = $w->image ?
+    $w->image->gobject :
+    Gtk2::Image->new_from_stock( 'gtk-dialog-error' , $w->icon_size || 'large-toolbar' );
+    
+    $w->set_args( [ $image, defined $w->label ? $w->label : ''  ] );
 };
 
 
@@ -418,6 +423,7 @@ paint 'Gapp::MenuToolButton', sub {
     else {
 	my $gtkw = $w->gobject;
 	$gtkw->set_label( $action->label ) if ! defined $w->label && defined $action->label;
+	$gtkw->set_icon_widget( $action->create_gtk_image( $w->icon_size || 'large-toolbar' ) ) if ! $w->icon  && ! $w->image && defined $action->icon;
 	$gtkw->set_tooltip_text( $action->tooltip ) if ! defined $w->tooltip && defined $action->tooltip;
 	$gtkw->signal_connect( clicked => actioncb( $action, $w, \@args ) );
     }
@@ -429,7 +435,8 @@ build 'Gapp::Notebook', sub {
     my ( $l, $w ) = @_;
 
     my $gtkw = $w->gobject;
-    
+    $w->action_widget->show_all;
+    $gtkw->set_action_widget( $w->action_widget->gobject, 'end' );
 };
 
 
@@ -443,9 +450,20 @@ add 'Gapp::Widget', to 'Gapp::Notebook', sub {
 	die qq[ Could not add $w to $c, $w must have the NotebookPage trait applied.];
     }
     
-    my $gtknb = $c->gobject;
     
-    $gtknb->append_page( $gtkw );
+    
+    # append the page
+    $c->gobject->append_page( $gtkw, $w->page_name );
+    
+    # create the label
+    $w->tab_label ?
+    $c->gobject->set_tab_label( $gtkw, $w->tab_label->gobject ) :
+    $c->gobject->set_tab_label_text( $gtkw, $w->page_name );
+    
+    $w->tab_label->show_all if $w->tab_label;
+
+    # call show all on the widget
+    $w->show_all;
     
     $c->{pages}{$w->page_name} = $w;
 };
@@ -530,43 +548,42 @@ add 'Gapp::ToolItem', to 'Gapp::Toolbar', sub {
 
 style 'Gapp::ToolButton', sub {
     my ( $l, $w ) = @_;
-    $w->set_args( [
-	Gtk2::Image->new_from_stock( 'gtk-dialog-error' , $w->icon_size || 'dnd' ),
-	defined $w->label ? $w->label : ''
-    ] );
+    
+    my $image = $w->image ?
+    $w->image->gobject :
+    Gtk2::Image->new_from_stock( 'gtk-dialog-error' , $w->icon_size || 'large-toolbar' );
+    
+    $w->set_args( [ $image, defined $w->label ? $w->label : ''  ] );
 };
+
 
 build 'Gapp::ToolButton', sub {
     my ( $l, $w ) = @_;
     my $gtkw = $w->gobject;
-    
+   
     $gtkw->set_stock_id( $w->stock_id ) if $w->stock_id;
     $gtkw->set_label( $w->label ) if defined $w->label;
     $gtkw->set_tooltip_text( $w->tooltip ) if defined $w->tooltip;
+};
+
+paint 'Gapp::ToolButton', sub {
+    my ( $l, $w ) = @_;
+    return if ! $w->action;
     
+    my ( $action, @args ) = parse_action ( $w->action );
     
-    if ( $w->action ) {
-	my $action = is_ArrayRef( $w->action ) ? $w->action->[0] : $w->action;
-	my ( $cb, @args );
-	@args = is_ArrayRef( $w->action ) ? @{$w->action} : ();
-	shift @args;
-	
-	if ( is_CodeRef($action) ) {
-	    $cb = $action;
-	    $gtkw->signal_connect( 'clicked', $cb, @args );
-	}
-	else {
-	    $gtkw->set_stock_id( $action->icon ) if $action->icon;
-	    $gtkw->set_label( $action->label ) if $action->label;
-	    $gtkw->set_tooltip_text( $action->tooltip ) if defined $action->tooltip;
-	    
-	    $gtkw->signal_connect( clicked => sub {
-		my ( $gtkw, @gtkargs ) = @_;
-		$action->perform( $w, \@args, $gtkw, \@gtkargs );
-	    });
-	}
+    if ( is_CodeRef $action ) {
+	$w->signal_connect( 'clicked', $action, \@args );
+    }
+    else {
+	my $gtkw = $w->gobject;
+	$gtkw->set_label( $action->label ) if ! defined $w->label && defined $action->label;
+	$gtkw->set_icon_widget( $action->create_gtk_image( $w->icon_size || 'large-toolbar' ) ) if ! $w->icon  && ! $w->image && defined $action->icon;
+	$gtkw->set_tooltip_text( $action->tooltip ) if ! defined $w->tooltip && defined $action->tooltip;
+	$gtkw->signal_connect( clicked => actioncb( $action, $w, \@args ) );
     }
 };
+
 
 # TreeView
 
@@ -589,18 +606,11 @@ build 'Gapp::TreeViewColumn', sub {
     # add the renderer to the column
     $gtkw->pack_start( $gtkr, $w->renderer->expand ? 1 : 0 );
     
-    
-    # define how to display the renderer
-    if ( defined $w->data_column && ! $w->data_func ) {
-        $gtkw->add_attribute( $gtkr, $w->renderer->property => $w->data_column );
-    }
-    elsif ( $w->data_func ) {
-        $gtkw->set_cell_data_func($gtkr, sub {
-            my ( $col, $gtkrenderer, $model, $iter, @args ) = @_;
-	    my $value = $w->get_cell_value( $model->get( $iter, $w->data_column ) );
-            $gtkrenderer->set_property( $w->renderer->property => $value );
-        });
-    }
+    $gtkw->set_cell_data_func($gtkr, sub {
+	my ( $col, $gtkrenderer, $model, $iter, @args ) = @_;
+	my $value = $w->get_cell_value( $model->get( $iter, $w->data_column ) );
+	$gtkrenderer->set_property( $w->renderer->property => $value );
+    });
     
     # if sorting enabled
     if ( $w->sort_enabled ) {
@@ -614,7 +624,6 @@ build 'Gapp::TreeViewColumn', sub {
 	    }, $w)
 	} );
     }
-
 };
 
 # Widget

@@ -153,7 +153,7 @@ coerce GappTreeViewColumn,
         $args{name} = $input->[0] if defined $input->[0];
         $args{title} = $input->[1] if defined $input->[1];
         $args{renderer} = $input->[2] || 'text';
-        $args{data_column} = $input->[3];
+        $args{data_column} = $input->[3] if defined $input->[3] ;
         
         # determine how to display the content
         if ( defined $input->[4] ) {

@@ -36,7 +36,7 @@ has 'tab_fill' => (
 
 has 'tab_label' => (
     is => 'rw',
-    isa => 'Maybe[Bool]',
+    isa => 'Maybe[Gapp::Widget]',
 );
 
 has 'tab_pack' => (
@@ -48,6 +48,26 @@ has 'page_name' => (
     is => 'rw',
     isa => 'Str',
     default => '',
+    trigger => sub {
+        my ( $self, $new, $old ) = @_;
+        return if ! $self->has_gobject;
+        return if ! $self->parent;
+        
+        if ( ! defined $self->tab_label ) {
+            $self->parent->gobject->set_tab_label_text( $self->gobject, $new );
+        }
+        else {
+            $self->tab_label->content->[0]->gobject->set_text( $new);
+        }
+        
+        if ( ! defined $self->menu_label ) {
+            $self->parent->gobject->set_menu_label_text( $self->gobject, $new );
+        }
+        else {
+            $self->menu_label->content->[0]->gobject->set_text( $new);
+        }
+        
+    }
 );
 
 

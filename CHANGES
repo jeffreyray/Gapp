@@ -1,5 +1,24 @@
 Changes for Gapp
 
+0.46 Sep 5 2012
+- calling "add" on an container whose gobject has already been created now packs the
+widget into the child
+- show_all called on widgets before being added to notebook to ensure that they are
+displayed
+- removed "form" attribute from FormElement role
+- added "form" method to FormElement role which returns the first widget in the
+ancestry with the Form trait applied
+- added trigger to "page_name" attribute of the NotebookPage trait which updates
+the label of the page in the notebook when changed
+- added HPaned, VPaned, Notebook attribute traits
+- added action_widget attribute to notebook
+- added image attribute to ImageButton
+- BUG FIX: Buttons with a CodeRef as an action were not passing user args correctly
+
+
+0.45.1 Aug 29 2012
+- fixed bug painting ImageMenuItem widgets
+
 0.45 Aug 29 2012
 - created tag-editor example
 - added mnemonic/accelerator attributes to Action objects

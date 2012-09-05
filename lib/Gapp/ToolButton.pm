@@ -7,12 +7,14 @@ use MooseX::SemiAffordanceAccessor;
 extends 'Gapp::ToolItem';
 with 'Gapp::Meta::Widget::Native::Role::HasIcon';
 with 'Gapp::Meta::Widget::Native::Role::HasIconSize';
+with 'Gapp::Meta::Widget::Native::Role::HasImage';
 with 'Gapp::Meta::Widget::Native::Role::HasLabel';
 with 'Gapp::Meta::Widget::Native::Role::HasStockId';
 
 has '+gclass' => (
     default => 'Gtk2::ToolButton',
 );
+
 
 
 

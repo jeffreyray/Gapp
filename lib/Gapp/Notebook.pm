@@ -10,6 +10,14 @@ has '+gclass' => (
     default => 'Gtk2::Notebook',
 );
 
+has 'action_widget' => (
+    is => 'rw',
+    isa => 'Maybe[Gapp::Widget]',
+    trigger => sub {
+       $_[1]->set_parent( $_[0] ) if $_[1];
+    }
+);
+
 sub BUILDARGS {
     my $class = shift;
     my %args = @_ == 1 && is_HashRef( $_[0] ) ? %{$_[0]} : @_;
@@ -20,6 +28,19 @@ sub BUILDARGS {
     
     __PACKAGE__->SUPER::BUILDARGS( %args );
 }
+
+
+
+sub current_page {
+    my ( $self ) = @_;
+    my $n = $self->gobject->get_current_page;
+    return if ! defined $n;
+    
+    my $gtkw = $self->gobject->get_nth_page( $n );
+    $gtkw->{_gapp};
+}
+
+
 
 1;
 

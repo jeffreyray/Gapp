@@ -4,18 +4,16 @@ use Moose::Role;
 use MooseX::SemiAffordanceAccessor;
 
 
-has 'form' => (
-    is => 'ro',
-    lazy_build => 1,
-    weak_ref => 1,
-    predicate => 'has_form',
-    clearer => 'clear_form',
-);
+#has 'form' => (
+#    is => 'ro',
+#    lazy_build => 1,
+#    weak_ref => 1,
+#    predicate => 'has_form',
+#    clearer => 'clear_form',
+#);
 
 sub form {
     my ( $self ) = @_;
-    
-    print "\t-$self\n";
     
     my $node = $self;   
     while ( $node ) {

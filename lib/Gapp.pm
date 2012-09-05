@@ -1,6 +1,6 @@
 package Gapp;
 
-our $VERSION = '0.45';
+our $VERSION = '0.46';
 
 use Gtk2 '-init';
 
@@ -40,6 +40,7 @@ use Gapp::SeparatorMenuItem;
 use Gapp::SeparatorToolItem;
 use Gapp::SpinButton;
 use Gapp::Model::SimpleList;
+use Gapp::Notebook;
 use Gapp::StatusIcon;
 use Gapp::SSNEntry;
 use Gapp::Table;
@@ -65,7 +66,6 @@ use Gapp::Window;
 
 use Gapp::Layout::Default;
 our $Layout = Gapp::Layout::Default->Layout;
-
 use Gapp::Meta::Widget::Native::Role::FormField;
 
 use Gapp::Meta::Widget::Native::Trait::AssistantPage;

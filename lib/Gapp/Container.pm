@@ -15,6 +15,7 @@ has 'content' => (
         my ( $self, $content ) = @_;
         map {
             confess 'cannot add undefined value to ' . $self if ! $_;
+
             $_->set_parent( $self );
         } @$content;
     },
@@ -44,8 +45,13 @@ after '_build_gobject' => sub {
 
 sub add {
     my ( $self, @args ) = @_;
-    $_->set_parent( $self ) for @args;
-    $self->_add_content( @args );
+    
+    for ( @args ) {
+        $_->set_parent ( $self );
+        
+        $self->find_layout->pack_widget( $_, $self) if $self->has_gobject;
+        $self->_add_content( $_ );
+    }
 }
 
 sub find {
