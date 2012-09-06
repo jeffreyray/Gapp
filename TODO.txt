@@ -11,13 +11,9 @@ TODO:
 
 - Clean up documentation again
 
-- add ok_action, cancel_action, apply_action to Form Trait
-
 - Fix examples
 
 - revamp documentation
-
-- extract Gapp::Notice, Gapp::NoticeBox
 
 - release 1.0
 
