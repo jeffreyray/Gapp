@@ -8,7 +8,7 @@ use Gapp::Util;
 use Gapp::Types qw( GappCellRenderer GappTreeViewColumn );
 
 use Moose::Util;
-use MooseX::Types::Moose qw( Str ArrayRef HashRef CodeRef );
+use MooseX::Types::Moose qw( Str ArrayRef HashRef CodeRef Undef );
 
 has '+gclass' => (
     default => 'Gtk2::TreeViewColumn',
@@ -22,7 +22,7 @@ has 'name' => (
 
 has 'renderer' => (
     is => 'rw',
-    isa => GappCellRenderer,
+    isa => GappCellRenderer|Undef,
     default => sub { Gapp::CellRenderer->new( gclass => 'Gtk2::CellRendererText', property => 'markup' ) },
     coerce => 1,
 );

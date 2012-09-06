@@ -612,17 +612,21 @@ build 'Gapp::TreeViewColumn', sub {
     
     my $gtkw = $w->gobject;
     
-    my $gtkr = $w->renderer->gobject;
-    $gtkw->{renderer} = $gtkr;
-    
-    # add the renderer to the column
-    $gtkw->pack_start( $gtkr, $w->renderer->expand ? 1 : 0 );
-    
-    $gtkw->set_cell_data_func($gtkr, sub {
-	my ( $col, $gtkrenderer, $model, $iter, @args ) = @_;
-	my $value = $w->get_cell_value( $model->get( $iter, $w->data_column ) );
-	$gtkrenderer->set_property( $w->renderer->property => $value );
-    });
+    if ( $w->renderer ) {
+	
+	my $gtkr = $w->renderer->gobject;
+	$gtkw->{renderer} = $gtkr;
+	
+	# add the renderer to the column
+	$gtkw->pack_start( $gtkr, $w->renderer->expand ? 1 : 0 );
+	
+	# set the data function
+	$gtkw->set_cell_data_func($gtkr, sub {
+	    my ( $col, $gtkrenderer, $model, $iter, @args ) = @_;
+	    my $value = $w->get_cell_value( $model->get( $iter, $w->data_column ) );
+	    $gtkrenderer->set_property( $w->renderer->property => $value );
+	});
+    }
     
     # if sorting enabled
     if ( $w->sort_enabled ) {
