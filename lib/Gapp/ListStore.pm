@@ -27,12 +27,17 @@ sub BUILDARGS {
     my $class = shift;
     my %args = @_ == 1 && is_HashRef( $_[0] ) ? %{$_[0]} : @_;
     
-    if ( exists $args{columns} ) {
-        $args{args} = [ @{ $args{columns} } ] if ! exists $args{args};
-    }
+    #if ( exists $args{columns} ) {
+    #    $args{args} = [ @{ $args{columns} } ] if ! exists $args{args};
+    #}
     
     __PACKAGE__->SUPER::BUILDARGS( %args );
 }
+
+before '_construct_gobject' => sub {
+    my ( $self ) = @_;
+    $self->set_args( [ @{ $self->columns } ] );
+};
 
 1;
 

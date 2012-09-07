@@ -16,6 +16,13 @@ has '+gclass' => (
 has 'model' => (
     is => 'rw',
     isa => 'Maybe[Object]',
+    trigger => sub {
+        my ( $self, $newval, $oldval ) = @_;
+        
+        if ( $self->has_gobject ) {
+            $self->gobject->set_model( $newval->gobject );
+        }
+    }
 );
 
 has 'columns' => (
