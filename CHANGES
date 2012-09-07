@@ -1,5 +1,10 @@
 Changes for Gapp
 
+0.46.4 Sep 7 2012
+- Changed when ListStore sets the args attribute during construction to support
+subclassing
+- Added trigger to model attribute of TreeStore to update the gtk_widget if it
+has been constructed
 
 0.46.3 Sep 6 2012
 - added border_width resize_mode property delegations to Container
