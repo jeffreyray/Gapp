@@ -34,6 +34,20 @@ sub BUILD {
     }
 }
 
+
+sub BUILDARGS {
+    my $class = shift;
+    my %args = @_ == 1 && is_HashRef( $_[0] ) ? %{$_[0]} : @_;
+    
+    for my $att ( qw(border_width resize_mode) ) {
+        $args{properties}{$att} = delete $args{$att} if exists $args{$att};
+    }
+    
+    __PACKAGE__->SUPER::BUILDARGS( %args );
+}
+
+
+
 after '_build_gobject' => sub {
     my $self = shift;
     

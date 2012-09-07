@@ -48,9 +48,8 @@ sub BUILDARGS {
     }
     
     # headers visible
-    if ( exists $args{headers_visible} ) {
-        $args{properties}{headers_visible} = $args{headers_visible};
-        delete $args{headers_visible};
+    for my $att ( qw(headers_visible headers_clickable) ) {
+        $args{properties}{$att} = delete $args{$att} if exists $args{$att};
     }
     
     __PACKAGE__->SUPER::BUILDARGS( %args );

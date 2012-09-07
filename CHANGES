@@ -1,5 +1,10 @@
 Changes for Gapp
 
+
+0.46.3 Sep 6 2012
+- added border_width resize_mode property delegations to Container
+- added headers_visible headers_clickable property delegations to TreeView
+
 0.46 Sep 5 2012
 - calling "add" on an container whose gobject has already been created now packs the
 widget into the child
