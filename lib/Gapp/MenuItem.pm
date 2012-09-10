@@ -21,6 +21,11 @@ has '+args' => (
     default => sub { [ '' ] },
 );
 
+has 'visible_func' => (
+    is => 'rw',
+    isa => 'Maybe[CodeRef]',
+);
+
 
 sub BUILDARGS {
     my $class = shift;

@@ -13,6 +13,24 @@ has '+gclass' => (
 1;
 
 
+sub run_visible_funcs {
+    my ( $self ) = @_;
+   
+    for my $i ( $self->children ) {
+        if ( $i->visible_func ) {
+            $i->visible_func->( $i ) ? $i->show_all : $i->hide
+        }
+        
+    }
+}
+
+sub popup {
+    my ( $self, @args ) = @_;
+    
+    $self->run_visible_funcs;
+    $self->gobject->popup( @args );
+}
+
 
 __END__
 
