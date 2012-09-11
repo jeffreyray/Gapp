@@ -33,6 +33,8 @@ use Gapp::Menu;
 use Gapp::MenuBar;
 use Gapp::MenuItem;
 use Gapp::MenuToolButton;
+use Gapp::Model::List;
+use Gapp::Model::SimpleList;
 use Gapp::ProgressBar;
 use Gapp::RadioButton;
 use Gapp::ScrolledWindow;

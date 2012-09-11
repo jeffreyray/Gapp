@@ -101,6 +101,7 @@ class_type GappCellRenderer,
         'text'   => [ 'Gtk2::CellRendererText', 'text' ],
         'markup' => [ 'Gtk2::CellRendererText', 'markup' ],
         'toggle' => [ 'Gtk2::CellRendererToggle', 'active' ],
+        'pixbuf' => [ 'Gtk2::CellRendererPixbuf', 'pixbuf']
     );
 
     coerce GappCellRenderer,
