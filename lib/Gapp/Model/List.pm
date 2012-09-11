@@ -13,7 +13,7 @@ has '+gclass' => (
 );
 
 has '+gobject' => (
-    handles => [qw( clear append )],
+    handles => [qw( clear append append_record )],
 );
 
 
