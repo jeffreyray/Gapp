@@ -541,6 +541,26 @@ build 'Gapp::TextView', sub {
     $w->gobject->set_buffer( $w->buffer->gobject ) if $w->buffer;
 };
 
+# ToggleButton
+build 'Gapp::ToggleButton', sub {
+    my ( $l, $w ) = @_;
+    my $gtkw = $w->gobject;
+    
+    my ( $image );
+    if ( $w->image ) {
+	$image = $w->image->gobject;
+    }
+    elsif ( $w->icon ) {
+	$image = Gtk2::Image->new_from_stock( $w->icon, $w->icon_size || 'button' );
+    }
+    
+
+    
+    $gtkw->set_label( $w->label ) if defined $w->label && ! defined $w->mnemonic;
+    $gtkw->set_image( $image ) if defined $image;
+    $gtkw->set_tooltip_text( $w->tooltip ) if defined $w->tooltip;
+};
+
 
 # Toolbar
 build 'Gapp::Toolbar', sub {

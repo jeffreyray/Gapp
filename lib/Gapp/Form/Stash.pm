@@ -53,7 +53,8 @@ sub update {
 
 sub update_from_context {
     my $self = shift;
-    warn '$stash->update_from_context( $cx ) deprecated, use $stah->update( $cx ) instead';
+    use Carp qw( cluck );
+    cluck '$stash->update_from_context( $cx ) deprecated, use $stah->update( $cx ) instead';
     $self->update( @_ );
 }
 
