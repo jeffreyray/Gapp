@@ -9,7 +9,7 @@ use_ok 'Gapp::Dialog';
 
 my $w = Gapp::Dialog->new(
     title => 'Gapp',
-    buttons => [ 'gtk-yes', 'gtk-no' ],
+    buttons => [ qw(gtk-yes yes gtk-no no) ],
 
 );
 

@@ -80,15 +80,21 @@ sub toplevel {
 
 
 sub BUILDARGS {
-    my ( $self, %opts ) = @_;
+    my $class = shift;
+    my %args = @_ == 1 && is_HashRef( $_[0] ) ? %{$_[0]} : @_;
     
-    if ( exists $opts{alignment} ) {
-        $opts{properties}{xalign} = $opts{alignment}[0];
-        $opts{properties}{yalign} = $opts{alignment}[1];
-        delete $opts{alignment};
+    if ( exists $args{alignment} ) {
+        $args{properties}{xalign} = $args{alignment}[0];
+        $args{properties}{yalign} = $args{alignment}[1];
+        delete $args{alignment};
     }
     
-    $self->SUPER::BUILDARGS( %opts );
+    # headers visible
+    for my $att ( qw(visible sensitive xalign yalign) ) {
+        $args{properties}{$att} = delete $args{$att} if exists $args{$att};
+    }
+    
+    __PACKAGE__->SUPER::BUILDARGS( %args );
 }
 
 

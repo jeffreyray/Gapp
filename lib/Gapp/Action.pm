@@ -1,7 +1,7 @@
 package Gapp::Action;
 
 use Moose;
-use MooseX::Clone;
+with 'MooseX::Clone';
 use MooseX::SemiAffordanceAccessor;
 use MooseX::StrictConstructor;
 
@@ -9,27 +9,27 @@ use MooseX::Types::Moose qw( CodeRef HashRef Object Str  );
 
 has 'code' => (
     is => 'rw',
-    isa => 'CodeRef',
+    isa => 'Maybe[CodeRef]',
     clearer => 'clear_code',
     predicate => 'has_code',
 );
 
 has 'icon' => (
     is => 'rw',
-    isa => 'Str',
+    isa => 'Maybe[Str]',
     clearer => 'clear_icon',
     predicate => 'has_icon',
 );
 
 has [qw( label name mnemonic accelerator )] => (
     is => 'rw',
-    isa => 'Str',
+    isa => 'Maybe[Str]',
     default => '',
 );
 
 has 'tooltip' => (
     is => 'rw',
-    isa => 'Str',
+    isa => 'Maybe[Str]',
     clearer => 'clear_tooltip',
     predicate => 'has_tooltip',
 );

@@ -3,12 +3,6 @@ TODO:
 
 - Revamp test suite
 
-- finish converting Layout::Default to use painters on objects with actions
-
-- Finish notebook
-
-- Fix Model namespaces
-
 - Clean up documentation again
 
 - Fix examples
