@@ -18,6 +18,18 @@ has 'buttons' => (
     isa => 'Maybe[ArrayRef]',
 );
 
+sub BUILDARGS {
+    my $class = shift;
+    my %args = @_ == 1 && is_HashRef( $_[0] ) ? %{$_[0]} : @_;
+    
+    # headers visible
+    for my $att ( qw(layout_style) ) {
+        $args{properties}{$att} = delete $args{$att} if exists $args{$att};
+    }
+    
+    __PACKAGE__->SUPER::BUILDARGS( %args );
+}
+
 
 before '_construct_gobject' => sub {
     my ( $self ) = @_;

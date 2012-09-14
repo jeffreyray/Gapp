@@ -54,7 +54,6 @@ has 'gobject' => (
     is => 'rw',
     isa => 'Object',
     lazy_build => 1,
-    handles => [qw( destroy hide present show show_all )],  # !move 
     predicate => 'has_gobject',
 );
 

@@ -16,6 +16,12 @@ has 'value' => (
     default => '1',
 );
 
+has 'off_value' => (
+    is => 'rw',
+    isa => 'Str',
+    default => '0',
+);
+
 
 sub BUILDARGS {
     my $class = shift;
@@ -58,6 +64,14 @@ sub widget_to_stash {
 sub stash_to_widget {
     my ( $self, $stash ) = @_;
     $self->set_field_value( $stash->fetch( $self->field ) );
+}
+
+sub _connect_changed_handler {
+    my ( $self ) = @_;
+
+    $self->gobject->signal_connect (
+      toggled => sub { $self->_widget_value_changed },
+    );
 }
 
 1;

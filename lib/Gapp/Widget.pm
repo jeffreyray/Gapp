@@ -5,7 +5,9 @@ use MooseX::SemiAffordanceAccessor;
 use MooseX::StrictConstructor;
 extends 'Gapp::Object';
 
-
+has '+gobject' => (
+    handles => [qw( destroy hide present show show_all )],  
+);
 
 has 'name' => (
     is => 'rw',
@@ -90,7 +92,7 @@ sub BUILDARGS {
     }
     
     # headers visible
-    for my $att ( qw(visible sensitive xalign yalign) ) {
+    for my $att ( qw(visible sensitive xalign yalign no_show_all) ) {
         $args{properties}{$att} = delete $args{$att} if exists $args{$att};
     }
     

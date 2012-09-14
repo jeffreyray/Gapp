@@ -48,6 +48,7 @@ use Gapp::Moose::Meta::Attribute::Trait::GappTextView;
 use Gapp::Moose::Meta::Attribute::Trait::GappTimeEntry;
 use Gapp::Moose::Meta::Attribute::Trait::GappToggleToolButton;
 use Gapp::Moose::Meta::Attribute::Trait::GappToolbar;
+use Gapp::Moose::Meta::Attribute::Trait::GappToolButton;
 use Gapp::Moose::Meta::Attribute::Trait::GappToolItemGroup;
 use Gapp::Moose::Meta::Attribute::Trait::GappToolPalette;
 use Gapp::Moose::Meta::Attribute::Trait::GappTreeView;
@@ -56,6 +57,7 @@ use Gapp::Moose::Meta::Attribute::Trait::GappWindow;
 use Gapp::Moose::Meta::Attribute::Trait::GappWidget;
 use Gapp::Moose::Meta::Attribute::Trait::GappVBox;
 use Gapp::Moose::Meta::Attribute::Trait::GappVButtonBox;
+use Gapp::Moose::Meta::Attribute::Trait::GappViewport;
 
 Moose::Exporter->setup_import_methods(
     with_meta => ['widget'],
