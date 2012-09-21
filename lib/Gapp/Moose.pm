@@ -39,6 +39,7 @@ use Gapp::Moose::Meta::Attribute::Trait::GappScrolledWindow;
 use Gapp::Moose::Meta::Attribute::Trait::GappSeparatorMenuItem;
 use Gapp::Moose::Meta::Attribute::Trait::GappSeparatorToolItem;
 use Gapp::Moose::Meta::Attribute::Trait::GappSpinButton;
+use Gapp::Moose::Meta::Attribute::Trait::GappStatusbar;
 use Gapp::Moose::Meta::Attribute::Trait::GappStatusIcon;
 use Gapp::Moose::Meta::Attribute::Trait::GappTable;
 use Gapp::Moose::Meta::Attribute::Trait::GappTearoffMenuItem;
