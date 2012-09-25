@@ -186,7 +186,7 @@ Using a context you can sync data between objects and you form.
 
   $cx = Gapp::Form::Context->new;
 
-  $cx->add_node( 'user' => $user,
+  $cx->add( 'user' => $user,
 
     writer_prefix => 'set_',
 

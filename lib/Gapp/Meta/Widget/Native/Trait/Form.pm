@@ -52,7 +52,7 @@ sub _build_stash {
     }
     
     # update the values in the stash via the context
-    $stash->update_from_context( $self->context ) if $self->context;
+    $stash->update( $self->context ) if $self->context;
     
     $stash->set_modified( 0 );
     return $stash;

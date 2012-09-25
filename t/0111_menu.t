@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 3;
+use Test::More tests => 7;
 
 use Gtk2 '-init';
 use_ok 'Gapp::Menu';

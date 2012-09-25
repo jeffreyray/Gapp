@@ -193,7 +193,14 @@ build 'Gapp::Dialog', sub {
 	while ( @{$w->buttons} ) {
 	    my $b = shift @{$w->buttons};
 	    my $r = shift @{$w->buttons};
-	    $gtk_w->add_button( $b->gobject, $r );
+	    
+	    if ( is_Object( $b ) ) {
+		$gtk_w->add_action_widget( $b->gobject, $r );
+	    }
+	    else {
+		$gtk_w->add_button( $b, $r );
+	    }
+	    
 	}
     }
 
@@ -447,8 +454,13 @@ build 'Gapp::Notebook', sub {
     my ( $l, $w ) = @_;
 
     my $gtkw = $w->gobject;
-    $w->action_widget->show_all;
-    $gtkw->set_action_widget( $w->action_widget->gobject, 'end' );
+    
+    # handle action widget
+    if ( $w->action_widget ) {
+	$w->action_widget->show_all if $w->action_widget;
+	$gtkw->set_action_widget( $w->action_widget->gobject, 'end' );
+    }
+
 };
 
 

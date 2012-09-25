@@ -1,5 +1,9 @@
 Changes for Gapp
 
+0.47 Sep 25 2012
+- updated test suite
+
+
 0.46.4 Sep 7 2012
 - Changed when ListStore sets the args attribute during construction to support
 subclassing

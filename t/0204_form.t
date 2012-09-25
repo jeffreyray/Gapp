@@ -20,7 +20,7 @@ my $cx = Gapp::Form::Context->new;
 ok $cx, 'created context';
 
 my $e = Employee->new( first_name => 'Homer' );
-$cx->add_node( 'employee', $e, );
+$cx->add( 'employee', $e, );
 
 my $form = Gapp::VBox->new (
     traits => [qw( Form )],

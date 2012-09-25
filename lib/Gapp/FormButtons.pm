@@ -38,8 +38,7 @@ has 'ok_button' => (
 );
 
 has '+content' => (
-        [ $_[0]->cancel_button, $_[0]->apply_button, $_[0]->ok_button ],
-    },
+    default => sub { [ $_[0]->cancel_button, $_[0]->apply_button, $_[0]->ok_button ] },
     lazy => 1,
 );
 
