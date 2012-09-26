@@ -2,20 +2,33 @@
 
 =head1 NAME
 
-Gapp::Manual - An introduction to Gapp programming
+Gapp::Manual - An introduction to GUI development with Gapp
 
 =head1 POST-MODERN GUI APPLICATIONS
 
-Gapp is a framework for creating GUI applications in Perl 5. Gapp is based on
-Moose and Gtk2-Perl. Moose calls itself a I<post-modern> object system, and
-relative to Perl 5, it is. Gapp aims to bring that same I<post-modern> feel to
-developing Gtk+ applications in perl.
+Gapp is a framework for creating GUI applications in perl. Gapp is based on
+Moose and Gtk2-Perl. Gapp brings the I<post-modern> feel of Moose to Gtk+
+application development in perl.
 
-Applications maintain a consistent look and feel without hand-configuring every
-widget. Gapp effectively separates GUI design from application logic and data
-structures, while keeping your widgets and data up-to-date.
+=head2 OVERVIEW
 
-Gapp makes programming complex GUI applications fun and easy.
+Gapp is a C<Moose>-enabled layer over Glib/Gtk2-Perl.
+
+Each L<Gapp::Widget> constructs an underlying L<Gtk2::Widget> which as accessible
+through the C<gobject> attribute. You can apply I<roles> and I<traits> to the
+L<Gapp::Widget> like any other Moose based class.
+
+Layouts are extensible classes that are used to define the positioning, spacing,
+and appearance of your widgets. By using a layout you can maintain a consistent
+look and feel across an entire application without the need to hand-configure
+every widget. Making a change to the layout propogates across the entire application.
+
+Actions are reusable blocks of code that know how to display themselves on various
+widgets. Using Actions loosely separate business logic and GUI design.
+
+Forms keep your widgets and your data synchronised transparently. There is no need to
+manually move data between the object and the widgets or vice-versa when displaying or
+saving a form.
 
 =head2 PREREQUISITES
 
@@ -23,15 +36,15 @@ Gapp uses both L<Moose> and L<Gtk2> extensively and assumes that the user
 understands these modules as well. Any of the Gapp documentation that you find
 lacking is probably covered by these modules.
 
-=head2 Moose
+=head3 Moose
 
 The documentation for Moose can be found on the CPAN at
 L<http://search.cpan.org/search?query=Moose>.
 
-=head2 Gtk2
+=head3 Gtk2
 
-The documentation for Gtk2-Perl can be ound at
-<http://gtk2-perl.sourceforge.net/doc/pod/index.html>.
+The documentation for Gtk2-Perl can be found at
+L<http://gtk2-perl.sourceforge.net/doc/pod/index.html>.
 
 The documentation for Gtk+ can be found at
 L<http://library.gnome.org/devel/gtk/stable/>.
@@ -42,52 +55,69 @@ L<http://library.gnome.org/devel/gtk/stable/>.
   use Gapp;
 
   $w = Gapp::Window->new(
+
     properties => {
+
       title => 'Gapp application',
+  
     },
+
     signal_connect => [
+
       [ 'delete-event' => sub { Gapp->quit } ],
+  
     ],
+
     content => [
+
       Gapp::Label->new( text => 'Hello World!' ),
+
     ]
+
   );
 
   $w->show_all;
 
   Gapp->main;
   
-=head1 WIDGET PARAMETERS
+Worth noting is the abscence of the C<use Gtk2 '-init'> line. Gapp calls this
+for you already.
+
+One of the first things you will notice is that we can define widget properties,
+connect to signals, and pack widgets all within the constructor of the widget.
+This lends to code that is cleaner and easier to read and modify.
+
+=head2 WIDGET PARAMETERS
 
 =over 4
 
-=item properties
+=item B<properties>
 
 Any properties you set here will be applied to the Gtk+ widget upon
-construction. You may find valid parameters by referencing that Gtk+
-documentation at L<http://library.gnome.org/devel/gtk/stable/>.
+construction. You may find valid properties by referencing the corresponding
+Gtk+ documentation at L<http://library.gnome.org/devel/gtk/stable/>.
 
-In this example we could have said:
-
-  Gapp::Window->new (
-    title => 'Gapp applicaiton'
-  ...
-  
-This is because the C<title> parameter delegates to the C<title> property of
-the Gtk widget. The documentation for the Gapp widget will provide more
-information on properties that have been setup for delegation.
-
-=item signal_connect
+=item B<signal_connect>
 
 You may connect to signals using the C<signal_connect> parameter using the
 format in the example.
 
-=item content
+=item B<content>
 
 You can add widgets to containers using the C<content> parameter. No formatting
-options are specified here, just the heirarchy of the widgets. Spacing and
-other rendering details are resolved by the layout. That will be discussed more
-later.
+options are specified here, just the hierarchy of the widgets. Spacing and
+other rendering details are resolved by the layout. The layout will be discussed
+in more detail later in this manual.
+
+=back
+
+=head2 DELEGATION
+
+=over 4
+
+=item B<properties>
+
+=item B<methods>
 
 =back
 
@@ -112,7 +142,7 @@ The layout determines how widgets are displayed on the screen. It has control
 over things like spacing, alignment, borders, etc. By centralizing the code
 the determines the appearance of widgets, it is is possible to achieve a
 consistent look GUI. By making changes to the layout, you can affect the
-appearnce of your whole application. You can subclass layouts too!
+appearance of your whole application. You can subclass layouts too!
 
 =head2 Using a Layout
 
@@ -145,7 +175,7 @@ on buttons. You can call them directly or connect them to signals.
   # display as button
   Gapp::Button->new( action => Quit );
 
-You should see L<Gapp::Actions> for information on creatng and using actions.
+You should see L<Gapp::Actions> for information on creating and using actions.
 
 =head1 TRAITS
 

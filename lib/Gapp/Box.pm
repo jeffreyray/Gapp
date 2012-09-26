@@ -41,7 +41,7 @@ Gapp::Box - Box widget
 
 =item ....+-- L<Gapp::Container>
 
-=item ........+-- L<Gapp::Box>
+=item ........+-- Gapp::Box
 
 =back
 

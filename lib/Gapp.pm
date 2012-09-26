@@ -1,6 +1,6 @@
 package Gapp;
 
-our $VERSION = '0.46.4';
+our $VERSION = '0.47';
 
 use Gtk2 '-init';
 
@@ -112,6 +112,8 @@ Gapp - Post-modern Gtk+ applications
             )
         ]
     );
+    
+    $w->show_all;
 
     Gapp->main;
   
@@ -123,11 +125,15 @@ COMPLETE IN THEIR IMPLEMENTATION. THE DOCUMENTATION MAY ALSO BE LACKING.*
     
 =head1 DESCRIPTION
 
-Gapp is a framework for building GUI applications.
+Gapp brings the I<post-modern> feel of L<Moose> to Gtk2-Perl applications.
 
-The main goal of Gapp is to make Perl 5 GUI programming easier and less tedious.
-With Gapp you can to think more about what you want to do and less about
-choreographing widgets or keeping them (and your data) up to date.
+The primary goal of Gapp is to make Perl 5 GUI programming easier and less
+tedious. With Gapp you can to think more about what you want to do and less
+about choreographing widgets or keeping them (and your data) up to date.
+
+Gapp applicationss maintain a consistent look and feel without the need to hand
+-configure every widget. Gapp effectively separates GUI design from application
+logic and data structures, while keeping your widgets and data up-to-date.
 
 =head2 New to Gapp?
 
@@ -150,33 +156,29 @@ Delegates to C<Gtk2::main_quit>.
 =head1 ACKNOWLEDGEMENTS
 
 Thanks to everyone at Gtk2-Perl and Moose and all those who came before me for
-making this module possible.
+making this module possible. Thanks to Jörn Reder and the authors and contributors
+of C<MooseX::Types>.
 
-Special thanks to Jörn Reder, author of L<Gtk2::Ex::FormFactory>, which inspired
-me to write Gapp. L<Gapp::TableMap> uses code modified from L<Gtk2::Ex::FormFactory::Table>
+C<Gapp::TableMap> uses code from Jörn Reder's L<Gtk2::Ex::FormFactory::Table>
 (see L<Gapp::TableMap> for more details.)
 
-Special thanks to the authors and contributors of L<MooseX::Types>, which formed
-the basis for L<Gapp::Actions> (see L<Gapp::Actions> for more details.)
+C<Gapp::Actions> is based off of L<MooseX::Types> (see L<Gapp::Actions> for more details.)
 
 =head1 AUTHORS
 
 Jeffrey Ray Hallock E<lt>jeffrey.hallock at gmail dot comE<gt>
 
-Individual packages in this module may have have multiple authors/and or
-contributors. Please refer to the documentation of indivdual packages for
-more information. (see L<Gapp::Actions>, L<Gapp::TableMap>)
-
 =head1 COPYRIGHT & LICENSE
 
-    Copyright (c) 2011-2012 Jeffrey Ray Hallock.
+Copyright (c) 2010-2012 Jeffrey Ray Hallock.
     
-    This program is free software; you can redistribute it and/or
-    modify it under the same terms as Perl itself.
+    This is free software, licensed under:
+
+    The Artistic License 2.0 (GPL Compatible)
     
-    Individual packages in this module may have have multiple copyrights and
-    licenses. Please refer to the documentation of indivdual packages for more
-    information. (see L<Gapp::Actions>, L<Gapp::TableMap>)
+Individual files in this package may have have multiple copyrights and/or
+licenses. Please refer to the documentation of indivdual packages for more
+information. (see L<Gapp::Actions>, L<Gapp::TableMap>)
 
 =cut
 
