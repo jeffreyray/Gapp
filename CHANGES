@@ -1,5 +1,8 @@
 Changes for Gapp
 
+{{$NEXT}}
+- now using Dist::Zilla
+
 0.47.1 Sep 26 2012
 - updating pod
 
