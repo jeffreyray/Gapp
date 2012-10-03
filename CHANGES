@@ -2,6 +2,12 @@ Changes for Gapp
 
 {{$NEXT}}
 
+
+0.48
+- fixed page_num bug with Assistant
+- fixed warning about widget not having AssistantPage trait applied
+
+
 0.47.7    2012-10-02 11:30:19
 - fixing version issues
 
