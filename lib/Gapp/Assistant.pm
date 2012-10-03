@@ -24,14 +24,14 @@ sub current_page {
     my $num = $self->gobject->get_current_page;
     
     for my $page ( $self->children ) {
-        return $page if $page->num == $num;
+        return $page if $page->page_num == $num;
     }
 }
 
 sub find_page {
     my ( $self, $page_name ) = @_;
     
-    if ( ! defined $page_name ) {
+    if ( ! defined $page_name || $page_name eq '' ) {
         $self->meta->throw_errow(
             qq[you did not supply a page name,\n] .
             qq[usage: Gapp::Assistant::find_page( $self, $page_name )]
@@ -40,7 +40,7 @@ sub find_page {
     }
     
     for my $page ( $self->children ) {
-        return $page if $page->page_name eq $page_name;
+        return $page if $page->name eq $page_name;
     }
 }
 

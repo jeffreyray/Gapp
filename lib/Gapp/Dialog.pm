@@ -2,7 +2,6 @@ package Gapp::Dialog;
 
 use Moose;
 use MooseX::SemiAffordanceAccessor;
-use MooseX::Types::Moose qw( ArrayRef );
 
 extends 'Gapp::Window';
 

@@ -2,6 +2,9 @@ Changes for Gapp
 
 {{$NEXT}}
 
+0.47.7    2012-10-02 11:30:19
+- fixing version issues
+
 0.47.6    2012-09-28 17:39:25
 - merged Gapp::Gtk2 widgets into Gapp
 - new versioning system

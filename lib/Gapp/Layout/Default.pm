@@ -33,9 +33,9 @@ build 'Gapp::Assistant', sub {
 add 'Gapp::Widget', to 'Gapp::Assistant', sub {
     my ( $l, $w, $c) = @_;
     
-    if ( ! $w->does('Gapp:Meta::Widget::Native::Trait::AssistantPage') ) {
-	use Carp;
-	carp qq[$w does not have the AssistantPage trait applied. Any widget added to ]. 
+    if ( ! $w->does('Gapp::Meta::Widget::Native::Trait::AssistantPage') ) {
+	use Carp qw(cluck);
+	cluck qq[$w does not have the AssistantPage trait applied. Any widget added to ]. 
 	qq[an assistant must have the AssistntPage trait.];
     }
 
@@ -43,14 +43,14 @@ add 'Gapp::Widget', to 'Gapp::Assistant', sub {
     
     my $assistant = $c->gobject;
    
-    my $page_num = $assistant->append_page( $w->grwrapper );
+    my $page_num = $assistant->append_page( $w->gwrapper );
     $w->set_page_num( $page_num );
     
     $assistant->set_page_title     ($w->gwrapper , $w->page_title );
     $assistant->set_page_side_image($w->gwrapper , $assistant->render_icon( $w->page_icon , 'dnd' ) ) if $w->page_icon;
     $assistant->set_page_type      ($w->gwrapper , $w->page_type );
     $assistant->set_page_complete  ($w->gwrapper , 1);
-    $assistant->{pages}{$w->page_name} = $w if $w->page_name;
+    $assistant->{pages}{$w->name} = $w if $w->name;
 };
 
 

@@ -1,8 +1,7 @@
-package Gapp::Dialog;
+package Gapp::MessageDialog;
 
 use Moose;
 use MooseX::SemiAffordanceAccessor;
-use MooseX::Types::Moose qw( ArrayRef );
 
 extends 'Gapp::Dialog';
 

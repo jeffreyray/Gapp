@@ -5,12 +5,6 @@ use MooseX::SemiAffordanceAccessor;
 use MooseX::LazyRequire;
 
 
-has 'page_name' => (
-    is => 'rw',
-    isa => 'Str',
-    default => '',
-);
-
 has 'page_title' => (
     is => 'rw',
     isa => 'Str',
