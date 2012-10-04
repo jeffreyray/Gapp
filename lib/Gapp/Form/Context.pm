@@ -94,8 +94,12 @@ sub modify {
 sub update {
     my ( $self, $stash ) = @_;
     
+    print "Update\n";
+    
     for my $path ( $stash->elements ) {
         next if $path eq '';
+        
+        print $path, ' - ', $stash->fetch( $path ), "\n";
         
         my $value = $stash->fetch( $path );
         
@@ -107,7 +111,9 @@ sub update {
 
 sub update_from_stash {
     my $self = shift;
-    warn '$cx->update_from_stash( $stash ) deprecated, use $cx->update( $stash )';
+    use Carp qw( cluck );
+    
+    cluck '$cx->update_from_stash( $stash ) deprecated, use $cx->update( $stash )';
     $self->update( @_ );
 }
 

@@ -8,7 +8,7 @@ use Gapp::Types qw( FormContext FormField FormStash );
 with 'Gapp::Meta::Widget::Native::Role::FormElement';
 
 use Gapp::Types qw(GappCallback);
-use MooseX::Types::Moose qw(Undef);
+use MooseX::Types::Moose qw(Undef CodeRef);
 
 use Gapp::Actions::Util qw( parse_action );
 
@@ -62,6 +62,9 @@ sub _build_stash {
 sub apply {
     my ( $self ) = @_;
     $self->sync_stash;
+    
+    print "CONTEXT", $self->context, "\n";
+    
     $self->context->update( $self->stash ) if $self->context;
     $self->do_apply_action;
 }
@@ -86,10 +89,12 @@ sub ok {
 
 sub do_apply_action {
     my ( $self ) = @_;
+    return if ! $self->apply_action;
     
     my ( $action, @args ) = parse_action ( $self->cancel_action );
+    return if ! $action;
     
-    if ( is_CodeRef $action ) {
+    if ( is_CodeRef ( $action ) ) {
         $action->( $self, \@args );
     }
     else {
@@ -103,7 +108,7 @@ sub do_cancel_action {
     
     my ( $action, @args ) = parse_action ( $self->cancel_action );
     
-    if ( is_CodeRef $action ) {
+    if ( is_CodeRef ($action) ) {
         $action->( $self, \@args );
     }
     else {
@@ -114,6 +119,7 @@ sub do_cancel_action {
 
 sub do_ok_action {
     my ( $self ) = @_;
+    return if ! $self->ok_action;
     
     my ( $action, @args ) = parse_action ( $self->ok_action );
     
