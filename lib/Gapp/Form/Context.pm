@@ -94,12 +94,9 @@ sub modify {
 sub update {
     my ( $self, $stash ) = @_;
     
-    print "Update\n";
     
     for my $path ( $stash->elements ) {
         next if $path eq '';
-        
-        print $path, ' - ', $stash->fetch( $path ), "\n";
         
         my $value = $stash->fetch( $path );
         

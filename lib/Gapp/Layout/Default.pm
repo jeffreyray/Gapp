@@ -212,6 +212,24 @@ style 'Gapp::Entry', sub {
     $w->properties->{activates_default} ||= 1;
 };
 
+
+
+
+
+
+# EventBox
+style 'Gapp::EventBox', sub {
+    my ( $l, $w ) = @_;
+};
+
+build 'Gapp::EventBox', sub {
+    my ( $l, $w ) = @_;
+};
+
+
+
+
+
 # FileChooserDialog
 
 build 'Gapp::FileChooserDialog', sub {

@@ -1,7 +1,10 @@
 Changes for Gapp
 
 {{$NEXT}}
-
+- styler/builder inheritance now acts like packer inheritince
+    1. Check layout for definition of specific widget
+    2. Check parent layouts for definition
+    3. If no definition found, repeat steps 1/2 for classes up the widget's hiearchy until a definition is found
 
 0.48
 - fixed page_num bug with Assistant

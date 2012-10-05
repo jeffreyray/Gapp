@@ -62,9 +62,10 @@ has '_packers' => (
 );
 
 sub build_widget {
-    my ( $self, $widget ) = @_;
+    my ( $self, $widget, $opts ) = @_;
     my $builder = $self->find_builder( $widget );
-    return if ! defined $builder;
+    
+    return if ! $builder;
     
     $builder->( $self, $widget );
 }
@@ -76,13 +77,37 @@ sub add_packer {
     $self->_packers->{$widget}{$container} = $code_ref;
 }
 
+
+# search this layout and parent layouts for a packer that will DWIM
 sub find_builder {
-    my ( $self, $w ) = @_;
+    my ( $self, $w, $opts ) = @_;
     $w = $w->meta->name if ref $w;
-    $w = ($w->meta->superclasses)[0]->meta->name if $w->meta->name =~ /__ANON__/;
-    return $self->get_builder( $w->meta->name ) if $self->get_builder( $w->meta->name );
-    return $self->parent ? $self->parent->find_builder( $w ) : undef;
+
+    # work around for dealing with classes that have traits applied
+    if ( $w =~ /__ANON__/ ) {
+        my ( $super ) = ( $w->meta->superclasses )[0];
+        $w = $super->meta->name;
+    }
+    
+    # widget superclasses ( minus Moose stuff )
+    my @wisa = $w->meta->linearized_isa;
+    splice @wisa,-1,1;
+    
+    print $w, "-", @wisa, "\n";
+    
+    for my $wclass ( @wisa ) {
+        my $builder = $self->lookup_builder( $wclass );
+        return $builder if $builder;
+    }
 }
+
+#sub find_builder {
+#    my ( $self, $w ) = @_;
+#    $w = $w->meta->name if ref $w;
+#    $w = ($w->meta->superclasses)[0]->meta->name if $w->meta->name =~ /__ANON__/;
+#    return $self->get_builder( $w->meta->name ) if $self->get_builder( $w->meta->name );
+#    return $self->parent ? $self->parent->find_builder( $w ) : undef;
+#}
 
 
 # search this layout and parent layouts for a packer that will DWIM
@@ -121,23 +146,25 @@ sub find_packer {
     }
 }
 
-sub find_styler {
-    my ( $self, $w ) = @_;
-    $w = $w->meta->name if ref $w;
-    
-    $w = ($w->meta->superclasses)[0]->meta->name if $w->meta->name =~ /__ANON__/;
-    return $self->get_styler( $w->meta->name ) if $self->get_styler( $w->meta->name );
-    return $self->parent ? $self->parent->find_styler( $w ) : undef;
-}
-
 sub find_painter {
     my ( $self, $w ) = @_;
     $w = $w->meta->name if ref $w;
     
-    $w = ($w->meta->superclasses)[0]->meta->name if $w->meta->name =~ /__ANON__/;
+    $w = ($w->meta->superclasses)[0]->meta->name if $w =~ /__ANON__/;
     return $self->get_painter( $w->meta->name ) if $self->get_painter( $w->meta->name );
     return $self->parent ? $self->parent->find_painter( $w ) : undef;
 }
+
+sub find_styler {
+    my ( $self, $w ) = @_;
+    $w = $w->meta->name if ref $w;
+    
+    $w = ($w->meta->superclasses)[0]->meta->name if $w =~ /__ANON__/;
+    return $self->get_styler( $w->meta->name ) if $self->get_styler( $w->meta->name );
+    return $self->parent ? $self->parent->find_styler( $w ) : undef;
+}
+
+
 
 sub get_packer {
     my ( $self, $widget, $container ) = @_;
@@ -147,6 +174,20 @@ sub get_packer {
 sub has_packer {
     my ( $self, $widget, $container ) = @_;
     exists $self->_packers->{$widget}{$container};
+}
+
+
+sub lookup_builder {
+    my ( $self, $w ) = @_;
+    
+    if ( $self->has_builder( $w ) ) {
+        return $self->get_builder( $w );
+    }
+    else {
+        return $self->parent ?
+        $self->parent->lookup_builder( $w ) :
+        undef;
+    }
 }
 
 # search this layout and parent layouts for specific packer
@@ -162,6 +203,9 @@ sub lookup_packer {
         undef;
     }
 }
+
+
+
 
 # pack a widget inside a container
 sub pack_widget {
@@ -183,16 +227,16 @@ sub pack_widget {
 }
 
 sub paint_widget {
-    my ( $self, $widget ) = @_;
-    my $painter = $self->find_painter( $widget );
+    my ( $self, $widget, $opts ) = @_;
+    my $painter = $self->find_painter( $opts->{as} ||  $widget );
     return if ! defined $painter;
     
     $painter->( $self, $widget );
 }
 
 sub style_widget {
-    my ( $self, $widget ) = @_;
-    my $builder = $self->find_styler( $widget );
+    my ( $self, $widget, $opts ) = @_;
+    my $builder = $self->find_styler( $opts->{as} ||  $widget );
     return if ! defined $builder;
     
     $builder->( $self, $widget );
