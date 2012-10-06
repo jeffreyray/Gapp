@@ -123,15 +123,21 @@ COMPLETE IN THEIR IMPLEMENTATION. THE DOCUMENTATION MAY ALSO BE LACKING.*
     
 =head1 DESCRIPTION
 
-Gapp brings the I<post-modern> feel of L<Moose> to Gtk2-Perl applications.
+Gapp brings the I<post-modern> feel of L<Moose> to Gtk2-Perl.
 
 The primary goal of Gapp is to make Perl 5 GUI programming easier and less
 tedious. With Gapp you can to think more about what you want to do and less
 about choreographing widgets or keeping them (and your data) up to date.
 
-Gapp applicationss maintain a consistent look and feel without the need to hand
--configure every widget. Gapp effectively separates GUI design from application
-logic and data structures, while keeping your widgets and data up-to-date.
+Gapp effectively separates user interface design from business logic and
+data structures. By defining the appearance and layout of widgets at a
+single point in your program, your entire application maintains a consistent
+look and feel.
+
+Combining the features of Moose with Gtk2 yields a powerful framework for
+building GUI applications. Declarative syntax results in code that is
+clearer and easier to maintain. Roles and traits can by applied to widgets
+like any other Moose object.
 
 =head2 New to Gapp?
 
@@ -155,12 +161,12 @@ Delegates to C<Gtk2::main_quit>.
 
 Thanks to everyone at Gtk2-Perl and Moose and all those who came before me for
 making this module possible. Thanks to Jörn Reder and the authors and contributors
-of C<MooseX::Types>.
+of MooseX::Types.
 
-C<Gapp::TableMap> uses code from Jörn Reder's L<Gtk2::Ex::FormFactory::Table>
+Gapp::TableMap uses code from Jörn Reder's L<Gtk2::Ex::FormFactory::Table>
 (see L<Gapp::TableMap> for more details.)
 
-C<Gapp::Actions> is based off of L<MooseX::Types> (see L<Gapp::Actions> for more details.)
+Gapp::Actions is based off of L<MooseX::Types> (see L<Gapp::Actions> for more details.)
 
 =head1 AUTHORS
 

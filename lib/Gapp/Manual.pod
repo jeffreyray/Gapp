@@ -12,19 +12,20 @@ application development in perl.
 
 =head2 OVERVIEW
 
-Gapp is a C<Moose>-enabled layer over Glib/Gtk2-Perl.
+Gapp is a Moose-enabled layer over Gtk2-Perl.
 
-Each L<Gapp::Widget> constructs an underlying L<Gtk2::Widget> which as accessible
-through the C<gobject> attribute. You can apply I<roles> and I<traits> to the
-L<Gapp::Widget> like any other Moose based class.
+Each L<Gapp::Widget> constructs an underlying L<Gtk2::Widget> which is accessible
+through the C<gobject> attribute. You can apply roles and traits to the
+widgets just like any other Moose based class.
 
 Layouts are extensible classes that are used to define the positioning, spacing,
-and appearance of your widgets. By using a layout you can maintain a consistent
-look and feel across an entire application without the need to hand-configure
-every widget. Making a change to the layout propogates across the entire application.
+and appearance of widgets in an application. By defining these properties in a
+sinlge location it is easy to maintain a consistent look and feel across an entire
+application. There is no need to hand configure every widget. Making a change to
+the layout propogates across the entire application.
 
 Actions are reusable blocks of code that know how to display themselves on various
-widgets. Using Actions loosely separate business logic and GUI design.
+widgets. Actions loosely separate business logic and interface design.
 
 Forms keep your widgets and your data synchronised transparently. There is no need to
 manually move data between the object and the widgets or vice-versa when displaying or
@@ -32,8 +33,8 @@ saving a form.
 
 =head2 PREREQUISITES
 
-Gapp uses both L<Moose> and L<Gtk2> extensively and assumes that the user
-understands these modules as well. Any of the Gapp documentation that you find
+Gapp uses both L<Moose> and L<Gtk2> extensively and assumes that the user has basic
+understanding of these modules as well. Any of the Gapp documentation that you find
 lacking is probably covered by these modules.
 
 =head3 Moose
@@ -87,6 +88,15 @@ One of the first things you will notice is that we can define widget properties,
 connect to signals, and pack widgets all within the constructor of the widget.
 This lends to code that is cleaner and easier to read and modify.
 
+=head1 WIDGET CONSTRUCTION
+
+A L<Gapp::Widget> is used to manage the construction of a L<Gtk2::Widget>.
+
+The L<Gtk2::Widget> is created on the first call to C<Gapp::Widget::gobject>.
+Make all configurations to your widget before this happens; any change you make
+to the L<Gapp::Widget> will not be reflected in the GtkWidget once it has been
+constructed.
+
 =head2 WIDGET PARAMETERS
 
 =over 4
@@ -120,16 +130,6 @@ in more detail later in this manual.
 =item B<methods>
 
 =back
-
-=head1 WIDGET CONSTRUCTION
-
-As previously mentioned, Gapp is a layer over Gtk2. A L<Gapp::Widget> is used to
-manage the construction of a L<Gtk2::Widget>.
-
-The L<Gtk2::Widget> is created on the first call to C<Gapp::gobject>. Make
-all configurations to your widget before this happens; any change you make to
-the L<Gapp::Widget> will not be reflected in the Gtk widget once it has been
-constructed.
 
 In our example program, the call to C<gobject> was made implicitly by calling
 C<show_all> all on the window. This is because C<show_all> is set up to delegate
