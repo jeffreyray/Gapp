@@ -66,10 +66,13 @@ after '_build_gobject' => sub {
     my $self = shift;
 
     for my $c ( @{ $self->columns } ) {
+        $c = to_GappTreeViewColumn( $c ) if ! is_GappTreeViewColumn( $c );
         $self->gobject->append_column( $c->gobject );
         $self->gobject->{columns}{$c->name} = $c->gobject;
     }
 };
+
+
 
 sub find_column {
     my ( $self, $cname ) = @_;
@@ -84,10 +87,13 @@ sub find_column {
 sub get_selected {
     my ( $self ) = @_;
     
-    my $iter = $self->gobject->get_selection->get_selected;
-    return if ! $iter;
-    my $model = $self->gobject->get_model;
-    $model->get( $iter, $self->data_column );
+    my @records;
+    $self->gobject->get_selection->selected_foreach( sub{
+        my ( $model, $path, $iter ) = @_;
+        push @records, $model->get( $iter );
+    });
+    
+    return wantarray ? @records : $records[0];
 }
 
 1;

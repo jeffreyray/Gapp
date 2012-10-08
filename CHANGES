@@ -1,6 +1,17 @@
 Changes for Gapp
 
 {{$NEXT}}
+- removed print statements
+- added initializer to container
+- bug fix: MenuToolButton was not rendering icon attribute
+- stylers now inherit from stylers applied to ancestor classes
+- TreeView get_selected returns array or scalar depending on context
+- TreeView coerces default column values
+
+0.484     2012-10-08 12:33:30
+- removed debug print statements
+
+0.483     2012-10-08 12:18:51
 - BUG FIX: Failing install on clean system, using artifacts
 
 0.482     2012-10-08 00:26:59

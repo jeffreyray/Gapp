@@ -63,8 +63,6 @@ sub apply {
     my ( $self ) = @_;
     $self->sync_stash;
     
-    print "CONTEXT", $self->context, "\n";
-    
     $self->context->update( $self->stash ) if $self->context;
     $self->do_apply_action;
 }

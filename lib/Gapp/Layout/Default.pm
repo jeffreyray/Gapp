@@ -429,7 +429,7 @@ style 'Gapp::MenuToolButton', sub {
     
     my $image = $w->image ?
     $w->image->gobject :
-    Gtk2::Image->new_from_stock( 'gtk-dialog-error' , $w->icon_size || 'large-toolbar' );
+    Gtk2::Image->new_from_stock( $w->icon || 'gtk-dialog-error' , $w->icon_size || 'large-toolbar' );
     
     $w->set_args( [ $image, defined $w->label ? $w->label : ''  ] );
 };
