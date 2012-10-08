@@ -1,6 +1,9 @@
 Changes for Gapp
 
 {{$NEXT}}
+- BUG FIX: Failing install on clean system, using artifacts
+
+0.482     2012-10-08 00:26:59
 - styler/builder inheritance now acts like packer inheritince
     1. Check layout for definition of specific widget
     2. Check parent layouts for definition

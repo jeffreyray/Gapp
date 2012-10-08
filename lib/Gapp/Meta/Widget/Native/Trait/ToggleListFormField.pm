@@ -86,8 +86,8 @@ sub _connect_changed_handler {
 }
 
 
-package Gapp::Meta::Widget::Custom::Trait::TreeViewToggleListFormField;
-sub register_implementation { 'Gapp::Meta::Widget::Native::Trait::TreeViewToggleListFormField' };
+package Gapp::Meta::Widget::Custom::Trait::ToggleListFormField;
+sub register_implementation { 'Gapp::Meta::Widget::Native::Trait::ToggleListFormField' };
 
 
 1;

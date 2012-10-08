@@ -43,7 +43,6 @@ use Gapp::Model::SimpleList;
 use Gapp::Notebook;
 use Gapp::Statusbar;
 use Gapp::StatusIcon;
-use Gapp::SSNEntry;
 use Gapp::Table;
 use Gapp::TextBuffer;
 use Gapp::TextTag;
@@ -74,8 +73,8 @@ use Gapp::Meta::Widget::Native::Trait::AssistantPage;
 use Gapp::Meta::Widget::Native::Trait::Form;
 use Gapp::Meta::Widget::Native::Trait::FromUIManager;
 use Gapp::Meta::Widget::Native::Trait::NotebookPage;
-use Gapp::Meta::Widget::Native::Trait::TreeViewListFormField;
-use Gapp::Meta::Widget::Native::Trait::TreeViewToggleListFormField;
+use Gapp::Meta::Widget::Native::Trait::ListFormField;
+use Gapp::Meta::Widget::Native::Trait::ToggleListFormField;
 
 sub main { Gtk2->main };
 sub quit { Gtk2->main_quit };

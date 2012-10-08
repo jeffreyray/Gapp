@@ -63,8 +63,8 @@ sub _connect_changed_handler {
 }
 
 
-package Gapp::Meta::Widget::Custom::Trait::TreeViewListFormField;
-sub register_implementation { 'Gapp::Meta::Widget::Native::Trait::TreeViewListFormField' };
+package Gapp::Meta::Widget::Custom::Trait::ListFormField;
+sub register_implementation { 'Gapp::Meta::Widget::Native::Trait::ListFormField' };
 
 
 1;
