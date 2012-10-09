@@ -169,6 +169,7 @@ sub update {
         $w->stash_to_widget( $self->stash ) if $w->field;
         $w->set_is_updating( 0 );
     }
+    
 }
 
 
@@ -188,6 +189,8 @@ sub sync_stash {
     for my $w ( $self->find_fields ) {
         $w->widget_to_stash( $stash ) if $w->field;
     }
+    
+    #$stash->set_modified( 1 );
 }
 
 
