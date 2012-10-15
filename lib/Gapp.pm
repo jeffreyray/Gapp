@@ -14,6 +14,7 @@ use Gapp::ComboBox;
 use Gapp::DateEntry;
 use Gapp::Dialog;
 use Gapp::Entry;
+use Gapp::Expander;
 use Gapp::EventBox;
 use Gapp::FileChooserDialog;
 use Gapp::FileFilter;

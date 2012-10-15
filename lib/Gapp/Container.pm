@@ -29,7 +29,8 @@ has 'content' => (
     handles => {
         _add_content => 'push',
         children => 'elements',
-    }
+    },
+    lazy => 1,
 );
 
 

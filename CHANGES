@@ -7,6 +7,11 @@ Changes for Gapp
 - stylers now inherit from stylers applied to ancestor classes
 - TreeView get_selected returns array or scalar depending on context
 - TreeView coerces default column values
+- content attribute of Gapp::Container widgets defaults to being lazy
+- GappWidget attribute traits now defaults attribute to being ro and lazy,
+typical settings for widgets, you can over-ride the defaults when defining
+the attribute
+- added Expander widget
 
 0.484     2012-10-08 12:33:30
 - removed debug print statements

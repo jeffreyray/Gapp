@@ -1,8 +1,5 @@
 package Gapp::Moose::Role;
 
-our $VERSION = 0.01;
-our $AUTHORITY = 'cpan:JHALLOCK';
-
 use Moose::Role;
 use Moose::Meta::Method;
 use Moose::Exporter;
@@ -11,11 +8,14 @@ use Gapp;
 use Gapp::Gtk2;
 use Gapp::Moose::Meta::Attribute::Trait::GappActionGroup;
 use Gapp::Moose::Meta::Attribute::Trait::GappAssistant;
+use Gapp::Moose::Meta::Attribute::Trait::GappCheckButton;
 use Gapp::Moose::Meta::Attribute::Trait::GappComboBox;
 use Gapp::Moose::Meta::Attribute::Trait::GappBox;
 use Gapp::Moose::Meta::Attribute::Trait::GappButton;
 use Gapp::Moose::Meta::Attribute::Trait::GappDateEntry;
+use Gapp::Moose::Meta::Attribute::Trait::GappEntry;
 use Gapp::Moose::Meta::Attribute::Trait::GappEventBox;
+use Gapp::Moose::Meta::Attribute::Trait::GappExpander;
 use Gapp::Moose::Meta::Attribute::Trait::GappFileChooserDialog;
 use Gapp::Moose::Meta::Attribute::Trait::GappFileFilter;
 use Gapp::Moose::Meta::Attribute::Trait::GappFrame;

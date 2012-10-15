@@ -646,6 +646,11 @@ paint 'Gapp::ToolButton', sub {
     }
 };
 
+style 'Gapp::ToggleToolButton', sub {
+    my ( $l, $w ) = @_;
+};
+
+
 
 # TreeView
 
@@ -708,6 +713,12 @@ add 'Gapp::Widget', to 'Gapp::Container', sub {
     my ($l,  $w, $c) = @_;
     $c->gobject->pack_start( $w->gwrapper, $w->expand, $w->fill, $w->padding );
 };
+
+add 'Gapp::Widget', to 'Gapp::Expander', sub {
+    my ($l,  $w, $c ) = @_;
+    $c->gobject->add( $w->gwrapper );
+};
+
 
 add 'Gapp::Widget', to 'Gapp::HBox', sub {
     my ($l,  $w, $c ) = @_;

@@ -50,6 +50,8 @@ before '_process_options' => sub {
             return $w;
         };
     }
+    $opts->{is} = 'ro' if ! exists $opts->{is};
+    $opts->{lazy} = 1 if ! exists $opts->{lazy};
     
 };
 
