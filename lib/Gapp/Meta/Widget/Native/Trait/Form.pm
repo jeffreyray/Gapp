@@ -163,13 +163,20 @@ sub update {
     # update the stash if we have a context
     $self->stash->update( $self->context ) if $self->context;
     
+    # update the widgets from the stash
+    $self->update_from_stash;
+}
+
+# update the values in the form (don't update the stash first)
+sub update_from_stash {
+    my ( $self ) = @_;
+    
     # update the values in the form
     for my $w ( $self->find_fields ) {
         $w->set_is_updating( 1 );
         $w->stash_to_widget( $self->stash ) if $w->field;
         $w->set_is_updating( 0 );
     }
-    
 }
 
 

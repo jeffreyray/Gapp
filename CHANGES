@@ -1,6 +1,8 @@
 Changes for Gapp
 
 {{$NEXT}}
+
+0.487     2012-10-15 10:36:21
 - removed print statements
 - added initializer to container
 - bug fix: MenuToolButton was not rendering icon attribute
