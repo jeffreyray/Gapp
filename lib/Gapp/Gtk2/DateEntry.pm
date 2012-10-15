@@ -3,10 +3,6 @@ use strict;
 use warnings;
 use Carp;
 
-our $VERSION = 0.02;
-our $AUTHORITY = 'cpan:JHALLOCK';
-
-
 use Gtk2;
 use DateTime;
 use Glib qw(TRUE FALSE);
