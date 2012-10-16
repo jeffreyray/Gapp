@@ -444,7 +444,7 @@ build 'Gapp::MenuToolButton', sub {
     $gtkw->set_stock_id( $w->stock_id ) if $w->stock_id;
     $gtkw->set_label( $w->label ) if defined $w->label;
     $gtkw->set_tooltip_text( $w->tooltip ) if defined $w->tooltip;
-    
+    $gtkw->set_homogeneous( 1 ) if $w->homogeneous;
     $w->menu->gwrapper->show_all if $w->menu;
 };
 
@@ -603,6 +603,7 @@ build 'Gapp::Toolbar', sub {
 add 'Gapp::ToolItem', to 'Gapp::Toolbar', sub {
     my ($l,  $w, $c) = @_;
     $c->gobject->insert( $w->gwrapper, -1 );
+    $c->gobject->child_set_property( $w->gwrapper, 'homogeneous',  1 );
 };
 
 
@@ -626,6 +627,7 @@ build 'Gapp::ToolButton', sub {
     $gtkw->set_stock_id( $w->stock_id ) if $w->stock_id;
     $gtkw->set_label( $w->label ) if defined $w->label;
     $gtkw->set_tooltip_text( $w->tooltip ) if defined $w->tooltip;
+    $gtkw->set_homogeneous( 1 ) if $w->homogeneous;
 };
 
 paint 'Gapp::ToolButton', sub {

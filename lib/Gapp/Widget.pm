@@ -15,6 +15,13 @@ has 'name' => (
     default => '',
 );
 
+# if the widget should be homogenous
+has 'homogeneous' => (
+    is => 'rw',
+    isa => 'Bool',
+    default => 0,
+);
+
 # if the widget should expand its container
 has 'expand' => (
     is => 'rw',
