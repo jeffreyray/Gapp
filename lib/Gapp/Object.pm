@@ -21,11 +21,11 @@ has 'args' => (
 
 
 # signals to connect to
-has 'connected_signals' => (
+has 'signal_connect' => (
     is => 'ro',
     isa => 'ArrayRef',
     default => sub { [ ] },
-    init_arg => 'signal_connect',
+    reader => 'connected_signals',
 );
 
 
