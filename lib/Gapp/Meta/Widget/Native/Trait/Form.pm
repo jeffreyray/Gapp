@@ -89,7 +89,7 @@ sub do_apply_action {
     my ( $self ) = @_;
     return if ! $self->apply_action;
     
-    my ( $action, @args ) = parse_action ( $self->cancel_action );
+    my ( $action, @args ) = parse_action ( $self->apply_action );
     return if ! $action;
     
     if ( is_CodeRef ( $action ) ) {
