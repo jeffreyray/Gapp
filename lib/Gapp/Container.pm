@@ -5,10 +5,12 @@ use MooseX::SemiAffordanceAccessor;
 
 extends 'Gapp::Widget';
 
+use Gapp::Types qw( GappContent );
+
 # the contents of the widget
 has 'content' => (
     is => 'rw',
-    isa => 'ArrayRef',
+    isa => GappContent,
     default => sub { [ ] },
     traits => [qw( Array )],
     trigger => sub {
