@@ -29,7 +29,7 @@ has 'data_func' => (
 has 'model' => (
     is => 'rw',
     isa => 'Maybe[Object]',
-    default => sub { Gapp::Model::SimpleList->new },
+    #default => sub { Gapp::Model::SimpleList->new },
 );
 
 has 'renderer' => (

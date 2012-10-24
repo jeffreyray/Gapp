@@ -116,6 +116,12 @@ build 'Gapp::ComboBox', sub {
     my ( $l, $w ) = @_;
     my $gtkw = $w->gobject;
     
+    
+    if ( ! $w->model ) {
+	my $model = Gapp::Model::SimpleList->new;
+	$w->set_model( $model )
+    }
+    
     my $model = $w->model->isa('Gapp::Object') ? $w->model->gobject : $w->model;
     
     # populate the module with values

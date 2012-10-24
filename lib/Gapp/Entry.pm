@@ -14,7 +14,7 @@ sub BUILDARGS {
     my $class = shift;
     my %args = @_ == 1 && is_HashRef( $_[0] ) ? %{$_[0]} : @_;
     
-    for my $att ( qw(text xalign width_chars) ) {
+    for my $att ( qw( activates_default caps_lock_warning max_length invisible_char overwrite_mode text visibility width_chars xalign ) ) {
         $args{properties}{$att} = delete $args{$att} if exists $args{$att};
     }
 
@@ -84,7 +84,21 @@ Gapp::Entry - Entry Widget
 
 =over 4
 
+=item B<activates_default>
+
+=item B<caps_lock_warning>
+
+=item B<max_length>
+
+=item B<invisible_char>
+
+=item B<overwrite_mode>
+
 =item B<text>
+
+=item B<visibility>
+
+=item B<width_chars>
 
 =item B<xalign>
 
