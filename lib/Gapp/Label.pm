@@ -23,6 +23,24 @@ sub BUILDARGS {
     my $class = shift;
     my %args = @_ == 1 && is_HashRef( $_[0] ) ? %{$_[0]} : @_;
     
+    
+    #my %args;
+    #if ( @_ == 1 ) {
+    #    if ( is_Str( $_[0] ) ) {
+    #        $args{text} = $_[0];
+    #    }
+    #    elsif ( is_HashRef( $_[0] ) ) {
+    #        %args = %{$_[0]};
+    #    }
+    #    else {
+    #        $class->meta->throw_error( 'Single parameter to constructor must be a sting a hash reference.' );
+    #    }
+    #}
+    #else {
+    #    %args = ( @_ );
+    #}
+    
+    
     #if ( exists $args{markup} ) {
     #    $args{args} = [ $args{markup} ];
     #    $args{constructor} = 'new_with_markup';

@@ -32,6 +32,10 @@ sub BUILDARGS {
         $args{constructor} = 'new_with_label';
     }
     
+    for my $att ( qw( can_default has_default ) ) {
+        $args{properties}{$att} = delete $args{$att} if exists $args{$att};
+    }
+    
     __PACKAGE__->SUPER::BUILDARGS( %args );
 }
 
