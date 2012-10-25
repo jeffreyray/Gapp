@@ -2,6 +2,8 @@ Changes for Gapp
 
 {{$NEXT}}
 
+0.494     2012-10-25 01:00:43
+
 0.487     2012-10-15 10:36:21
 - removed print statements
 - added initializer to container
