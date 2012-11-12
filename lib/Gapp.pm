@@ -16,6 +16,7 @@ use Gapp::Dialog;
 use Gapp::Entry;
 use Gapp::Expander;
 use Gapp::EventBox;
+use Gapp::FileChooserButton;
 use Gapp::FileChooserDialog;
 use Gapp::FileFilter;
 use Gapp::Form::Context;
