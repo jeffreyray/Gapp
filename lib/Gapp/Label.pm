@@ -58,7 +58,7 @@ sub BUILDARGS {
     
     
     
-    for my $att ( qw( xalign yalign) ) {
+    for my $att ( qw( xalign yalign justify elipsize ) ) {
         $args{properties}{$att} = delete $args{$att} if exists $args{$att};
     }
     

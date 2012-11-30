@@ -13,7 +13,7 @@ sub BUILDARGS {
     my $class = shift;
     my %args = @_ == 1 && is_HashRef( $_[0] ) ? %{$_[0]} : @_;
     
-    for my $att ( qw(toolbar_style show_arrow tooltips ) ) {
+    for my $att ( qw(toolbar_style show_arrow tooltips orientation ) ) {
         $args{properties}{$att} = delete $args{$att} if exists $args{$att};
     }
     if ( exists $args{style} ) {

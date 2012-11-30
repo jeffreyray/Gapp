@@ -14,6 +14,7 @@ use Glib::Object::Subclass
 
 sub INIT_INSTANCE {
 	my $self = shift;
+	$self->{column_types} = [ 'Glib::Scalar' ];
 	$self->{rows}     = [];
 	$self->{stamp} = sprintf '%d', rand (1<<31);
 }
@@ -27,7 +28,7 @@ sub FINALIZE_INSTANCE {
 
 
 sub GET_FLAGS { [qw/list-only/] }
-sub GET_N_COLUMNS { undef }
+sub GET_N_COLUMNS { 0 }
 
 sub GET_COLUMN_TYPE {
     my ($self, $index) = @_;

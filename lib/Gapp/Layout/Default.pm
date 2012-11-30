@@ -665,7 +665,10 @@ style 'Gapp::ToggleToolButton', sub {
 build 'Gapp::TreeView', sub {
     my ( $l, $w ) = @_;
     my $gtkw = $w->gobject;
-    $gtkw->set_model( $w->model->isa('Gapp::Object') ? $w->model->gobject : $w->model ) if $w->model;
+    
+    my $model = $w->model;
+    
+    $gtkw->set_model( $model->isa('Gapp::Object') ? $model->gobject : $model ) if $model;
 };
 
 # TreeViewColumn

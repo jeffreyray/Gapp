@@ -76,6 +76,7 @@ use Gapp::Meta::Widget::Native::Trait::Form;
 use Gapp::Meta::Widget::Native::Trait::FromUIManager;
 use Gapp::Meta::Widget::Native::Trait::NotebookPage;
 use Gapp::Meta::Widget::Native::Trait::ListFormField;
+use Gapp::Meta::Widget::Native::Trait::Sensitivity;
 use Gapp::Meta::Widget::Native::Trait::ToggleListFormField;
 
 sub main { Gtk2->main };

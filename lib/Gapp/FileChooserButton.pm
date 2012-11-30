@@ -1,35 +1,21 @@
 package Gapp::FileChooserButton;
 
 use Moose;
-extends 'Gapp::HBox';
+
+extends 'Gapp::Widget';
 with 'Gapp::Meta::Widget::Native::Role::FormField';
+with 'Gapp::Meta::Widget::Native::Role::FileChooser';
 
 has '+gclass' => (
     default => 'Gtk2::FileChooserButton',
 );
-
-has 'action' => (
-    is => 'rw',
-    isa => 'Str',
-    default => 'open',
-);
-
-has 'filters' => (
-    isa => 'ArrayRef',
-    default => sub { [] },
-    traits => [qw( Array )],
-    handles => {
-        add_filter => 'push',
-        filters => 'elements',
-    }
-);
-
 
 
 before '_build_gobject' => sub {
     my $self = shift;
     $self->set_args( [ $self->properties->{title} ? $self->properties->{title} : '' , $self->action ] );
 };
+
 
 # returns the value of the widget
 sub get_field_value {
@@ -38,7 +24,7 @@ sub get_field_value {
 
 sub set_field_value {
     my ( $self, $value ) = @_;
-    $self->gobject->set_filename( $value ? $value : '' );
+    $self->gobject->set_filename( defined $value ? $value : '' );
 }
 
 sub widget_to_stash {
@@ -58,7 +44,7 @@ sub _connect_changed_handler {
       file_set => sub { $self->_widget_value_changed },
     );
 }
-   
+
 
 1;
 
@@ -84,7 +70,7 @@ Gapp::FileChooserButton - FileChooserButton Widget
 
 =item ............+-- L<Gapp::HBox>
 
-=item ................+-- Gapp::FileChooserDialog
+=item ................+-- Gapp::FileChooserButton
 
 =back
 
