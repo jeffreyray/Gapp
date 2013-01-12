@@ -45,6 +45,7 @@ sub update {
             my $value = $cx->lookup( $field );
             $self->store( $field, $value );
         }
+        
        
     }
     
@@ -54,7 +55,7 @@ sub update {
 sub update_from_context {
     my $self = shift;
     use Carp qw( cluck );
-    cluck '$stash->update_from_context( $cx ) deprecated, use $stah->update( $cx ) instead';
+    cluck '$stash->update_from_context( $cx ) deprecated, use $stash->update( $cx ) instead';
     $self->update( @_ );
 }
 

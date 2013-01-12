@@ -301,7 +301,10 @@ build 'Gapp::Image', sub {
     my ( $l, $w ) = @_;
     
     my $gtkw = $w->gobject;
-    if ( $w->stock ) {
+    if ( $w->file ) {
+	$gtkw->set_from_file( $w->file );
+    }
+    elsif ( $w->stock ) {
         $gtkw->set_from_stock( $w->stock->[0], $w->stock->[1] );
     }
 };

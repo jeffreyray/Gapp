@@ -58,7 +58,7 @@ sub BUILDARGS {
     
     
     
-    for my $att ( qw( xalign yalign justify elipsize ) ) {
+    for my $att ( qw( angle ellipsize cursor_position max_width_chars mnemonic_keyval pattern selectable selection_bound single_line_mode track_visited_links use_markup use_underline width_chars wrap wrap_mode xalign yalign justify  ) ) {
         $args{properties}{$att} = delete $args{$att} if exists $args{$att};
     }
     

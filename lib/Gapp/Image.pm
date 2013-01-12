@@ -9,10 +9,14 @@ has '+gclass' => (
     default => 'Gtk2::Image',
 );
 
+has 'file' => (
+    is => 'rw',
+    isa => 'Maybe[Str]',
+);
+
 has 'stock' => (
     is => 'rw',
-    isa => 'ArrayRef',
-    default => sub { [ ] },
+    isa => 'Maybe[ArrayRef]',
 );
 
 1;
